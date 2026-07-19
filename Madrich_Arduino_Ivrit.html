@@ -1,0 +1,1738 @@
+<title>מדריך ארדואינו בעברית לילדים</title>
+<style>
+  :root{
+    --bg:#f4f8f9; --bg-2:#e9f1f3; --surface:#ffffff; --surface-2:#f1f7f8;
+    --ink:#16272e; --ink-soft:#485c64; --ink-faint:#7c8f96; --border:#d8e4e7;
+    --accent:#0e9aa7; --accent-strong:#0b7f8a; --accent-soft:#d5eef0;
+    --amber:#e0900a; --amber-soft:#fbeccd;
+    --spark:#ef5b4f; --spark-soft:#ffe0dc;
+    --grape:#6d4fc7; --grape-soft:#e8e2fb;
+    --code-bg:#0f1e26; --code-ink:#dcecef; --code-dim:#7fa6b0; --code-key:#f6b93b; --code-str:#7ee0a6; --code-com:#5f8592; --code-num:#ff9d8a;
+    --shadow:0 1px 2px rgba(16,40,48,.06),0 8px 24px rgba(16,40,48,.07);
+    --shadow-lg:0 12px 40px rgba(16,40,48,.14);
+    --radius:16px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0c151a; --bg-2:#091015; --surface:#14222a; --surface-2:#182b34;
+      --ink:#e9f1f3; --ink-soft:#aabdc4; --ink-faint:#6f838b; --border:#23383f;
+      --accent:#2fc0cf; --accent-strong:#5bd6e1; --accent-soft:#0f3138;
+      --amber:#ffb43d; --amber-soft:#3a2c12;
+      --spark:#ff8074; --spark-soft:#3a1f1c;
+      --grape:#a98cf0; --grape-soft:#241a3d;
+      --code-bg:#081116; --code-ink:#dcecef;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.35);
+      --shadow-lg:0 16px 46px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f8f9; --bg-2:#e9f1f3; --surface:#ffffff; --surface-2:#f1f7f8;
+    --ink:#16272e; --ink-soft:#485c64; --ink-faint:#7c8f96; --border:#d8e4e7;
+    --accent:#0e9aa7; --accent-strong:#0b7f8a; --accent-soft:#d5eef0;
+    --amber:#e0900a; --amber-soft:#fbeccd; --spark:#ef5b4f; --spark-soft:#ffe0dc;
+    --grape:#6d4fc7; --grape-soft:#e8e2fb;
+    --code-bg:#0f1e26; --shadow:0 1px 2px rgba(16,40,48,.06),0 8px 24px rgba(16,40,48,.07);
+    --shadow-lg:0 12px 40px rgba(16,40,48,.14);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c151a; --bg-2:#091015; --surface:#14222a; --surface-2:#182b34;
+    --ink:#e9f1f3; --ink-soft:#aabdc4; --ink-faint:#6f838b; --border:#23383f;
+    --accent:#2fc0cf; --accent-strong:#5bd6e1; --accent-soft:#0f3138;
+    --amber:#ffb43d; --amber-soft:#3a2c12; --spark:#ff8074; --spark-soft:#3a1f1c;
+    --grape:#a98cf0; --grape-soft:#241a3d; --code-bg:#081116;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.35);
+    --shadow-lg:0 16px 46px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0}
+  .page{
+    direction:rtl; text-align:right;
+    font-family:"Segoe UI","Arial Hebrew","Noto Sans Hebrew",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:
+      radial-gradient(circle at 12% -5%, var(--accent-soft), transparent 40%),
+      radial-gradient(circle at 88% 0%, var(--amber-soft), transparent 38%),
+      var(--bg);
+    color:var(--ink); line-height:1.7; min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 20px}
+
+  /* ---- top bar ---- */
+  .topbar{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:10px 20px;
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:saturate(1.4) blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+  .brand .dot{width:14px;height:14px;border-radius:50%;background:var(--spark);box-shadow:0 0 0 0 var(--spark);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--spark) 70%,transparent)}70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  .theme-btn{
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+    border:1px solid var(--border); background:var(--surface); color:var(--ink);
+    border-radius:999px; padding:7px 14px; font-size:14px; font-weight:600; font-family:inherit;
+  }
+  .theme-btn:hover{border-color:var(--accent)}
+  .theme-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  /* ---- hero ---- */
+  .hero{padding:54px 0 30px}
+  .hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--accent-strong);
+    background:var(--accent-soft); border:1px solid color-mix(in srgb,var(--accent) 30%,transparent); padding:6px 14px;border-radius:999px}
+  .hero h1{font-size:clamp(2.1rem,6vw,3.4rem); line-height:1.12; margin:.5em 0 .2em; text-wrap:balance; letter-spacing:-.5px}
+  .hero h1 .glow{color:var(--accent)}
+  .hero p.lead{font-size:clamp(1.05rem,2.4vw,1.25rem); color:var(--ink-soft); max-width:60ch; margin:.2em 0 0}
+  .led-strip{display:flex; gap:10px; margin:26px 0 4px}
+  .led{width:26px;height:26px;border-radius:50%;background:var(--border)}
+  .led.on{animation:blink 2s infinite}
+  .led.c1{--c:#ff5b52} .led.c2{--c:#f6b93b} .led.c3{--c:#42d392} .led.c4{--c:#37b6ff} .led.c5{--c:#b06cff}
+  .led.on{background:var(--c); box-shadow:0 0 14px 2px color-mix(in srgb,var(--c) 65%,transparent)}
+  .led.d1{animation-delay:0s}.led.d2{animation-delay:.4s}.led.d3{animation-delay:.8s}.led.d4{animation-delay:1.2s}.led.d5{animation-delay:1.6s}
+  @keyframes blink{0%,45%{opacity:1}55%,100%{opacity:.18}}
+
+  .note{
+    display:flex; gap:14px; align-items:flex-start;
+    background:var(--surface); border:1px solid var(--border); border-inline-start:5px solid var(--amber);
+    border-radius:14px; padding:16px 18px; box-shadow:var(--shadow); margin:26px 0;
+  }
+  .note .ico{font-size:26px; line-height:1.2}
+  .note h4{margin:0 0 4px; font-size:1.02rem}
+  .note p{margin:0; color:var(--ink-soft); font-size:.98rem}
+
+  /* intro-to-programming call-to-action card */
+  .mavo-card{display:flex; gap:18px; align-items:center; flex-wrap:wrap; margin:26px 0; padding:22px; border-radius:20px;
+    background:linear-gradient(140deg, var(--grape-soft), var(--surface)); border:1px solid color-mix(in srgb,var(--grape) 34%,transparent); box-shadow:var(--shadow)}
+  .mavo-card .mavo-ico{font-size:42px; line-height:1; flex:none}
+  .mavo-card .mavo-txt{flex:1; min-width:240px}
+  .mavo-card .mavo-eyebrow{font-size:.78rem; font-weight:800; letter-spacing:.4px; color:var(--grape); text-transform:uppercase}
+  .mavo-card h3{margin:2px 0 5px; font-size:1.22rem}
+  .mavo-card p{margin:0; color:var(--ink-soft); font-size:.97rem}
+  .mavo-btn{flex:none; display:inline-flex; align-items:center; gap:9px; text-decoration:none; background:var(--grape); color:#fff; font-weight:800; font-size:1rem;
+    padding:13px 22px; border-radius:999px; box-shadow:0 8px 20px color-mix(in srgb,var(--grape) 40%,transparent); white-space:nowrap}
+  .mavo-btn:hover{background:color-mix(in srgb,var(--grape) 82%, #000)}
+  .mavo-btn:focus-visible{outline:3px solid var(--grape); outline-offset:3px}
+  @media (max-width:560px){ .mavo-card{flex-direction:column; text-align:center} .mavo-btn{width:100%; justify-content:center} }
+
+  /* ---- generic section ---- */
+  section{padding:22px 0}
+  h2.sec{font-size:clamp(1.5rem,4vw,2rem); margin:.2em 0 .1em; letter-spacing:-.3px}
+  .sec-sub{color:var(--ink-soft); margin:.1em 0 1em; max-width:65ch}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow)}
+
+  /* ---- intro info cards ---- */
+  .info-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:14px}
+  .info-grid .card{padding:18px}
+  .info-grid h3{margin:.1em 0 .3em; font-size:1.05rem; display:flex; align-items:center; gap:9px}
+  .info-grid p{margin:0; color:var(--ink-soft); font-size:.96rem}
+  .badge-ico{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:10px;font-size:19px;background:var(--accent-soft)}
+
+  /* ---- steps ---- */
+  ol.steps{margin:0; padding:0; list-style:none; counter-reset:s; display:grid; gap:12px}
+  ol.steps li{position:relative; padding:14px 58px 14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:12px}
+  ol.steps li::before{counter-increment:s; content:counter(s); position:absolute; inset-inline-start:14px; top:12px;
+    width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-weight:800;color:#fff;background:var(--accent); font-variant-numeric:tabular-nums}
+  ol.steps b{color:var(--ink)}
+
+  /* ---- dictionary table ---- */
+  .dict{margin-top:16px; background:var(--grape-soft); border:1px solid color-mix(in srgb,var(--grape) 32%,transparent); border-radius:14px; overflow:hidden}
+  .dict h4{margin:0; padding:12px 16px; font-size:1rem; display:flex; align-items:center; gap:9px; color:var(--ink);
+    background:color-mix(in srgb,var(--grape) 16%,transparent); border-bottom:1px solid color-mix(in srgb,var(--grape) 24%,transparent)}
+  .dict-scroll{overflow-x:auto}
+  table.voc{width:100%; border-collapse:collapse; font-size:.95rem; min-width:420px}
+  table.voc th,table.voc td{padding:9px 14px; text-align:right; border-bottom:1px solid color-mix(in srgb,var(--grape) 18%,transparent); vertical-align:top; color:var(--ink)}
+  table.voc td{color:var(--ink)}
+  table.voc th{font-size:.8rem; letter-spacing:.4px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; background:color-mix(in srgb,var(--grape) 8%,transparent)}
+  table.voc tr:last-child td{border-bottom:none}
+  .en{direction:ltr; unicode-bidi:isolate; display:inline-block; font-family:"Cascadia Code","Consolas",ui-monospace,monospace; font-weight:600; color:var(--grape); background:color-mix(in srgb,var(--grape) 12%,transparent); padding:1px 7px; border-radius:6px; font-size:.9em}
+  .say{font-weight:700; color:var(--ink); white-space:nowrap}
+
+  /* ---- chapter ---- */
+  .chapter{scroll-margin-top:72px; margin:30px 0; overflow:hidden}
+  .chapter>.head{display:flex; align-items:center; gap:16px; padding:20px 22px; background:linear-gradient(180deg,var(--surface-2),var(--surface)); border-bottom:1px solid var(--border)}
+  .chapter .num{flex:none; width:52px;height:52px;border-radius:14px; display:grid; place-items:center; font-size:1.5rem; font-weight:800; color:#fff;
+    background:linear-gradient(140deg,var(--accent),var(--accent-strong)); font-variant-numeric:tabular-nums; box-shadow:0 6px 16px color-mix(in srgb,var(--accent) 40%,transparent)}
+  .chapter .head h3{margin:0; font-size:1.3rem; line-height:1.25}
+  .chapter .head .sub{display:block; margin-top:3px; font-size:.9rem; color:var(--ink-faint); font-weight:600}
+  .chapter .head .sub .en{color:var(--accent); background:var(--accent-soft)}
+  .chapter .body{padding:20px 22px}
+  .block{margin:0 0 18px}
+  .block:last-child{margin-bottom:0}
+  .block h4{margin:0 0 8px; font-size:1.05rem; display:flex; align-items:center; gap:9px}
+  .block p{margin:.2em 0; color:var(--ink-soft)}
+  .block ul{margin:.3em 0; padding-inline-start:1.3em; color:var(--ink-soft)}
+  .block ul li{margin:.25em 0}
+  .block ul li b{color:var(--ink)}
+
+  .chips{display:flex; flex-wrap:wrap; gap:9px; padding:0; margin:.4em 0; list-style:none}
+  .chips li{background:var(--surface-2); border:1px solid var(--border); border-radius:999px; padding:6px 13px; font-size:.9rem; font-weight:600; color:var(--ink); display:inline-flex; gap:7px; align-items:center}
+
+  /* ---- code ---- */
+  .code{position:relative; background:var(--code-bg); border-radius:12px; margin:.4em 0; box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .code .bar{display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-bottom:1px solid rgba(255,255,255,.07)}
+  .code .bar .dots{display:flex; gap:6px}
+  .code .bar .dots i{width:11px;height:11px;border-radius:50%;display:block}
+  .code .bar .dots i:nth-child(1){background:#ff5f56}.code .bar .dots i:nth-child(2){background:#ffbd2e}.code .bar .dots i:nth-child(3){background:#27c93f}
+  .code .bar .fname{color:var(--code-dim); font-size:.8rem; font-family:"Cascadia Code","Consolas",monospace}
+  .copy{cursor:pointer; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); color:#dcecef; border-radius:8px; padding:4px 12px; font-size:.8rem; font-weight:600; font-family:inherit}
+  .copy:hover{background:rgba(255,255,255,.14)}
+  .copy:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .code pre{direction:ltr; text-align:left; margin:0; padding:14px 16px; overflow-x:auto; color:var(--code-ink);
+    font-family:"Cascadia Code","Consolas","SF Mono",ui-monospace,monospace; font-size:.86rem; line-height:1.65; tab-size:2}
+  .code .k{color:var(--code-key)} .code .s{color:var(--code-str)} .code .c{color:var(--code-com); font-style:italic} .code .n{color:var(--code-num)}
+
+  /* ---- TOC ---- */
+  .toc-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin-top:12px}
+  a.toc-card{text-decoration:none; color:var(--ink); background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:6px; box-shadow:var(--shadow); transition:transform .12s ease, border-color .12s ease}
+  a.toc-card:hover{transform:translateY(-3px); border-color:var(--accent)}
+  a.toc-card .tnum{font-size:.78rem; font-weight:800; color:#fff; background:var(--amber); width:fit-content; padding:2px 9px; border-radius:999px; font-variant-numeric:tabular-nums}
+  a.toc-card .temoji{font-size:1.5rem}
+  a.toc-card .ttl{font-weight:700; font-size:.98rem; line-height:1.3}
+  a.toc-card:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  /* ---- bonus ---- */
+  .bonus-head{background:linear-gradient(140deg, color-mix(in srgb,var(--spark) 18%,var(--surface)), var(--surface)); border:1px solid color-mix(in srgb,var(--spark) 30%,transparent); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); margin-top:8px}
+  .bonus-head h2{margin:.1em 0}
+  .bonus .chapter .num{background:linear-gradient(140deg,var(--spark),#c9463b); box-shadow:0 6px 16px color-mix(in srgb,var(--spark) 40%,transparent)}
+  .bonus .chapter .head .sub .en{color:var(--spark); background:var(--spark-soft)}
+  .star{color:var(--amber)}
+
+  /* ---- footer ---- */
+  footer{margin-top:40px; padding:28px 0 60px; border-top:1px solid var(--border); color:var(--ink-faint); font-size:.9rem}
+  footer a{color:var(--accent-strong)}
+  footer p{margin:.4em 0}
+
+  /* ---- back to top ---- */
+  #top{position:fixed; inset-inline-end:18px; bottom:18px; z-index:50; width:46px;height:46px;border-radius:50%; border:1px solid var(--border);
+    background:var(--surface); color:var(--ink); box-shadow:var(--shadow-lg); cursor:pointer; font-size:20px; display:none; place-items:center}
+  #top.show{display:grid}
+  #top:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  /* ---- floating tools dock (left side) ---- */
+  .fab-dock{position:fixed; left:14px; top:50%; transform:translateY(-50%); z-index:45; display:flex; flex-direction:column; gap:10px}
+  .fab{display:flex; flex-direction:column; align-items:center; gap:3px; width:62px; padding:10px 6px; border-radius:16px; border:1px solid var(--border); background:var(--surface); color:var(--ink); box-shadow:var(--shadow-lg); cursor:pointer; font-family:inherit; transition:transform .12s ease, border-color .12s ease, background .12s ease}
+  .fab .emoji{font-size:22px; line-height:1}
+  .fab .cap{font-size:.62rem; font-weight:800; letter-spacing:.2px}
+  .fab:hover{border-color:var(--accent); transform:translateX(3px)}
+  .fab.active{border-color:var(--accent); background:var(--accent-soft)}
+  .fab:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  .tool-panel{position:fixed; left:86px; top:50%; transform:translateY(-50%); z-index:60; width:min(340px,86vw); max-height:86vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow-lg); padding:18px 16px}
+  .tool-panel[hidden]{display:none}
+  .tool-close{position:absolute; inset-inline-end:12px; top:12px; width:30px; height:30px; border-radius:9px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink); font-size:20px; line-height:1; cursor:pointer; font-family:inherit}
+  .tool-close:hover{border-color:var(--spark); color:var(--spark)}
+  .tool-close:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+  .tool-title{margin:0 34px .2em 0; font-size:1.15rem}
+  .tool-hint{margin:0 0 12px; font-size:.9rem; color:var(--ink-soft)}
+
+  .res{display:flex; align-items:center; justify-content:center; margin:4px 0 8px}
+  .res .lead{height:4px; width:20px; background:#adb2b8}
+  .res .body{display:flex; align-items:center; gap:5px; height:48px; padding:0 9px; background:#e9dcbf; border:1px solid #cdbf9e; border-radius:9px}
+  .res .band{width:7px; height:100%; border-radius:2px; box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+  .res .band.spacer{width:9px; background:transparent!important; box-shadow:none}
+  .res-val{font-size:1.55rem; font-weight:800; text-align:center; color:var(--accent-strong); font-variant-numeric:tabular-nums; margin-bottom:10px}
+
+  .mode-toggle{display:inline-flex; margin-bottom:12px; border:1px solid var(--border); border-radius:999px; overflow:hidden}
+  .mode-btn{cursor:pointer; border:none; background:var(--surface-2); color:var(--ink-soft); padding:7px 16px; font-family:inherit; font-weight:700; font-size:.85rem}
+  .mode-btn.active{background:var(--accent); color:#fff}
+  .mode-btn:focus-visible{outline:3px solid var(--accent); outline-offset:-3px}
+  .band-group{margin-bottom:11px}
+  .band-group[hidden]{display:none}
+  .band-label{display:block; font-size:.78rem; font-weight:700; color:var(--ink-soft); margin-bottom:5px}
+  .sw-row{display:flex; flex-wrap:wrap; gap:6px}
+  .sw{width:27px; height:27px; border-radius:50%; border:2px solid var(--border); cursor:pointer; padding:0; position:relative}
+  .sw.sel{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+  .sw:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  .presets{margin-top:6px; border-top:1px dashed var(--border); padding-top:12px}
+  .preset-row{display:flex; flex-wrap:wrap; gap:7px; margin-top:6px}
+  .preset{cursor:pointer; border:1px solid var(--accent); background:var(--accent-soft); color:var(--accent-strong); border-radius:999px; padding:5px 12px; font-size:.85rem; font-weight:700; font-family:inherit}
+  .preset:hover{background:color-mix(in srgb,var(--accent) 22%,transparent)}
+  .preset:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  /* pinout tool */
+  .pin-sec{margin-bottom:11px}
+  .pin-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px}
+  .pin{display:inline-grid; place-items:center; min-width:30px; height:30px; padding:0 7px; border-radius:8px; font-size:.85rem; font-weight:800; font-variant-numeric:tabular-nums; background:var(--surface-2); border:1px solid var(--border); color:var(--ink)}
+  .pin.pwm{background:var(--accent-soft); border-color:var(--accent); color:var(--accent-strong)}
+  .pin.ana{background:var(--grape-soft); border-color:var(--grape); color:var(--grape)}
+  .pin.pow{background:var(--spark-soft); border-color:var(--spark); color:var(--spark)}
+  .pin.gnd{background:var(--surface-2); border-color:var(--ink-faint); color:var(--ink)}
+  .pin-note{margin:5px 0 0; font-size:.8rem; color:var(--ink-faint)}
+  .tool-tips{margin:10px 0 0; padding-inline-start:1.1em; font-size:.82rem; color:var(--ink-soft)}
+  .tool-tips li{margin:.25em 0}
+  /* notes tool */
+  .note-row{display:flex; flex-wrap:wrap; gap:7px; margin-top:6px}
+  .note-btn{cursor:pointer; border:1px solid var(--accent); background:var(--accent-soft); color:var(--accent-strong); border-radius:10px; padding:7px 9px; font-family:inherit; font-weight:800; font-size:.85rem; display:flex; flex-direction:column; align-items:center; gap:1px; min-width:50px}
+  .note-btn small{font-weight:600; color:var(--ink-soft); font-size:.68rem; font-variant-numeric:tabular-nums}
+  .note-btn:hover{background:color-mix(in srgb,var(--accent) 22%,transparent)}
+  .note-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+  /* words tool */
+  .kv{display:flex; flex-direction:column; gap:6px}
+  .kv-row{display:flex; gap:9px; align-items:baseline; font-size:.9rem; border-bottom:1px solid var(--border); padding-bottom:5px}
+  .kv-row:last-child{border-bottom:none}
+  .kv-row code{direction:ltr; font-family:"Cascadia Code","Consolas",monospace; font-weight:700; color:var(--accent-strong); background:var(--accent-soft); padding:1px 6px; border-radius:6px; font-size:.8rem; white-space:nowrap; flex:none}
+  .kv-row span{color:var(--ink-soft)}
+  /* ohm tool */
+  .ohm-field{display:flex; align-items:center; gap:8px; margin:8px 0}
+  .ohm-field label{width:110px; font-size:.85rem; font-weight:700}
+  .ohm-field input{flex:1; min-width:0; padding:8px 10px; border-radius:9px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink); font-family:inherit; font-size:.95rem; direction:ltr; text-align:left}
+  .ohm-field input:focus-visible{outline:3px solid var(--accent); outline-offset:1px}
+  .ohm-btns{display:flex; gap:8px; margin-top:8px}
+  .ohm-out{margin-top:12px; font-size:1.05rem; font-weight:800; color:var(--accent-strong); min-height:1.4em}
+
+  @media (max-width:640px){
+    .fab-dock{left:10px; top:auto; bottom:12px; transform:none; flex-direction:row; flex-wrap:wrap; max-width:calc(100vw - 20px)}
+    .fab{width:56px; padding:8px 4px}
+    .tool-panel{left:50%; right:auto; top:auto; bottom:150px; transform:translateX(-50%); width:94vw; max-height:60vh}
+  }
+
+  .print-btn{display:inline-flex; align-items:center; gap:8px; cursor:pointer; border:1px solid var(--grape); background:var(--grape-soft); color:var(--ink); border-radius:999px; padding:9px 18px; font-size:.98rem; font-weight:700; font-family:inherit; margin-top:8px}
+  .print-btn:hover{background:color-mix(in srgb,var(--grape) 20%,transparent)}
+  .print-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+
+  @media print{
+    .topbar,#top,.theme-btn,.copy,.print-btn,.led-strip,.fab-dock,.tool-panel{display:none!important}
+    .page{background:#fff!important; color:#000!important}
+    .card,.code,a.toc-card,.dict,.note,.bonus-head{box-shadow:none!important}
+    .code{background:#f4f4f4!important}
+    .code pre{color:#111!important; white-space:pre-wrap; word-break:break-word}
+    .code .k,.code .s,.code .c,.code .n{color:#111!important}
+    .chapter,.dict,.note{page-break-inside:avoid}
+    a{color:#000!important; text-decoration:none}
+  }
+  @media (max-width:520px){ .chapter .head h3{font-size:1.12rem} .hero{padding:38px 0 20px} }
+</style>
+
+<div class="page" lang="he">
+
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span><span>מדריך ארדואינו · לילדים</span></div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="החלף בין מצב בהיר לכהה">
+      <span id="themeIco">🌙</span><span id="themeTxt">מצב כהה</span>
+    </button>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ===================== HERO ===================== -->
+    <header class="hero">
+      <span class="kicker">🔌 ערכת Freenove · מדריך בעברית</span>
+      <h1>בונים דברים <span class="glow">מגניבים</span> עם אַרְדוּאִינוֹ!</h1>
+      <p class="lead">שלום! כאן נלמד יחד, צעד־אחר־צעד, איך להדליק נורות, לנגן צלילים, להזיז מנוע ואפילו למדוד חום — עם מחשב קטן ומגניב שנקרא <span class="en">Arduino</span>. אין צורך לדעת הכול מראש. נתחיל מהקל, ובכל שלב יש מילון קטן שיעזור לך להבין את המילים באנגלית. 🚀</p>
+      <div class="led-strip" aria-hidden="true">
+        <span class="led on c1 d1"></span><span class="led on c2 d2"></span><span class="led on c3 d3"></span><span class="led on c4 d4"></span><span class="led on c5 d5"></span>
+      </div>
+    </header>
+
+    <div class="note">
+      <span class="ico" aria-hidden="true">🖼️</span>
+      <div>
+        <h4>איך משתמשים במדריך הזה</h4>
+        <p>המדריך הזה הוא ה<b>הסבר בעברית</b>. את <b>התמונות של החיבורים</b> (איך מחברים את החוטים) תמצא/י במדריך המקורי של Freenove — הן באנגלית וזה בסדר גמור, כי תמונה מבינים בלי מילים. פִּתחו את שני המדריכים זה לצד זה: כאן קוראים ומבינים, ובתמונות רואים בדיוק לאן כל חוט הולך.</p>
+      </div>
+    </div>
+
+    <!-- ===================== INTRO-TO-PROGRAMMING CTA ===================== -->
+    <div class="mavo-card">
+      <span class="mavo-ico" aria-hidden="true">🧠</span>
+      <div class="mavo-txt">
+        <span class="mavo-eyebrow">מומלץ לקרוא קודם</span>
+        <h3>חדש בתכנות? התחל כאן 👇</h3>
+        <p>לפני שמדליקים נורות, כדאי להבין דבר קטן וחשוב: <b>איך המחשב "חושב" ואיך נותנים לו הוראות</b>. במבוא קצר וקליל תכיר מה זו שפת תכנות, מה זה זיכרון, משתנים, לולאות ותנאים — וכל שורת קוד במדריך פתאום תתבהר. שווה 5 דקות!</p>
+      </div>
+      <a class="mavo-btn" href="Mavo_Tichnut.html">📖 למבוא לתכנות ←</a>
+    </div>
+
+    <!-- ===================== WHAT IS ARDUINO ===================== -->
+    <section id="intro">
+      <h2 class="sec">רגע, מה זה בכלל אַרְדוּאִינוֹ? 🤔</h2>
+      <p class="sec-sub">ארדואינו הוא לוח חשמלי קטן עם "מוח" זעיר. אנחנו כותבים לו הוראות במחשב, שולחים אותן ללוח דרך חוט <span class="en">USB</span>, והלוח מבצע אותן שוב ושוב — מדליק נורות, קורא חיישנים, מזיז מנועים. כמו לתת מתכון לרובוט קטן, והוא מבשל לבד.</p>
+      <div class="info-grid">
+        <div class="card"><h3><span class="badge-ico">🧠</span> הלוח</h3><p>ה"מוח" שמריץ את הקוד שלנו. יש לו רגליים (<span class="en">pins</span>) שאליהן מחברים נורות, כפתורים וחיישנים.</p></div>
+        <div class="card"><h3><span class="badge-ico">🍞</span> לוח הניסויים</h3><p>ה־<span class="en">breadboard</span> הוא לוח לבן עם חורים. מכניסים לתוכו רכיבים בלי הלחמה — כמו לגו של חשמל.</p></div>
+        <div class="card"><h3><span class="badge-ico">💻</span> התוכנה</h3><p>ב־<span class="en">Arduino IDE</span> במחשב כותבים את ההוראות, בודקים אותן, ושולחים ללוח בלחיצת כפתור.</p></div>
+        <div class="card"><h3><span class="badge-ico">⚡</span> חשמל</h3><p>הלוח עובד על מתח נמוך ובטוח (5 וולט). זה לא מסוכן, אבל תמיד מכבים לפני שמחברים חוטים חדשים.</p></div>
+      </div>
+    </section>
+
+    <!-- ===================== THE IDE ===================== -->
+    <section id="ide">
+      <h2 class="sec">התוכנה: להכיר את ה־<span class="en" style="font-size:.8em">Arduino IDE</span> 💻</h2>
+      <p class="sec-sub">התוכנה שבה כותבים את הקוד נקראת <b>IDE</b> (קוראים: אַיי־דִי־אִי). הנה איך עובדים איתה בכל פרויקט:</p>
+      <ol class="steps">
+        <li><b>פותחים סְקֶץ' חדש</b> — כל תוכנית בארדואינו נקראת <span class="en">Sketch</span>. זה פשוט הקובץ שבו כותבים את הקוד.</li>
+        <li><b>כותבים או מעתיקים את הקוד</b> מהפרויקט שרוצים לבנות.</li>
+        <li><b>בוחרים לוח ויציאה</b> — בתפריט <span class="en">Tools</span> בוחרים את סוג הלוח (<span class="en">Board</span>) ואת החיבור למחשב (<span class="en">Port</span>).</li>
+        <li><b>לוחצים <span class="en">Verify</span> (✓)</b> — המחשב בודק שאין שגיאות בקוד.</li>
+        <li><b>לוחצים <span class="en">Upload</span> (←)</b> — הקוד נשלח ללוח, וזהו — הפרויקט רץ!</li>
+      </ol>
+
+      <div class="dict">
+        <h4>📖 מילון ה־IDE · המילים בתוכנה</h4>
+        <div class="dict-scroll">
+        <table class="voc">
+          <thead><tr><th>מילה באנגלית</th><th>איך אומרים</th><th>מה הפירוש</th></tr></thead>
+          <tbody>
+            <tr><td><span class="en">Sketch</span></td><td class="say">סְקֶץ'</td><td>קובץ הקוד שלנו בארדואינו (התוכנית).</td></tr>
+            <tr><td><span class="en">Verify</span></td><td class="say">וֶרִיפַאי</td><td>"לוודא" — בודק שאין טעויות בקוד.</td></tr>
+            <tr><td><span class="en">Upload</span></td><td class="say">אַפְּלוֹוד</td><td>"להעלות" — שולח את הקוד אל הלוח.</td></tr>
+            <tr><td><span class="en">Board</span></td><td class="say">בּוֹורְד</td><td>"לוח" — סוג הארדואינו שלך.</td></tr>
+            <tr><td><span class="en">Port</span></td><td class="say">פּוֹורְט</td><td>"יציאה" — לאיזה חיבור USB הלוח מחובר.</td></tr>
+            <tr><td><span class="en">Tools</span></td><td class="say">טוּלְז</td><td>"כלים" — תפריט ההגדרות.</td></tr>
+            <tr><td><span class="en">Library</span></td><td class="say">לַייבְּרֶרִי</td><td>"ספרייה" — חבילת קוד מוכן שאפשר להשתמש בה.</td></tr>
+            <tr><td><span class="en">Serial Monitor</span></td><td class="say">סִירְיַאל מוֹנִיטוֹר</td><td>חלון שבו רואים הודעות שהלוח שולח למחשב.</td></tr>
+            <tr><td><span class="en">Examples</span></td><td class="say">אֶקְזַמְפְּלְז</td><td>"דוגמאות" — קודים מוכנים ללמידה.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="dict" style="margin-top:14px">
+        <h4>🧩 מילון היסוד · מילים שחוזרות בכל הקודים</h4>
+        <div class="dict-scroll">
+        <table class="voc">
+          <thead><tr><th>מילה בקוד</th><th>איך אומרים</th><th>מה זה עושה</th></tr></thead>
+          <tbody>
+            <tr><td><span class="en">setup()</span></td><td class="say">סֶטְ־אַפּ</td><td>"הכנה" — רץ <b>פעם אחת</b> כשהלוח מתחיל. כאן מכינים הכול.</td></tr>
+            <tr><td><span class="en">loop()</span></td><td class="say">לוּפּ</td><td>"לולאה" — רץ <b>שוב ושוב, בלי סוף</b>. כאן קורה כל האקשן.</td></tr>
+            <tr><td><span class="en">pinMode</span></td><td class="say">פִּין מוֹוד</td><td>קובע אם רגל היא <b>יציאה</b> (שולחת חשמל) או <b>כניסה</b> (מקשיבה).</td></tr>
+            <tr><td><span class="en">OUTPUT</span></td><td class="say">אַאוּטְפּוּט</td><td>"פֶּלֶט" — הרגל שולחת חשמל החוצה (למשל לנורה).</td></tr>
+            <tr><td><span class="en">INPUT</span></td><td class="say">אִינְפּוּט</td><td>"קֶלֶט" — הרגל מקשיבה למה שנכנס (למשל כפתור).</td></tr>
+            <tr><td><span class="en">digitalWrite</span></td><td class="say">דִּיגִ'יטַל רַייט</td><td>מדליק (<span class="en">HIGH</span>) או מכבה (<span class="en">LOW</span>) רגל.</td></tr>
+            <tr><td><span class="en">HIGH / LOW</span></td><td class="say">הַאיי / לוֹו</td><td>"גבוה / נמוך" — יש חשמל (דלוק) או אין חשמל (כבוי).</td></tr>
+            <tr><td><span class="en">delay</span></td><td class="say">דִּילֵיי</td><td>"השהיה" — חכה. המספר הוא באלפיות שנייה (1000 = שנייה אחת).</td></tr>
+            <tr><td><span class="en">int</span></td><td class="say">אִינְט</td><td>משתנה שמחזיק <b>מספר שלם</b> (למשל מספר של רגל).</td></tr>
+            <tr><td><span class="en">// </span></td><td class="say">סְלֶש סְלֶש</td><td>"הערה" — טקסט בשבילנו בני האדם. המחשב מתעלם ממנו.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <div class="note">
+      <span class="ico" aria-hidden="true">🦺</span>
+      <div>
+        <h4>כללי בטיחות קטנים (וחשובים)</h4>
+        <p>1) מנתקים את ה־USB לפני שמחברים או מזיזים חוטים. 2) שמים לב לרגל הארוכה והקצרה של הנורה. 3) תמיד משתמשים בנגד (<span class="en">resistor</span>) עם נורה, כדי שלא תישרף. 4) אם משהו מתחמם או מריח מוזר — מנתקים מיד וקוראים למבוגר. אתם לא יכולים להיפגע מ־5 וולט, אבל הרכיבים כן. 😊</p>
+      </div>
+    </div>
+
+    <!-- ===================== TOC ===================== -->
+    <section id="toc">
+      <h2 class="sec">תוכן העניינים — לאן קופצים? 🗺️</h2>
+      <p class="sec-sub">אפשר ללכת לפי הסדר (מומלץ!) או לקפוץ לפרויקט שהכי מסקרן אותך.</p>
+      <div class="toc-grid">
+        <a class="toc-card" href="#p1"><span class="tnum">1</span><span class="temoji">💡</span><span class="ttl">הנורה הראשונה שלי</span></a>
+        <a class="toc-card" href="#p2"><span class="tnum">2</span><span class="temoji">✨</span><span class="ttl">שתי נורות מהבהבות</span></a>
+        <a class="toc-card" href="#p3"><span class="tnum">3</span><span class="temoji">📊</span><span class="ttl">שורת נורות רצה</span></a>
+        <a class="toc-card" href="#p4"><span class="tnum">4</span><span class="temoji">🌗</span><span class="ttl">נורה נושמת (בהירות)</span></a>
+        <a class="toc-card" href="#p5"><span class="tnum">5</span><span class="temoji">🔘</span><span class="ttl">כפתור</span></a>
+        <a class="toc-card" href="#p6"><span class="tnum">6</span><span class="temoji">💬</span><span class="ttl">מדברים עם המחשב</span></a>
+        <a class="toc-card" href="#p7"><span class="tnum">7</span><span class="temoji">🎚️</span><span class="ttl">כפתור סיבוב וחיישן אור</span></a>
+        <a class="toc-card" href="#p8"><span class="tnum">8</span><span class="temoji">🌈</span><span class="ttl">נורה בכל הצבעים</span></a>
+        <a class="toc-card" href="#p9"><span class="tnum">9</span><span class="temoji">🔊</span><span class="ttl">זמזם שמנגן</span></a>
+        <a class="toc-card" href="#p10"><span class="tnum">10</span><span class="temoji">⚙️</span><span class="ttl">מנוע וממסר</span></a>
+        <a class="toc-card" href="#p11"><span class="tnum">11</span><span class="temoji">🤖</span><span class="ttl">מנוע סֶרְווֹ</span></a>
+        <a class="toc-card" href="#p12"><span class="tnum">12</span><span class="temoji">🌡️</span><span class="ttl">מודדים חום</span></a>
+        <a class="toc-card" href="#p13"><span class="tnum">13</span><span class="temoji">🕹️</span><span class="ttl">ג'ויסטיק</span></a>
+        <a class="toc-card" href="#p14"><span class="tnum">14</span><span class="temoji">📐</span><span class="ttl">חיישן תנועה</span></a>
+        <a class="toc-card" href="#p15"><span class="tnum">15</span><span class="temoji">🔢</span><span class="ttl">שבב עוזר ומטריצה</span></a>
+        <a class="toc-card" href="#p16"><span class="tnum">16</span><span class="temoji">🔡</span><span class="ttl">מסך שכותב מילים</span></a>
+        <a class="toc-card" href="#bonus" style="background:var(--spark-soft);border-color:var(--spark)"><span class="tnum" style="background:var(--spark)">★</span><span class="temoji">🎁</span><span class="ttl">פרויקטים בונוס</span></a>
+        <a class="toc-card" href="#glossary" style="background:var(--grape-soft);border-color:var(--grape)"><span class="tnum" style="background:var(--grape)">א→ת</span><span class="temoji">📖</span><span class="ttl">המילון הגדול (להדפסה)</span></a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ==================== CHAPTERS ============================== -->
+    <!-- ============================================================ -->
+
+    <!-- ---- 1 ---- -->
+    <section class="chapter card" id="p1">
+      <div class="head"><div class="num">1</div><div><h3>הנורה הראשונה שלי 💡<span class="sub">מהבהבים נורה · <span class="en">Blink an LED</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>נגרום לנורה להידלק לשנייה, להיכבות לשנייה, ושוב ושוב — לנצח. זה ה"שלום עולם" של האלקטרוניקה, הפרויקט הראשון של כל ממציא.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>💡 נורה (<span class="en">LED</span>)</li><li>🧱 נגד 220Ω</li><li>🍞 לוח ניסויים</li><li>🔌 2 חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>הרגל <b>הארוכה</b> של הנורה (הפלוס) מתחברת דרך הנגד לרגל מספר <b>13</b> בלוח. הרגל <b>הקצרה</b> מתחברת ל־<span class="en">GND</span> (מינוס / אדמה). הנגד מגן על הנורה שלא תישרף. את התמונה המדויקת ראו במדריך המקורי.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Blink.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">void</span> setup() {
+  pinMode(<span class="n">13</span>, OUTPUT);   <span class="c">// רגל 13 = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  digitalWrite(<span class="n">13</span>, HIGH);  <span class="c">// מדליק</span>
+  delay(<span class="n">1000</span>);            <span class="c">// חכה שנייה</span>
+  digitalWrite(<span class="n">13</span>, LOW);   <span class="c">// מכבה</span>
+  delay(<span class="n">1000</span>);            <span class="c">// חכה שנייה</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li><b>setup</b> רץ פעם אחת ומגדיר שרגל 13 היא יציאה.</li><li><b>loop</b> חוזר בלי סוף: מדליק ← מחכה שנייה ← מכבה ← מחכה שנייה.</li><li>המספר ב־<b>delay</b> הוא באלפיות שנייה, אז 1000 = שנייה אחת.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">LED</span></td><td class="say">לֶד</td><td>נורית קטנה שנדלקת. ראשי־תיבות של "דיודה פולטת אור".</td></tr>
+          <tr><td><span class="en">Blink</span></td><td class="say">בְּלִינְק</td><td>"להבהב" — נדלק ונכבה שוב ושוב.</td></tr>
+          <tr><td><span class="en">GND</span></td><td class="say">גְּראַונְד</td><td>"אדמה" — הצד המינוס של החשמל.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 2 ---- -->
+    <section class="chapter card" id="p2">
+      <div class="head"><div class="num">2</div><div><h3>שתי נורות מהבהבות ✨<span class="sub">משתנים ולולאות · <span class="en">Two LEDs Blink</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>שתי נורות שמתחלפות — כשאחת דולקת, השנייה כבויה. כמו אורות של אמבולנס קטן!</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>💡💡 2 נורות</li><li>🧱 2 נגדים 220Ω</li><li>🍞 לוח ניסויים</li><li>🔌 חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>נורה אחת לרגל <b>12</b> ונורה שנייה לרגל <b>13</b> (כל אחת דרך נגד, והרגל הקצרה ל־<span class="en">GND</span>).</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">TwoLEDs.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> led1 = <span class="n">12</span>;   <span class="c">// נורה ראשונה ברגל 12</span>
+<span class="k">int</span> led2 = <span class="n">13</span>;   <span class="c">// נורה שנייה ברגל 13</span>
+
+<span class="k">void</span> setup() {
+  pinMode(led1, OUTPUT);   <span class="c">// נורה 1 = יציאה</span>
+  pinMode(led2, OUTPUT);   <span class="c">// נורה 2 = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  digitalWrite(led1, HIGH);   <span class="c">// נורה 1 דולקת</span>
+  digitalWrite(led2, LOW);    <span class="c">// נורה 2 כבויה</span>
+  delay(<span class="n">500</span>);              <span class="c">// חכה חצי שנייה</span>
+  digitalWrite(led1, LOW);    <span class="c">// נורה 1 כבית</span>
+  digitalWrite(led2, HIGH);   <span class="c">// נורה 2 דולקת - התחלף!</span>
+  delay(<span class="n">500</span>);              <span class="c">// חכה חצי שנייה</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li>נתנו לרגליים <b>שמות</b> (led1, led2) עם <span class="en">int</span> — ככה הקוד ברור יותר וקל לשנות.</li><li>בכל סיבוב מדליקים אחת ומכבים את השנייה, ואז הפוך.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">int</span></td><td class="say">אִינְט</td><td>משתנה למספר. כאן נותן שם לרגל.</td></tr>
+          <tr><td><span class="en">variable</span></td><td class="say">וֵורִיאֶבְּל</td><td>"משתנה" — קופסה עם שם ששומרת מספר.</td></tr>
+          <tr><td><span class="en">Two</span></td><td class="say">טוּ</td><td>"שתיים".</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 3 ---- -->
+    <section class="chapter card" id="p3">
+      <div class="head"><div class="num">3</div><div><h3>שורת נורות רצה 📊<span class="sub">מערך ולולאת for · <span class="en">LED Bar Graph</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>עשר נורות בשורה, ואור אחד "רץ" מצד לצד — כמו במכונית מהסרטים. במקום לכתוב קוד לכל נורה בנפרד, נלמד טריק חכם.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>💡×10 נורות</li><li>🧱×10 נגדים</li><li>🍞 לוח ניסויים</li><li>🔌 הרבה חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>עשר הנורות לרגליים <b>3 עד 12</b>, כל אחת דרך נגד, כל הרגליים הקצרות ל־<span class="en">GND</span> משותף.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">BarGraph.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> ledPins[] = { <span class="n">3</span>,<span class="n">4</span>,<span class="n">5</span>,<span class="n">6</span>,<span class="n">7</span>,<span class="n">8</span>,<span class="n">9</span>,<span class="n">10</span>,<span class="n">11</span>,<span class="n">12</span> };  <span class="c">// רשימת 10 הרגליים</span>
+
+<span class="k">void</span> setup() {
+  <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; <span class="n">10</span>; i++)    <span class="c">// עבור על כל הרגליים</span>
+    pinMode(ledPins[i], OUTPUT);   <span class="c">// כל אחת = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; <span class="n">10</span>; i++) {  <span class="c">// עבור נורה-נורה</span>
+    digitalWrite(ledPins[i], HIGH);  <span class="c">// הדלק נורה מספר i</span>
+    delay(<span class="n">100</span>);                     <span class="c">// חכה רגע קטן</span>
+    digitalWrite(ledPins[i], LOW);   <span class="c">// כבה אותה</span>
+  }
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li><b>מערך</b> (<span class="en">array</span>) הוא רשימה של מספרים בשם אחד. כאן רשימת כל הרגליים.</li><li><b>לולאת for</b> סופרת 0,1,2... ובכל פעם מטפלת בנורה הבאה. קוד קצר שעושה הרבה!</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">array</span></td><td class="say">אַרֵיי</td><td>"מערך" — רשימה של מספרים תחת שם אחד: <span class="en">ledPins[]</span>.</td></tr>
+          <tr><td><span class="en">for</span></td><td class="say">פוֹר</td><td>לולאה שחוזרת מספר קבוע של פעמים (כאן 10).</td></tr>
+          <tr><td><span class="en">bar graph</span></td><td class="say">בַּאר גְרַאף</td><td>"תרשים עמודות" — שורת נורות שמראה כמות.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 4 ---- -->
+    <section class="chapter card" id="p4">
+      <div class="head"><div class="num">4</div><div><h3>נורה נושמת 🌗<span class="sub">בהירות ו־PWM · <span class="en">Fading / Breathing LED</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>עד עכשיו נורה הייתה רק דלוקה או כבויה. עכשיו נגרום לה להיות <b>חלש</b> או <b>חזק</b> — ואפילו "לנשום": להתחזק ולהיחלש לאט לאט, כמו שינה רגועה.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>💡 נורה</li><li>🧱 נגד 220Ω</li><li>🍞 לוח ניסויים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>נורה לרגל <b>5</b> — דרך נגד. חשוב: רק רגליים עם הסימן <b>~</b> (טילדה) יודעות לעשות בהירות. אלה רגליים 3, 5, 6, 9, 10, 11.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Breathe.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> ledPin = <span class="n">5</span>;   <span class="c">// נורה ברגל 5 (רגל עם ~)</span>
+
+<span class="k">void</span> setup() {
+  pinMode(ledPin, OUTPUT);   <span class="c">// נורה = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt;= <span class="n">255</span>; i++) {  <span class="c">// מ-0 עד 255 = נעשה חזק</span>
+    analogWrite(ledPin, i);   <span class="c">// קבע בהירות = i</span>
+    delay(<span class="n">6</span>);              <span class="c">// חכה קצת בין צעד לצעד</span>
+  }
+  <span class="k">for</span> (<span class="k">int</span> i = <span class="n">255</span>; i &gt;= <span class="n">0</span>; i--) {  <span class="c">// מ-255 עד 0 = נעשה חלש</span>
+    analogWrite(ledPin, i);   <span class="c">// קבע בהירות = i</span>
+    delay(<span class="n">6</span>);              <span class="c">// חכה קצת</span>
+  }
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li><b>analogWrite</b> נותן בהירות במספר מ־<b>0</b> (כבוי) עד <b>255</b> (הכי חזק).</li><li>הטריק נקרא <span class="en">PWM</span>: הנורה נדלקת ונכבית מהר-מהר, והעין רואה את הממוצע כבהירות. קסם! 🪄</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">analogWrite</span></td><td class="say">אַנַלוֹג רַייט</td><td>שולח בהירות (0–255) במקום רק דלוק/כבוי.</td></tr>
+          <tr><td><span class="en">PWM</span></td><td class="say">פִּי־דַבְּליו־אֶם</td><td>הטריק של הבהוב מהיר שמדמה בהירות.</td></tr>
+          <tr><td><span class="en">fade</span></td><td class="say">פֵייד</td><td>"להתעמעם" — להיחלש בהדרגה.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 5 ---- -->
+    <section class="chapter card" id="p5">
+      <div class="head"><div class="num">5</div><div><h3>כפתור 🔘<span class="sub">קלט ותנאים · <span class="en">Push Button</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>עד עכשיו הלוח רק "דיבר". עכשיו נלמד אותו <b>להקשיב</b>: לחיצה על כפתור תדליק נורה. זה השלב שבו הפרויקטים הופכים לאינטראקטיביים!</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🔘 כפתור</li><li>💡 נורה + נגד</li><li>🧱 נגד 10kΩ</li><li>🍞 לוח ניסויים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>כפתור לרגל <b>12</b>, נורה לרגל <b>9</b>. הכפתור מחובר גם דרך נגד כדי שהלוח ידע בבירור מתי לוחצים ומתי לא.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Button.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> buttonPin = <span class="n">12</span>;   <span class="c">// כפתור ברגל 12</span>
+<span class="k">int</span> ledPin = <span class="n">9</span>;       <span class="c">// נורה ברגל 9</span>
+
+<span class="k">void</span> setup() {
+  pinMode(buttonPin, INPUT);   <span class="c">// כפתור = כניסה (מקשיב)</span>
+  pinMode(ledPin, OUTPUT);     <span class="c">// נורה = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">if</span> (digitalRead(buttonPin) == HIGH)  <span class="c">// לא לוחצים</span>
+    digitalWrite(ledPin, LOW);         <span class="c">// כבה</span>
+  <span class="k">else</span>                                 <span class="c">// לוחצים!</span>
+    digitalWrite(ledPin, HIGH);        <span class="c">// הדלק</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li><b>digitalRead</b> קורא את הכפתור: <span class="en">HIGH</span> = לא לחוץ, <span class="en">LOW</span> = לחוץ.</li><li><b>if / else</b> = "אם / אחרת": אם לוחצים — הדלק, אחרת — כבה.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Push Button</span></td><td class="say">פּוּש בַּאטְן</td><td>"כפתור לחיצה".</td></tr>
+          <tr><td><span class="en">digitalRead</span></td><td class="say">דִּיגִ'יטַל רִיד</td><td>"קורא" רגל — בודק אם יש חשמל או לא.</td></tr>
+          <tr><td><span class="en">if / else</span></td><td class="say">אִיף / אֶלְס</td><td>"אם / אחרת" — קבלת החלטה בקוד.</td></tr>
+          <tr><td><span class="en">INPUT</span></td><td class="say">אִינְפּוּט</td><td>"קֶלֶט" — רגל שמקשיבה.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 6 ---- -->
+    <section class="chapter card" id="p6">
+      <div class="head"><div class="num">6</div><div><h3>מדברים עם המחשב 💬<span class="sub">תקשורת טורית · <span class="en">Serial Communication</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>הלוח ישלח הודעות למחשב, ואנחנו נראה אותן על המסך בזמן אמת. זה הכלי הכי חשוב לגלות "מה הלוח חושב" — ולתקן בעיות.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🔌 רק הלוח וחוט USB</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>שום דבר לחבר! רק צריך לפתוח את חלון ה־<span class="en">Serial Monitor</span> בתוכנה (הכפתור בפינה למעלה), ולוודא שהמהירות מוגדרת ל־<b>9600</b>.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Serial.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> counter = <span class="n">0</span>;   <span class="c">// המספר שנספור, מתחיל מ-0</span>
+
+<span class="k">void</span> setup() {
+  Serial.begin(<span class="n">9600</span>);              <span class="c">// פותח קו דיבור למחשב</span>
+  Serial.println(<span class="s">"UNO is ready!"</span>);  <span class="c">// הודעת פתיחה</span>
+}
+
+<span class="k">void</span> loop() {
+  Serial.print(<span class="s">"counter:"</span>);   <span class="c">// כותב את המילה</span>
+  Serial.println(counter);   <span class="c">// כותב את המספר + שורה חדשה</span>
+  delay(<span class="n">500</span>);               <span class="c">// חכה חצי שנייה</span>
+  counter++;                 <span class="c">// הוסף 1 למספר</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li><b>Serial.begin(9600)</b> פותח את "הקו" בין הלוח למחשב.</li><li><b>Serial.println</b> שולח שורה. <b>counter++</b> אומר "הוסף 1 למספר".</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Serial</span></td><td class="say">סִירְיַאל</td><td>"טורי" — דרך לשלוח מידע למחשב, אות אחר אות.</td></tr>
+          <tr><td><span class="en">print / println</span></td><td class="say">פְּרִינְט</td><td>"להדפיס" — לשלוח טקסט. <span class="en">ln</span> = שורה חדשה.</td></tr>
+          <tr><td><span class="en">baud rate</span></td><td class="say">בּוֹוד רֵייט</td><td>"מהירות" הדיבור. 9600 = ערך נפוץ.</td></tr>
+          <tr><td><span class="en">counter</span></td><td class="say">קַאונְטֶר</td><td>"מונה" — משתנה שסופר.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 7 ---- -->
+    <section class="chapter card" id="p7">
+      <div class="head"><div class="num">7</div><div><h3>כפתור סיבוב וחיישן אור 🎚️<span class="sub">קריאה אנלוגית · <span class="en">Potentiometer &amp; Photoresistor</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>נחבר "כפתור סיבוב" (פוטנציומטר) ששולט על בהירות נורה — סובבים והנורה מתחזקת. ואז נחליף אותו בחיישן אור, כך שהנורה תגיב לחושך ולאור בחדר!</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🎚️ פוטנציומטר</li><li>🔆 חיישן אור</li><li>🧱 נגד 10kΩ</li><li>💡 נורה + נגד</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>הרגל האמצעית של הפוטנציומטר לרגל <b>A0</b> (רגל אנלוגית), שני הצדדים ל־<span class="en">5V</span> ו־<span class="en">GND</span>. הנורה לרגל <b>9</b>.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Analog.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> ledPin = <span class="n">9</span>;   <span class="c">// נורה ברגל 9</span>
+
+<span class="k">void</span> setup() {
+  pinMode(ledPin, OUTPUT);   <span class="c">// נורה = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">int</span> val = analogRead(A0);   <span class="c">// קורא ערך 0..1023 מהחיישן</span>
+  <span class="c">// ממיר את הערך לבהירות 0..255 ומדליק:</span>
+  analogWrite(ledPin, map(val, <span class="n">0</span>,<span class="n">1023</span>, <span class="n">0</span>,<span class="n">255</span>));
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li><b>analogRead(A0)</b> קורא מספר בין <b>0 ל־1023</b> — לפי מצב הסיבוב או כמות האור.</li><li><b>map</b> "מתרגם" את המספר לטווח אחר (כאן: לבהירות 0–255).</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Potentiometer</span></td><td class="say">פּוֹטֶנְצְיוֹמֶטֶר</td><td>כפתור מסתובב שמשנה מספר. קיצור: "פוט".</td></tr>
+          <tr><td><span class="en">Photoresistor</span></td><td class="say">פוֹטוֹ־רֶזִיסְטוֹר</td><td>חיישן שמרגיש כמה אור יש.</td></tr>
+          <tr><td><span class="en">analogRead</span></td><td class="say">אַנַלוֹג רִיד</td><td>קורא ערך משתנה (0–1023), לא רק דלוק/כבוי.</td></tr>
+          <tr><td><span class="en">map</span></td><td class="say">מַאפּ</td><td>"למפות" — לתרגם מספר מטווח אחד לטווח אחר.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 8 ---- -->
+    <section class="chapter card" id="p8">
+      <div class="head"><div class="num">8</div><div><h3>נורה בכל הצבעים 🌈<span class="sub">מיזוג צבעים · <span class="en">RGB LED</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>נורה מיוחדת שיכולה להיות בכל צבע! היא מערבבת אדום, ירוק וכחול — בדיוק כמו מסך טלוויזיה. נגרום לה להחליף צבעים אקראיים.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🌈 נורת <span class="en">RGB</span></li><li>🧱 3 נגדים</li><li>🍞 לוח ניסויים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>שלוש הרגליים הצבעוניות: אדום לרגל <b>11</b>, ירוק ל־<b>10</b>, כחול ל־<b>9</b> (כל אחת דרך נגד). הרגל הארוכה ל־<span class="en">GND</span>.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">RGB.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> R = <span class="n">11</span>, G = <span class="n">10</span>, B = <span class="n">9</span>;   <span class="c">// רגליים לאדום, ירוק, כחול</span>
+
+<span class="k">void</span> setup() {
+  pinMode(R, OUTPUT); pinMode(G, OUTPUT); pinMode(B, OUTPUT);  <span class="c">// שלושתם יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  analogWrite(R, random(<span class="n">256</span>));  <span class="c">// אדום בעוצמה אקראית</span>
+  analogWrite(G, random(<span class="n">256</span>));  <span class="c">// ירוק בעוצמה אקראית</span>
+  analogWrite(B, random(<span class="n">256</span>));  <span class="c">// כחול בעוצמה אקראית</span>
+  delay(<span class="n">500</span>);                 <span class="c">// חכה חצי שנייה, ואז צבע חדש</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li>כל צבע מקבל בהירות 0–255. שילוב שונה = צבע שונה. אדום+ירוק = צהוב, וכו'.</li><li><b>random(256)</b> בוחר מספר אקראי בכל פעם — צבע הפתעה!</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">RGB</span></td><td class="say">אַר־גִ'י־בִּי</td><td>אדום־ירוק־כחול (<span class="en">Red Green Blue</span>) — צבעי היסוד של אור.</td></tr>
+          <tr><td><span class="en">random</span></td><td class="say">רֵנְדוֹם</td><td>"אקראי" — מספר מפתיע בכל פעם.</td></tr>
+          <tr><td><span class="en">Colorful</span></td><td class="say">קַלֶרְפוּל</td><td>"צבעוני".</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 9 ---- -->
+    <section class="chapter card" id="p9">
+      <div class="head"><div class="num">9</div><div><h3>זמזם שמנגן 🔊<span class="sub">צליל ותדר · <span class="en">Buzzer</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>עד עכשיו רק אור — עכשיו <b>קול</b>! נשמיע צפצוף, ואז נגרום לזמזם "לשיר" בגבהים שונים, כמו סירנה קטנה.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🔊 זמזם (<span class="en">Buzzer</span>)</li><li>🍞 לוח ניסויים</li><li>🔌 חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>הרגל <b>הארוכה</b> (פלוס) של הזמזם לרגל <b>9</b>, הרגל הקצרה ל־<span class="en">GND</span>.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Buzzer.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> buzzer = <span class="n">9</span>;   <span class="c">// זמזם ברגל 9</span>
+
+<span class="k">void</span> setup() {
+  pinMode(buzzer, OUTPUT);   <span class="c">// זמזם = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">for</span> (<span class="k">int</span> f = <span class="n">200</span>; f &lt; <span class="n">800</span>; f++) {  <span class="c">// גובה עולה לאט</span>
+    tone(buzzer, f);   <span class="c">// נגן צליל בגובה f</span>
+    delay(<span class="n">5</span>);         <span class="c">// חכה רגע זעיר</span>
+  }
+  noTone(buzzer);      <span class="c">// הפסק צליל - שקט</span>
+  delay(<span class="n">500</span>);         <span class="c">// חכה חצי שנייה</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li><b>tone</b> מנגן צליל. מספר גבוה = צליל <b>גבוה</b> (חד), מספר נמוך = צליל <b>נמוך</b> (עבה).</li><li>הלולאה מעלה את הגובה לאט — וזה נשמע כמו סירנה שעולה.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Buzzer</span></td><td class="say">בַּאזֶר</td><td>"זמזם" — רכיב שמשמיע קול.</td></tr>
+          <tr><td><span class="en">tone</span></td><td class="say">טוֹון</td><td>"צליל" — הפקודה שמנגנת קול בגובה מסוים.</td></tr>
+          <tr><td><span class="en">frequency</span></td><td class="say">פְרִיקְוֶונְסִי</td><td>"תדר" — כמה גבוה או נמוך הצליל.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 10 ---- -->
+    <section class="chapter card" id="p10">
+      <div class="head"><div class="num">10</div><div><h3>מנוע וממסר ⚙️<span class="sub">להזיז דברים גדולים · <span class="en">Motor &amp; Relay</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>הלוח קטן וחלש מדי כדי להפעיל מנוע ישירות. אז נשתמש ב<b>ממסר</b> — מתג חשמלי שהלוח שולט בו, והוא מדליק את המנוע. לחיצת כפתור תפעיל ותכבה את המנוע.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>⚙️ מנוע קטן</li><li>🔀 ממסר (<span class="en">Relay</span>)</li><li>🔘 כפתור</li><li>🔋 מקור מתח</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>הממסר מחובר לרגל <b>9</b>, הכפתור לרגל <b>12</b>, והמנוע מחובר לצד ה"כוח" של הממסר. שימו לב: מנועים דורשים חיבור זהיר — עשו את זה עם מבוגר.</p></div>
+        <div class="block"><h4>💻 הקוד (מקוצר)</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Relay.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> relayPin = <span class="n">9</span>, buttonPin = <span class="n">12</span>;   <span class="c">// ממסר ברגל 9, כפתור ברגל 12</span>
+<span class="k">bool</span> on = <span class="k">false</span>;   <span class="c">// האם המנוע דולק? מתחיל כבוי</span>
+
+<span class="k">void</span> setup() {
+  pinMode(buttonPin, INPUT);   <span class="c">// כפתור = כניסה</span>
+  pinMode(relayPin, OUTPUT);   <span class="c">// ממסר = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">if</span> (digitalRead(buttonPin) == LOW) {  <span class="c">// אם לחצו</span>
+    delay(<span class="n">20</span>);                          <span class="c">// דילוג על "רעד" הכפתור</span>
+    on = !on;                            <span class="c">// הפוך מצב: דלוק &lt;-&gt; כבוי</span>
+    digitalWrite(relayPin, on);          <span class="c">// עדכן את הממסר</span>
+    <span class="k">while</span> (digitalRead(buttonPin) == LOW);  <span class="c">// חכה שיעזבו את הכפתור</span>
+  }
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li>ה<b>ממסר</b> הוא כמו מתג רובוטי: הלוח נותן פקודה קטנה, והממסר סוגר מעגל חזק שמפעיל את המנוע.</li><li><b>on = !on</b> אומר "הפוך את המצב" — אם היה דלוק, כבה, ולהפך.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Motor</span></td><td class="say">מוֹטוֹר</td><td>"מנוע" — מסתובב ומזיז דברים.</td></tr>
+          <tr><td><span class="en">Relay</span></td><td class="say">רִילֵיי</td><td>"ממסר" — מתג חשמלי שנשלט מהלוח.</td></tr>
+          <tr><td><span class="en">while</span></td><td class="say">וַואיל</td><td>"כל עוד" — לולאה שממשיכה עד שמשהו משתנה.</td></tr>
+          <tr><td><span class="en">bool</span></td><td class="say">בּוּל</td><td>משתנה של כן/לא (<span class="en">true/false</span>).</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 11 ---- -->
+    <section class="chapter card" id="p11">
+      <div class="head"><div class="num">11</div><div><h3>מנוע סֶרְווֹ 🤖<span class="sub">זווית מדויקת · <span class="en">Servo Motor</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>מנוע מיוחד שמסתובב לזווית מדויקת (0 עד 180 מעלות) ונעצר שם. מושלם לזרוע רובוט, זנב שמכשכש, או מחסום קטן. נגרום לו להתנדנד קדימה ואחורה.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🤖 מנוע <span class="en">Servo</span></li><li>🔌 3 חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>לסרוו שלושה חוטים: חום/שחור ל־<span class="en">GND</span>, אדום ל־<span class="en">5V</span>, וצהוב/כתום (אות) לרגל <b>3</b>.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Servo.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">#include</span> <span class="s">&lt;Servo.h&gt;</span>   <span class="c">// מביא את ספריית הסרוו</span>
+Servo myservo;       <span class="c">// יוצר "סרוו" בשם myservo</span>
+
+<span class="k">void</span> setup() {
+  myservo.attach(<span class="n">3</span>);   <span class="c">// הסרוו מחובר לרגל 3</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">for</span> (<span class="k">int</span> a = <span class="n">0</span>; a &lt;= <span class="n">180</span>; a++) {  <span class="c">// מ-0 עד 180 מעלות</span>
+    myservo.write(a);   <span class="c">// סובב לזווית a</span>
+    delay(<span class="n">15</span>);         <span class="c">// חכה שיגיע</span>
+  }
+  <span class="k">for</span> (<span class="k">int</span> a = <span class="n">180</span>; a &gt;= <span class="n">0</span>; a--) {  <span class="c">// בחזרה מ-180 ל-0</span>
+    myservo.write(a);   <span class="c">// סובב לזווית a</span>
+    delay(<span class="n">15</span>);         <span class="c">// חכה שיגיע</span>
+  }
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li><b>#include &lt;Servo.h&gt;</b> מייבא <span class="en">library</span> — קוד מוכן שיודע לדבר עם סרוו.</li><li><b>myservo.write(a)</b> אומר לסרוו "עבור לזווית a מעלות".</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Servo</span></td><td class="say">סֶרְווֹ</td><td>מנוע שעוצר בזווית מדויקת.</td></tr>
+          <tr><td><span class="en">#include</span></td><td class="say">אִינְקְלוּד</td><td>"לצרף" — מייבא ספרייה של קוד מוכן.</td></tr>
+          <tr><td><span class="en">Sweep</span></td><td class="say">סְוִויפּ</td><td>"טאטוא" — תנועה הלוך ושוב.</td></tr>
+          <tr><td><span class="en">angle</span></td><td class="say">אַנְגְל</td><td>"זווית" — נמדדת במעלות (0–180).</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 12 ---- -->
+    <section class="chapter card" id="p12">
+      <div class="head"><div class="num">12</div><div><h3>מודדים חום 🌡️<span class="sub">חיישן טמפרטורה · <span class="en">Temperature Sensor</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>חיישן קטן (<span class="en">LM35</span>) שמרגיש את הטמפרטורה. נחשב את החום במעלות ונראה אותו על מסך המחשב. נסו לגעת בחיישן ולראות את המספר עולה!</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🌡️ חיישן <span class="en">LM35</span></li><li>🔌 3 חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>לחיישן שלוש רגליים: <span class="en">5V</span>, הרגל האמצעית (אות) לרגל <b>A0</b>, ו־<span class="en">GND</span>. שימו לב לכיוון — הפוך יחמם את החיישן!</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Temperature.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">void</span> setup() {
+  Serial.begin(<span class="n">9600</span>);   <span class="c">// פותח קו דיבור למחשב</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">int</span> raw = analogRead(A0);                  <span class="c">// קורא את החיישן (0..1023)</span>
+  <span class="k">float</span> tempC = raw / <span class="n">1023.0</span> * <span class="n">5.0</span> / <span class="n">0.01</span>;   <span class="c">// מחשב מעלות צלזיוס</span>
+  Serial.print(<span class="s">"Temperature: "</span>);   <span class="c">// כותב מילה</span>
+  Serial.print(tempC);                 <span class="c">// כותב את המספר</span>
+  Serial.println(<span class="s">" C"</span>);            <span class="c">// יחידה + שורה חדשה</span>
+  delay(<span class="n">500</span>);                       <span class="c">// חכה חצי שנייה</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li>החיישן הופך חום למתח חשמלי קטן. הנוסחה ממירה את הקריאה למעלות צלזיוס.</li><li><b>float</b> הוא מספר עם נקודה עשרונית — כי חום יכול להיות 24.5 מעלות.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Temperature</span></td><td class="say">טֶמְפְּרֶצֶ'ר</td><td>"טמפרטורה" — כמה חם או קר.</td></tr>
+          <tr><td><span class="en">Sensor</span></td><td class="say">סֶנְסוֹר</td><td>"חיישן" — רכיב שמרגיש משהו בעולם.</td></tr>
+          <tr><td><span class="en">float</span></td><td class="say">פְלוֹוט</td><td>מספר עם נקודה עשרונית (למשל 24.5).</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 13 ---- -->
+    <section class="chapter card" id="p13">
+      <div class="head"><div class="num">13</div><div><h3>ג'ויסטיק 🕹️<span class="sub">שליטה בשני צירים · <span class="en">Joystick</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>בדיוק כמו בשלט של קונסולה! הג'ויסטיק מרגיש תנועה שמאלה־ימינה, למעלה־למטה, וגם לחיצה. נראה את הכיוונים על מסך המחשב.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🕹️ ג'ויסטיק</li><li>🔌 5 חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>ציר X לרגל <b>A0</b>, ציר Y לרגל <b>A1</b>, הלחיצה (Z) לרגל <b>8</b>, ועוד <span class="en">5V</span> ו־<span class="en">GND</span>.</p></div>
+        <div class="block"><h4>💻 הקוד (מקוצר)</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Joystick.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">void</span> setup() {
+  pinMode(<span class="n">8</span>, INPUT_PULLUP);   <span class="c">// כפתור הלחיצה של הג'ויסטיק</span>
+  Serial.begin(<span class="n">9600</span>);         <span class="c">// פותח קו דיבור למחשב</span>
+}
+
+<span class="k">void</span> loop() {
+  Serial.print(<span class="s">"X:"</span>); Serial.print(analogRead(A0));    <span class="c">// כיוון שמאל-ימין</span>
+  Serial.print(<span class="s">"  Y:"</span>); Serial.print(analogRead(A1));  <span class="c">// כיוון מעלה-מטה</span>
+  Serial.print(<span class="s">"  Z:"</span>); Serial.println(digitalRead(<span class="n">8</span>));  <span class="c">// לחיצה</span>
+  delay(<span class="n">200</span>);   <span class="c">// חכה רגע</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li>הג'ויסטיק הוא בעצם שני פוטנציומטרים — אחד לכל כיוון. כל אחד נותן מספר 0–1023.</li><li><b>INPUT_PULLUP</b> טריק קטן שגורם לכפתור הלחיצה לעבוד בלי נגד נוסף.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Joystick</span></td><td class="say">גֹ'וֹיְסְטִיק</td><td>מוט שליטה — כמו בשלט משחק.</td></tr>
+          <tr><td><span class="en">axis</span></td><td class="say">אַקְסִיס</td><td>"ציר" — כיוון (X = צדדים, Y = מעלה/מטה).</td></tr>
+          <tr><td><span class="en">INPUT_PULLUP</span></td><td class="say">אִינְפּוּט פּוּל־אַפּ</td><td>מצב כניסה מיוחד לכפתורים.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 14 ---- -->
+    <section class="chapter card" id="p14">
+      <div class="head"><div class="num">14</div><div><h3>חיישן תנועה ⭐ מתקדם<span class="sub">תאוצה וכיוון · <span class="en">Accelerometer (MPU-6050)</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>חיישן מדהים שמרגיש <b>הטיה, נענוע ותנועה</b> — בדיוק כמו בטלפון או בשלט של קונסולה. הוא יודע אם הלוח מוטה, נופל או מסתובב. זה פרויקט מתקדם, אז לא נורא אם צריך עזרה ממבוגר.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>📐 חיישן <span class="en">MPU-6050</span></li><li>📚 ספריות מיוחדות</li><li>🔌 4 חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>החיישן מדבר בשיטה שנקראת <span class="en">I2C</span> — רק 4 חוטים: <span class="en">VCC</span>, <span class="en">GND</span>, ושני חוטי מידע (<span class="en">SDA</span>, <span class="en">SCL</span>). קודם צריך להתקין את הספריות של החיישן בתוכנה (דרך תפריט <span class="en">Library</span>).</p></div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li>בפנים יש חיישן <b>תאוצה</b> (מרגיש תזוזה ונפילה) וחיישן <b>סיבוב</b> (ג'ירוסקופ, מרגיש הטיה).</li><li>אחרי התקנת הספריות, פותחים דוגמה מוכנה מתפריט <span class="en">Examples</span>, מעלים אותה, ופותחים את ה־<span class="en">Serial Monitor</span> — ורואים את המספרים משתנים כשמזיזים את החיישן.</li><li>רעיון: לחבר אותו ללוח, ולהזיז — ולראות איך המספרים קופצים בכל תזוזה. אפשר להשתמש בזה לבנות "חרב אור" שמצפצפת כשמנפנפים!</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Accelerometer</span></td><td class="say">אַקְסֶלֶרוֹמֶטֶר</td><td>"מד־תאוצה" — מרגיש תזוזה ונפילה.</td></tr>
+          <tr><td><span class="en">Gyroscope</span></td><td class="say">גַ'ייְרוֹסְקוֹפּ</td><td>"ג'ירוסקופ" — מרגיש סיבוב והטיה.</td></tr>
+          <tr><td><span class="en">I2C</span></td><td class="say">אַיי־טוּ־סִי</td><td>שיטה לחבר חיישן חכם בשני חוטי מידע בלבד.</td></tr>
+          <tr><td><span class="en">Library</span></td><td class="say">לַייבְּרֶרִי</td><td>"ספרייה" — קוד מוכן שמתקינים ומשתמשים בו.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 15 ---- -->
+    <section class="chapter card" id="p15">
+      <div class="head"><div class="num">15</div><div><h3>שבב עוזר ומטריצה 🔢<span class="sub">להרחיב רגליים · <span class="en">74HC595 &amp; LED Matrix</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>בעיה: לפעמים צריך להדליק הרבה נורות, אבל אין מספיק רגליים בלוח. הפתרון: שבב עוזר (<span class="en">74HC595</span>) שמפעיל 8 נורות דרך 3 רגליים בלבד! ואז אפשר להפעיל לוח שלם של נורות — מטריצה.</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🔲 שבב <span class="en">74HC595</span></li><li>💡 שורת נורות / מטריצה</li><li>🍞 לוח ניסויים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>לשבב 3 רגלי שליטה: <b>Data</b> לרגל 11, <b>Clock</b> לרגל 13, <b>Latch</b> לרגל 12. שאר הרגליים של השבב הולכות לנורות.</p></div>
+        <div class="block"><h4>💻 הקוד (מקוצר)</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">ShiftReg.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> latchPin = <span class="n">12</span>, clockPin = <span class="n">13</span>, dataPin = <span class="n">11</span>;   <span class="c">// רגלי נעילה, שעון, מידע</span>
+
+<span class="k">void</span> setup() {
+  pinMode(latchPin, OUTPUT);   <span class="c">// נעילה = יציאה</span>
+  pinMode(clockPin, OUTPUT);   <span class="c">// שעון = יציאה</span>
+  pinMode(dataPin, OUTPUT);    <span class="c">// מידע = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">byte</span> x = <span class="n">0x01</span>;             <span class="c">// רק נורה אחת דולקת (00000001)</span>
+  <span class="k">for</span> (<span class="k">int</span> j = <span class="n">0</span>; j &lt; <span class="n">8</span>; j++) {   <span class="c">// 8 פעמים = 8 נורות</span>
+    digitalWrite(latchPin, LOW);         <span class="c">// פותח לקבלת מידע</span>
+    shiftOut(dataPin, clockPin, LSBFIRST, x);  <span class="c">// שולח 8 סיביות לשבב</span>
+    digitalWrite(latchPin, HIGH);        <span class="c">// נועל - הנורות מתעדכנות</span>
+    x = x &lt;&lt; <span class="n">1</span>;               <span class="c">// הזז את האור צעד שמאלה</span>
+    delay(<span class="n">100</span>);              <span class="c">// חכה רגע</span>
+  }
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li>השבב מקבל 8 "כן/לא" בזה אחר זה (<span class="en">shiftOut</span>), ואז מדליק 8 נורות בבת אחת.</li><li><b>byte</b> הוא 8 סיביות (0 או 1) — בדיוק בשביל 8 נורות. <b>x &lt;&lt; 1</b> מזיז את הדולקת צעד שמאלה.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Shift Register</span></td><td class="say">שִׁיפְט רֶגִ'יסְטֶר</td><td>שבב שמרחיב מ־3 רגליים ל־8 יציאות.</td></tr>
+          <tr><td><span class="en">byte</span></td><td class="say">בַּייְט</td><td>8 סיביות — קבוצה של 8 אפסים ואחדים.</td></tr>
+          <tr><td><span class="en">Matrix</span></td><td class="say">מֵייְטְרִיקְס</td><td>"מטריצה" — לוח נורות בשורות ועמודות.</td></tr>
+          <tr><td><span class="en">shiftOut</span></td><td class="say">שִׁיפְט אַאוּט</td><td>שולח 8 סיביות לשבב, אחת אחרי השנייה.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ---- 16 ---- -->
+    <section class="chapter card" id="p16">
+      <div class="head"><div class="num">16</div><div><h3>מסך שכותב מילים 🔡<span class="sub">תצוגת טקסט · <span class="en">LCD1602 Screen</span></span></h3></div></div>
+      <div class="body">
+        <div class="block"><h4>🎯 מה נבנה</h4><p>מסך קטן שיכול להציג <b>מילים ומספרים</b> — 16 אותיות על 2 שורות. נכתוב עליו "hello, world!" ונציג שעון שסופר שניות. הפרויקט המושלם לסיום!</p></div>
+        <div class="block"><h4>🧰 מה צריך</h4><ul class="chips"><li>🔡 מסך <span class="en">LCD1602</span></li><li>🎚️ פוטנציומטר (לניגודיות)</li><li>🔌 הרבה חוטים</li></ul></div>
+        <div class="block"><h4>🔌 איך מחברים</h4><p>למסך הרבה רגליים. הן מתחברות לרגליים 12, 11, 5, 4, 3, 2 בלוח, ועוד חשמל ופוטנציומטר שקובע כמה האותיות בהירות. עקבו בזהירות אחרי התמונה במדריך המקורי.</p></div>
+        <div class="block"><h4>💻 הקוד</h4>
+          <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">LCD.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">#include</span> <span class="s">&lt;LiquidCrystal.h&gt;</span>          <span class="c">// מביא את ספריית המסך</span>
+LiquidCrystal lcd(<span class="n">12</span>,<span class="n">11</span>,<span class="n">5</span>,<span class="n">4</span>,<span class="n">3</span>,<span class="n">2</span>);   <span class="c">// לאילו רגליים המסך מחובר</span>
+
+<span class="k">void</span> setup() {
+  lcd.begin(<span class="n">16</span>, <span class="n">2</span>);           <span class="c">// 16 עמודות, 2 שורות</span>
+  lcd.print(<span class="s">"hello, world!"</span>);   <span class="c">// כותב בשורה הראשונה</span>
+}
+
+<span class="k">void</span> loop() {
+  lcd.setCursor(<span class="n">0</span>, <span class="n">1</span>);        <span class="c">// עבור לתחילת השורה השנייה</span>
+  lcd.print(<span class="s">"Counter:"</span>);      <span class="c">// כותב את המילה</span>
+  lcd.print(millis() / <span class="n">1000</span>);  <span class="c">// כותב כמה שניות עברו</span>
+}</pre></div>
+        </div>
+        <div class="block"><h4>🧠 איך זה עובד</h4><ul><li>הספרייה <b>LiquidCrystal</b> יודעת לדבר עם המסך. <b>lcd.print</b> כותב טקסט.</li><li><b>lcd.setCursor(0,1)</b> מזיז את ה"עט" לתחילת השורה השנייה. <b>millis()</b> נותן כמה זמן עבר.</li></ul></div>
+        <div class="dict"><h4>📖 מילון הפרויקט</h4><div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">LCD</span></td><td class="say">אֶל־סִי־דִי</td><td>"מסך גבישי" — מסך קטן להצגת טקסט.</td></tr>
+          <tr><td><span class="en">cursor</span></td><td class="say">קֶרְסוֹר</td><td>"סמן" — המקום שבו ייכתב הטקסט הבא.</td></tr>
+          <tr><td><span class="en">millis</span></td><td class="say">מִילִיס</td><td>כמה אלפיות שנייה עברו מאז שהלוח התחיל.</td></tr>
+          <tr><td><span class="en">hello, world</span></td><td class="say">הֶלוֹו וֶורְלד</td><td>"שלום עולם" — ההודעה הראשונה המסורתית של מתכנתים.</td></tr>
+        </tbody></table></div></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ==================== BONUS SECTION ========================= -->
+    <!-- ============================================================ -->
+    <section class="bonus" id="bonus">
+      <div class="bonus-head">
+        <span class="kicker" style="color:var(--spark);background:var(--spark-soft);border-color:var(--spark)">🎁 מדור מיוחד</span>
+        <h2 class="sec">פרויקטים בונוס — רעיונות מגניבים משלנו! <span class="star">★</span></h2>
+        <p class="sec-sub" style="margin-bottom:0">סיימת את המדריך? כל הכבוד, אתה כבר ממציא! 🎉 הנה כמה פרויקטים שהמצאנו במיוחד בשבילך, מכל החלקים שכבר למדת להשתמש בהם. כאן אין מדריך מקורי — עכשיו <b>אתה</b> הממציא. נסה, שנה, ותמציא עוד!</p>
+      </div>
+
+      <!-- Bonus dictionary -->
+      <div class="dict" style="margin:18px 0">
+        <h4>📖 מילים חדשות שנפגוש בבונוס</h4>
+        <div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">threshold</span></td><td class="say">תְרֶשְׁהוֹלד</td><td>"סף" — גבול מספרי שמעליו/מתחתיו קורה משהו.</td></tr>
+          <tr><td><span class="en">reaction</span></td><td class="say">רִיאַקְשֶׁן</td><td>"תגובה" — כמה מהר אתה מגיב.</td></tr>
+          <tr><td><span class="en">theremin</span></td><td class="say">תֶרֶמִין</td><td>כלי נגינה שמנגנים בו בלי לגעת — עם היד באוויר.</td></tr>
+          <tr><td><span class="en">alarm</span></td><td class="say">אַלַארְם</td><td>"אזעקה".</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <!-- Bonus 1 -->
+      <section class="chapter card" id="b1">
+        <div class="head"><div class="num">★</div><div><h3>רמזור אמיתי 🚦<span class="sub">בונוס · <span class="en">Traffic Light</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>שלוש נורות — אדומה, צהובה, ירוקה — שמתחלפות בדיוק כמו רמזור ברחוב. מושלם לבנות עיר קטנה של לגו סביבו!</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>🔴🟡🟢 3 נורות</li><li>🧱 3 נגדים</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">TrafficLight.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> red=<span class="n">13</span>, yellow=<span class="n">12</span>, green=<span class="n">11</span>;   <span class="c">// שלוש נורות הרמזור</span>
+
+<span class="k">void</span> setup() {
+  pinMode(red,OUTPUT); pinMode(yellow,OUTPUT); pinMode(green,OUTPUT);   <span class="c">// כולן יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  digitalWrite(green,HIGH); delay(<span class="n">3000</span>);   <span class="c">// ירוק - סע!</span>
+  digitalWrite(green,LOW);                    <span class="c">// כבה ירוק</span>
+  digitalWrite(yellow,HIGH); delay(<span class="n">1000</span>);  <span class="c">// צהוב - היזהר</span>
+  digitalWrite(yellow,LOW);                   <span class="c">// כבה צהוב</span>
+  digitalWrite(red,HIGH); delay(<span class="n">3000</span>);     <span class="c">// אדום - עצור!</span>
+  digitalWrite(red,LOW);                      <span class="c">// כבה אדום</span>
+}</pre></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bonus 2 -->
+      <section class="chapter card" id="b2">
+        <div class="head"><div class="num">★</div><div><h3>מנורת לילה חכמה 🌙<span class="sub">בונוס · <span class="en">Smart Night Light</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>נורה שנדלקת <b>לבד</b> כשחשוך, ונכבית כשיש אור. שים אותה ליד המיטה — כשמכבים את האור בחדר, היא נדלקת!</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>🔆 חיישן אור + נגד 10kΩ</li><li>💡 נורה + נגד</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">NightLight.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> ledPin = <span class="n">9</span>;   <span class="c">// נורה ברגל 9</span>
+
+<span class="k">void</span> setup() {
+  pinMode(ledPin, OUTPUT);   <span class="c">// נורה = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">int</span> light = analogRead(A0);   <span class="c">// כמה אור יש בחדר?</span>
+  <span class="k">if</span> (light &lt; <span class="n">300</span>)               <span class="c">// אם חשוך (מתחת לסף)</span>
+    digitalWrite(ledPin, HIGH);  <span class="c">// הדלק נורה</span>
+  <span class="k">else</span>                           <span class="c">// אם יש אור</span>
+    digitalWrite(ledPin, LOW);   <span class="c">// כבה נורה</span>
+}</pre></div>
+          </div>
+          <div class="block"><p style="color:var(--ink-soft)">💡 <b>טיפ:</b> אם הנורה נדלקת בזמן הלא נכון, שנו את המספר <b>300</b> (ה־<span class="en">threshold</span>). נסו 200 או 500 עד שזה מרגיש נכון.</p></div>
+        </div>
+      </section>
+
+      <!-- Bonus 3 -->
+      <section class="chapter card" id="b3">
+        <div class="head"><div class="num">★</div><div><h3>אזעקת פורצים 🚨<span class="sub">בונוס · <span class="en">Alarm</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>שים חיישן אור מתחת לחפץ יקר (או בתוך מגירה). אם מישהו מזיז אותו והאור נכנס — הזמזם צורח ונורה מהבהבת! שומר סודות מושלם.</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>🔆 חיישן אור</li><li>🔊 זמזם</li><li>💡 נורה</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Alarm.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> buzzer=<span class="n">9</span>, led=<span class="n">8</span>;   <span class="c">// זמזם ברגל 9, נורה ברגל 8</span>
+
+<span class="k">void</span> setup() {
+  pinMode(buzzer,OUTPUT); pinMode(led,OUTPUT);   <span class="c">// שניהם יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">int</span> light = analogRead(A0);   <span class="c">// כמה אור יש?</span>
+  <span class="k">if</span> (light &gt; <span class="n">600</span>) {          <span class="c">// נכנס הרבה אור = פריצה!</span>
+    tone(buzzer, <span class="n">1500</span>);                <span class="c">// צליל אזעקה</span>
+    digitalWrite(led, HIGH); delay(<span class="n">200</span>);  <span class="c">// נורה דולקת</span>
+    noTone(buzzer);                       <span class="c">// שקט לרגע</span>
+    digitalWrite(led, LOW);  delay(<span class="n">200</span>);  <span class="c">// נורה כבית -> מהבהב</span>
+  } <span class="k">else</span> {                     <span class="c">// אין פריצה</span>
+    noTone(buzzer);            <span class="c">// שקט</span>
+    digitalWrite(led, LOW);    <span class="c">// נורה כבויה</span>
+  }
+}</pre></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bonus 4 -->
+      <section class="chapter card" id="b4">
+        <div class="head"><div class="num">★</div><div><h3>תֶרֶמִין — כלי נגינה קסום 🎵<span class="sub">בונוס · <span class="en">Light Theremin</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>כלי נגינה שמנגנים בו בלי לגעת! מזיזים את היד מעל חיישן האור, וגובה הצליל משתנה. קרוב = צליל אחד, רחוק = צליל אחר. קסם אמיתי. 🪄</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>🔆 חיישן אור + נגד 10kΩ</li><li>🔊 זמזם</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Theremin.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> buzzer = <span class="n">9</span>;   <span class="c">// זמזם ברגל 9</span>
+
+<span class="k">void</span> setup() {
+  pinMode(buzzer, OUTPUT);   <span class="c">// זמזם = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">int</span> light = analogRead(A0);   <span class="c">// כמה אור מגיע ליד?</span>
+  <span class="c">// הופך כמות אור לגובה צליל:</span>
+  <span class="k">int</span> pitch = map(light, <span class="n">0</span>,<span class="n">1023</span>, <span class="n">200</span>,<span class="n">2000</span>);
+  tone(buzzer, pitch);   <span class="c">// נגן את הצליל</span>
+  delay(<span class="n">10</span>);          <span class="c">// חכה רגע זעיר</span>
+}</pre></div>
+          </div>
+          <div class="block"><p style="color:var(--ink-soft)">🎶 <b>נסו:</b> להזיז את היד לאט מעל החיישן ולהאזין. אפשר אפילו לנגן שיר פשוט!</p></div>
+        </div>
+      </section>
+
+      <!-- Bonus 5 -->
+      <section class="chapter card" id="b5">
+        <div class="head"><div class="num">★</div><div><h3>משחק תגובה מהירה ⚡<span class="sub">בונוס · <span class="en">Reaction Game</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>משחק לשניים! הנורה נדלקת בזמן אקראי — מי שלוחץ ראשון על הכפתור מנצח. הלוח אפילו מודד כמה מילי־שניות לקח לך להגיב. תתחרו מי הכי מהיר!</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>💡 נורה + נגד</li><li>🔘 כפתור</li><li>💻 מסך Serial</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">ReactionGame.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> led=<span class="n">9</span>, button=<span class="n">12</span>;   <span class="c">// נורה ברגל 9, כפתור ברגל 12</span>
+
+<span class="k">void</span> setup() {
+  pinMode(led,OUTPUT); pinMode(button,INPUT_PULLUP);   <span class="c">// נורה יציאה, כפתור כניסה</span>
+  Serial.begin(<span class="n">9600</span>);   <span class="c">// קו דיבור למחשב</span>
+}
+
+<span class="k">void</span> loop() {
+  Serial.println(<span class="s">"Get ready..."</span>);   <span class="c">// התכונן...</span>
+  delay(random(<span class="n">2000</span>,<span class="n">5000</span>));    <span class="c">// המתנה מפתיעה (2-5 שניות)</span>
+  digitalWrite(led, HIGH);         <span class="c">// עכשיו! הנורה נדלקה</span>
+  <span class="k">long</span> start = millis();           <span class="c">// מתחילים למדוד זמן</span>
+  <span class="k">while</span> (digitalRead(button) == HIGH);  <span class="c">// חכה עד שלוחצים</span>
+  <span class="k">long</span> reaction = millis() - start;    <span class="c">// כמה זמן זה לקח?</span>
+  digitalWrite(led, LOW);          <span class="c">// כבה נורה</span>
+  Serial.print(<span class="s">"Your time: "</span>);    <span class="c">// כותב תוצאה</span>
+  Serial.print(reaction);          <span class="c">// המספר</span>
+  Serial.println(<span class="s">" ms"</span>);        <span class="c">// יחידה (מילי-שניות)</span>
+  delay(<span class="n">3000</span>);                   <span class="c">// חכה לפני הסיבוב הבא</span>
+}</pre></div>
+          </div>
+          <div class="block"><p style="color:var(--ink-soft)">🏆 בני אדם מגיבים בערך ב־250 מילי־שניות. מתחת ל־200? אתה מהיר במיוחד!</p></div>
+        </div>
+      </section>
+
+      <!-- Bonus 6 -->
+      <section class="chapter card" id="b6">
+        <div class="head"><div class="num">★</div><div><h3>מדחום צבעוני 🌡️🌈<span class="sub">בונוס · <span class="en">Color Thermometer</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>שילוב של שני פרויקטים! חיישן החום קובע את צבע הנורה: <b>כחול</b> כשקר, <b>ירוק</b> כשנעים, <b>אדום</b> כשחם. תרמומטר שרואים במבט אחד.</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>🌡️ חיישן LM35</li><li>🌈 נורת RGB + 3 נגדים</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">ColorTemp.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> R=<span class="n">11</span>, G=<span class="n">10</span>, B=<span class="n">9</span>;   <span class="c">// רגליים לאדום, ירוק, כחול</span>
+
+<span class="k">void</span> setup() {
+  pinMode(R,OUTPUT); pinMode(G,OUTPUT); pinMode(B,OUTPUT);   <span class="c">// שלושתם יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">int</span> raw = analogRead(A0);                  <span class="c">// קורא את חיישן החום</span>
+  <span class="k">float</span> tempC = raw / <span class="n">1023.0</span> * <span class="n">5.0</span> / <span class="n">0.01</span>;   <span class="c">// מחשב מעלות</span>
+  digitalWrite(R,LOW); digitalWrite(G,LOW); digitalWrite(B,LOW);   <span class="c">// כבה הכול</span>
+  <span class="k">if</span> (tempC &lt; <span class="n">20</span>)       digitalWrite(B,HIGH);  <span class="c">// קר = כחול</span>
+  <span class="k">else if</span> (tempC &lt; <span class="n">28</span>)  digitalWrite(G,HIGH);  <span class="c">// נעים = ירוק</span>
+  <span class="k">else</span>                  digitalWrite(R,HIGH);  <span class="c">// חם = אדום</span>
+  delay(<span class="n">300</span>);                                 <span class="c">// חכה רגע</span>
+}</pre></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bonus 7 -->
+      <section class="chapter card" id="b7">
+        <div class="head"><div class="num">★</div><div><h3>שעון עצר על המסך ⏱️<span class="sub">בונוס · <span class="en">Stopwatch</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>שעון עצר אמיתי שמראה על המסך כמה שניות עברו. לחיצה על הכפתור מאפסת אותו חזרה ל-0 — בדיוק כמו בשעון של ספורטאים. מדדו כמה זמן אתם עוצרים את הנשימה!</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>🔡 מסך LCD1602</li><li>🔘 כפתור</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Stopwatch.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">#include</span> <span class="s">&lt;LiquidCrystal.h&gt;</span>          <span class="c">// ספריית המסך</span>
+LiquidCrystal lcd(<span class="n">12</span>,<span class="n">11</span>,<span class="n">5</span>,<span class="n">4</span>,<span class="n">3</span>,<span class="n">2</span>);   <span class="c">// רגלי המסך</span>
+<span class="k">int</span> button = <span class="n">8</span>;                     <span class="c">// כפתור איפוס ברגל 8</span>
+<span class="k">long</span> startTime = <span class="n">0</span>;                <span class="c">// מתי התחלנו לספור</span>
+
+<span class="k">void</span> setup() {
+  lcd.begin(<span class="n">16</span>, <span class="n">2</span>);              <span class="c">// 16 עמודות, 2 שורות</span>
+  pinMode(button, INPUT_PULLUP);   <span class="c">// כפתור = כניסה</span>
+  lcd.print(<span class="s">"Stopwatch:"</span>);        <span class="c">// כותרת בשורה עליונה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">if</span> (digitalRead(button) == LOW)   <span class="c">// אם לוחצים</span>
+    startTime = millis();          <span class="c">// אפס את הזמן</span>
+  <span class="k">long</span> seconds = (millis() - startTime) / <span class="n">1000</span>;  <span class="c">// חשב שניות</span>
+  lcd.setCursor(<span class="n">0</span>, <span class="n">1</span>);            <span class="c">// שורה שנייה</span>
+  lcd.print(seconds);              <span class="c">// הצג את הזמן</span>
+  lcd.print(<span class="s">" sec   "</span>);           <span class="c">// רווחים מוחקים ספרות ישנות</span>
+}</pre></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bonus 8 -->
+      <section class="chapter card" id="b8">
+        <div class="head"><div class="num">★</div><div><h3>קוביית הגרלה 🎲<span class="sub">בונוס · <span class="en">Dice Roller</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>לחיצה על הכפתור "מגלגלת קובייה": הלוח מגריל מספר בין 1 ל-6, כותב אותו על המסך, והנורה מהבהבת בדיוק את מספר הפעמים שיצא. מושלם למשחקי קופסה כשאבד לכם הקובייה!</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>💡 נורה + נגד</li><li>🔘 כפתור</li><li>💻 מסך Serial</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Dice.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> led = <span class="n">9</span>, button = <span class="n">12</span>;   <span class="c">// נורה וכפתור</span>
+
+<span class="k">void</span> setup() {
+  pinMode(led, OUTPUT);            <span class="c">// נורה = יציאה</span>
+  pinMode(button, INPUT_PULLUP);   <span class="c">// כפתור = כניסה</span>
+  Serial.begin(<span class="n">9600</span>);            <span class="c">// קו דיבור למחשב</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">if</span> (digitalRead(button) == LOW) {   <span class="c">// אם לחצו</span>
+    <span class="k">int</span> roll = random(<span class="n">1</span>, <span class="n">7</span>);          <span class="c">// הגרל מספר 1 עד 6</span>
+    Serial.print(<span class="s">"You rolled: "</span>);     <span class="c">// כותב תוצאה</span>
+    Serial.println(roll);
+    <span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; roll; i++) {  <span class="c">// הבהב כמספר שיצא</span>
+      digitalWrite(led, HIGH); delay(<span class="n">300</span>);
+      digitalWrite(led, LOW);  delay(<span class="n">300</span>);
+    }
+    delay(<span class="n">500</span>);   <span class="c">// הפסקה קטנה</span>
+  }
+}</pre></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bonus 9 -->
+      <section class="chapter card" id="b9">
+        <div class="head"><div class="num">★</div><div><h3>מד-קרבה מצפצף 🅿️<span class="sub">בונוס · <span class="en">Proximity Beeper</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>בדיוק כמו חיישן החניה במכונית! ככל שהיד מתקרבת לחיישן האור (ומחשיכה אותו), הביפים נעשים מהירים יותר. קרוב מאוד = ביפ רצוף. מגניב לשים ליד דלת.</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>🔆 חיישן אור + נגד 10kΩ</li><li>🔊 זמזם</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">Proximity.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> buzzer = <span class="n">9</span>;   <span class="c">// זמזם ברגל 9</span>
+
+<span class="k">void</span> setup() {
+  pinMode(buzzer, OUTPUT);   <span class="c">// זמזם = יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">int</span> light = analogRead(A0);              <span class="c">// יד קרובה = חשוך = מספר קטן</span>
+  <span class="k">int</span> wait = map(light, <span class="n">0</span>,<span class="n">1023</span>, <span class="n">50</span>,<span class="n">1000</span>);  <span class="c">// חשוך = המתנה קצרה = מהיר</span>
+  tone(buzzer, <span class="n">1000</span>);  delay(<span class="n">60</span>);        <span class="c">// ביפ קצר</span>
+  noTone(buzzer);      delay(wait);        <span class="c">// שקט - וזה קובע את הקצב</span>
+}</pre></div>
+          </div>
+          <div class="block"><p style="color:var(--ink-soft)">🅿️ <b>טיפ:</b> אם הביפ מהיר מדי גם כשהיד רחוקה, הגדילו את המספר <b>50</b> ל-<b>150</b>.</p></div>
+        </div>
+      </section>
+
+      <!-- Bonus 10 -->
+      <section class="chapter card" id="b10">
+        <div class="head"><div class="num">★</div><div><h3>מנורת מצב רוח 🎨<span class="sub">בונוס · <span class="en">Mood Lamp</span></span></h3></div></div>
+        <div class="body">
+          <div class="block"><h4>🎯 הרעיון</h4><p>סובבו את כפתור הסיבוב לאט — וצבע הנורה משתנה בעדינות מצבע לצבע. בחרו בדיוק את הגוון שמתאים למצב הרוח שלכם, ותנו לו להאיר את החדר.</p></div>
+          <div class="block"><h4>🧰 חלקים</h4><ul class="chips"><li>🎚️ פוטנציומטר</li><li>🌈 נורת RGB + 3 נגדים</li></ul></div>
+          <div class="block"><h4>💻 הקוד</h4>
+            <div class="code"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">MoodLamp.ino</span><button class="copy" type="button">העתק</button></div><pre><span class="k">int</span> R=<span class="n">11</span>, G=<span class="n">10</span>, B=<span class="n">9</span>;   <span class="c">// נורת RGB</span>
+<span class="k">int</span> pot = A0;             <span class="c">// כפתור הסיבוב ברגל A0</span>
+
+<span class="k">void</span> setup() {
+  pinMode(R,OUTPUT); pinMode(G,OUTPUT); pinMode(B,OUTPUT);   <span class="c">// הכול יציאה</span>
+}
+
+<span class="k">void</span> loop() {
+  <span class="k">int</span> val = analogRead(pot);          <span class="c">// קורא את הסיבוב (0..1023)</span>
+  <span class="k">int</span> hue = map(val, <span class="n">0</span>,<span class="n">1023</span>, <span class="n">0</span>,<span class="n">255</span>);  <span class="c">// ממיר לטווח צבע 0..255</span>
+  analogWrite(R, hue);                <span class="c">// אדום עולה עם הסיבוב</span>
+  analogWrite(G, <span class="n">255</span> - hue);          <span class="c">// ירוק יורד עם הסיבוב</span>
+  analogWrite(B, <span class="n">128</span>);                <span class="c">// כחול קבוע - גוון רך</span>
+  delay(<span class="n">20</span>);                         <span class="c">// חלק ורגוע</span>
+}</pre></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="note" style="border-inline-start-color:var(--grape); margin-top:24px">
+        <span class="ico" aria-hidden="true">🧠</span>
+        <div>
+          <h4>רעיונות להמשך — תמציא בעצמך!</h4>
+          <p>• <b>שעון עצר</b> עם כפתור ומסך LCD. • <b>מד־מרחק</b> שמצפצף מהר יותר ככל שמתקרבים. • <b>קוביית הגרלה</b> — לחיצה על כפתור מדליקה נורה אקראית. • <b>סימון מצב רוח</b> — פוטנציומטר שמשנה צבע נורת RGB לאט. קח כל שני פרויקטים מהמדריך — וחבר אותם יחד לרעיון חדש שלך! 💥</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BIG GLOSSARY ===================== -->
+    <section id="glossary">
+      <h2 class="sec">📖 המילון הגדול — כל המילים במקום אחד</h2>
+      <p class="sec-sub">כל המילים באנגלית מכל הפרקים, מסודרות לפי נושא. אפשר <b>להדפיס</b> את הדף ולשים אותו ליד המחשב בזמן העבודה. בכל שורה: המילה באנגלית · איך אומרים אותה · מה הפירוש.</p>
+      <button class="print-btn" id="printBtn" type="button">🖨️ הדפס את המדריך / המילון</button>
+
+      <div class="dict" style="margin-top:16px">
+        <h4>💻 מילות התוכנה (IDE)</h4>
+        <div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">IDE</span></td><td class="say">אַיי־דִי־אִי</td><td>התוכנה שבה כותבים את הקוד.</td></tr>
+          <tr><td><span class="en">Sketch</span></td><td class="say">סְקֶץ'</td><td>קובץ הקוד שלנו (התוכנית).</td></tr>
+          <tr><td><span class="en">Verify</span></td><td class="say">וֶרִיפַאי</td><td>"לוודא" — בודק שאין טעויות בקוד.</td></tr>
+          <tr><td><span class="en">Upload</span></td><td class="say">אַפְּלוֹוד</td><td>"להעלות" — שולח את הקוד ללוח.</td></tr>
+          <tr><td><span class="en">Board</span></td><td class="say">בּוֹורְד</td><td>"לוח" — סוג הארדואינו שלך.</td></tr>
+          <tr><td><span class="en">Port</span></td><td class="say">פּוֹורְט</td><td>"יציאה" — לאיזה חיבור USB הלוח מחובר.</td></tr>
+          <tr><td><span class="en">Tools</span></td><td class="say">טוּלְז</td><td>"כלים" — תפריט ההגדרות.</td></tr>
+          <tr><td><span class="en">Library</span></td><td class="say">לַייבְּרֶרִי</td><td>"ספרייה" — חבילת קוד מוכן.</td></tr>
+          <tr><td><span class="en">Serial Monitor</span></td><td class="say">סִירְיַאל מוֹנִיטוֹר</td><td>חלון שבו רואים הודעות מהלוח.</td></tr>
+          <tr><td><span class="en">Examples</span></td><td class="say">אֶקְזַמְפְּלְז</td><td>"דוגמאות" — קודים מוכנים ללמידה.</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="dict" style="margin-top:14px">
+        <h4>🧩 מילות יסוד בקוד</h4>
+        <div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">void</span></td><td class="say">ווֹיד</td><td>סוג פונקציה שלא מחזירה תשובה.</td></tr>
+          <tr><td><span class="en">setup</span></td><td class="say">סֶטְ־אַפּ</td><td>"הכנה" — רץ פעם אחת בהתחלה.</td></tr>
+          <tr><td><span class="en">loop</span></td><td class="say">לוּפּ</td><td>"לולאה" — רץ שוב ושוב בלי סוף.</td></tr>
+          <tr><td><span class="en">pinMode</span></td><td class="say">פִּין מוֹוד</td><td>קובע אם רגל היא כניסה או יציאה.</td></tr>
+          <tr><td><span class="en">OUTPUT</span></td><td class="say">אַאוּטְפּוּט</td><td>"פֶּלֶט" — רגל ששולחת חשמל החוצה.</td></tr>
+          <tr><td><span class="en">INPUT</span></td><td class="say">אִינְפּוּט</td><td>"קֶלֶט" — רגל שמקשיבה.</td></tr>
+          <tr><td><span class="en">INPUT_PULLUP</span></td><td class="say">אִינְפּוּט פּוּל־אַפּ</td><td>מצב כניסה מיוחד לכפתורים.</td></tr>
+          <tr><td><span class="en">HIGH / LOW</span></td><td class="say">הַאיי / לוֹו</td><td>"גבוה / נמוך" — יש חשמל / אין חשמל.</td></tr>
+          <tr><td><span class="en">digitalWrite</span></td><td class="say">דִּיגִ'יטַל רַייט</td><td>מדליק או מכבה רגל.</td></tr>
+          <tr><td><span class="en">digitalRead</span></td><td class="say">דִּיגִ'יטַל רִיד</td><td>קורא אם ברגל יש חשמל או לא.</td></tr>
+          <tr><td><span class="en">analogWrite</span></td><td class="say">אַנַלוֹג רַייט</td><td>שולח בהירות/עוצמה (0–255).</td></tr>
+          <tr><td><span class="en">analogRead</span></td><td class="say">אַנַלוֹג רִיד</td><td>קורא ערך משתנה (0–1023).</td></tr>
+          <tr><td><span class="en">delay</span></td><td class="say">דִּילֵיי</td><td>"השהיה" — חכה (באלפיות שנייה).</td></tr>
+          <tr><td><span class="en">if / else</span></td><td class="say">אִיף / אֶלְס</td><td>"אם / אחרת" — קבלת החלטה.</td></tr>
+          <tr><td><span class="en">for</span></td><td class="say">פוֹר</td><td>לולאה שחוזרת מספר קבוע של פעמים.</td></tr>
+          <tr><td><span class="en">while</span></td><td class="say">וַואיל</td><td>"כל עוד" — לולאה שממשיכה עד שמשהו משתנה.</td></tr>
+          <tr><td><span class="en">int</span></td><td class="say">אִינְט</td><td>משתנה למספר שלם.</td></tr>
+          <tr><td><span class="en">float</span></td><td class="say">פְלוֹוט</td><td>מספר עם נקודה עשרונית (24.5).</td></tr>
+          <tr><td><span class="en">bool</span></td><td class="say">בּוּל</td><td>משתנה של כן/לא (true/false).</td></tr>
+          <tr><td><span class="en">byte</span></td><td class="say">בַּייְט</td><td>8 סיביות (אפסים ואחדים).</td></tr>
+          <tr><td><span class="en">map</span></td><td class="say">מַאפּ</td><td>לתרגם מספר מטווח אחד לטווח אחר.</td></tr>
+          <tr><td><span class="en">random</span></td><td class="say">רֵנְדוֹם</td><td>"אקראי" — מספר מפתיע בכל פעם.</td></tr>
+          <tr><td><span class="en">tone / noTone</span></td><td class="say">טוֹון</td><td>מנגן צליל / מפסיק צליל.</td></tr>
+          <tr><td><span class="en">millis</span></td><td class="say">מִילִיס</td><td>כמה אלפיות שנייה עברו מאז ההתחלה.</td></tr>
+          <tr><td><span class="en">Serial</span></td><td class="say">סִירְיַאל</td><td>"טורי" — שליחת מידע למחשב.</td></tr>
+          <tr><td><span class="en">print / println</span></td><td class="say">פְּרִינְט</td><td>"להדפיס" טקסט. ln = שורה חדשה.</td></tr>
+          <tr><td><span class="en">#include</span></td><td class="say">אִינְקְלוּד</td><td>"לצרף" — מייבא ספרייה של קוד מוכן.</td></tr>
+          <tr><td><span class="en">// </span></td><td class="say">סְלֶש סְלֶש</td><td>"הערה" — טקסט לבני אדם; המחשב מתעלם.</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="dict" style="margin-top:14px">
+        <h4>🔧 רכיבים (החלקים בקופסה)</h4>
+        <div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">LED</span></td><td class="say">לֶד</td><td>נורית קטנה שנדלקת.</td></tr>
+          <tr><td><span class="en">resistor</span></td><td class="say">רֶזִיסְטוֹר</td><td>"נגד" — מגן על הנורה שלא תישרף.</td></tr>
+          <tr><td><span class="en">breadboard</span></td><td class="say">בְּרֶד־בּוֹורְד</td><td>"לוח ניסויים" — לוח לבן עם חורים.</td></tr>
+          <tr><td><span class="en">GND</span></td><td class="say">גְּראַונְד</td><td>"אדמה" — צד המינוס של החשמל.</td></tr>
+          <tr><td><span class="en">5V</span></td><td class="say">פַאיְב ווֹלְט</td><td>צד הפלוס — 5 וולט חשמל.</td></tr>
+          <tr><td><span class="en">Push Button</span></td><td class="say">פּוּש בַּאטְן</td><td>"כפתור לחיצה".</td></tr>
+          <tr><td><span class="en">Potentiometer</span></td><td class="say">פּוֹטֶנְצְיוֹמֶטֶר</td><td>כפתור מסתובב שמשנה מספר.</td></tr>
+          <tr><td><span class="en">Photoresistor</span></td><td class="say">פוֹטוֹ־רֶזִיסְטוֹר</td><td>חיישן שמרגיש כמה אור יש.</td></tr>
+          <tr><td><span class="en">RGB LED</span></td><td class="say">אַר־גִ'י־בִּי לֶד</td><td>נורה שיכולה להיות בכל צבע.</td></tr>
+          <tr><td><span class="en">Buzzer</span></td><td class="say">בַּאזֶר</td><td>"זמזם" — משמיע קול.</td></tr>
+          <tr><td><span class="en">Motor</span></td><td class="say">מוֹטוֹר</td><td>"מנוע" — מסתובב ומזיז דברים.</td></tr>
+          <tr><td><span class="en">Relay</span></td><td class="say">רִילֵיי</td><td>"ממסר" — מתג חשמלי שנשלט מהלוח.</td></tr>
+          <tr><td><span class="en">Servo</span></td><td class="say">סֶרְווֹ</td><td>מנוע שעוצר בזווית מדויקת.</td></tr>
+          <tr><td><span class="en">Sensor</span></td><td class="say">סֶנְסוֹר</td><td>"חיישן" — מרגיש משהו בעולם.</td></tr>
+          <tr><td><span class="en">Joystick</span></td><td class="say">גֹ'וֹיְסְטִיק</td><td>מוט שליטה — כמו בשלט משחק.</td></tr>
+          <tr><td><span class="en">Accelerometer</span></td><td class="say">אַקְסֶלֶרוֹמֶטֶר</td><td>"מד־תאוצה" — מרגיש תזוזה ונפילה.</td></tr>
+          <tr><td><span class="en">Shift Register</span></td><td class="say">שִׁיפְט רֶגִ'יסְטֶר</td><td>שבב שמרחיב מ-3 רגליים ל-8 יציאות.</td></tr>
+          <tr><td><span class="en">Matrix</span></td><td class="say">מֵייְטְרִיקְס</td><td>"מטריצה" — לוח נורות בשורות ועמודות.</td></tr>
+          <tr><td><span class="en">LCD</span></td><td class="say">אֶל־סִי־דִי</td><td>מסך קטן להצגת טקסט.</td></tr>
+          <tr><td><span class="en">I2C</span></td><td class="say">אַיי־טוּ־סִי</td><td>שיטה לחבר חיישן חכם בשני חוטי מידע.</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="dict" style="margin-top:14px">
+        <h4>✨ מילים בפרויקטים</h4>
+        <div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>פירוש</th></tr></thead><tbody>
+          <tr><td><span class="en">Blink</span></td><td class="say">בְּלִינְק</td><td>"להבהב" — נדלק ונכבה שוב ושוב.</td></tr>
+          <tr><td><span class="en">fade</span></td><td class="say">פֵייד</td><td>"להתעמעם" — להיחלש בהדרגה.</td></tr>
+          <tr><td><span class="en">PWM</span></td><td class="say">פִּי־דַבְּליו־אֶם</td><td>טריק הבהוב מהיר שמדמה בהירות.</td></tr>
+          <tr><td><span class="en">frequency</span></td><td class="say">פְרִיקְוֶונְסִי</td><td>"תדר" — כמה גבוה או נמוך הצליל.</td></tr>
+          <tr><td><span class="en">angle</span></td><td class="say">אַנְגְל</td><td>"זווית" — נמדדת במעלות (0–180).</td></tr>
+          <tr><td><span class="en">axis</span></td><td class="say">אַקְסִיס</td><td>"ציר" — כיוון (X, Y).</td></tr>
+          <tr><td><span class="en">threshold</span></td><td class="say">תְרֶשְׁהוֹלד</td><td>"סף" — גבול מספרי שמעליו קורה משהו.</td></tr>
+          <tr><td><span class="en">reaction</span></td><td class="say">רִיאַקְשֶׁן</td><td>"תגובה" — כמה מהר אתה מגיב.</td></tr>
+          <tr><td><span class="en">theremin</span></td><td class="say">תֶרֶמִין</td><td>כלי נגינה שמנגנים בו באוויר בלי לגעת.</td></tr>
+          <tr><td><span class="en">alarm</span></td><td class="say">אַלַארְם</td><td>"אזעקה".</td></tr>
+          <tr><td><span class="en">roll</span></td><td class="say">רוֹול</td><td>"הטלה" — גלגול של קובייה.</td></tr>
+          <tr><td><span class="en">hue</span></td><td class="say">הְיוּ</td><td>"גוון" — איזה צבע בדיוק.</td></tr>
+          <tr><td><span class="en">stopwatch</span></td><td class="say">סְטוֹפְּ־ווֹץ'</td><td>"שעון עצר".</td></tr>
+          <tr><td><span class="en">hello, world</span></td><td class="say">הֶלוֹו וֶורְלד</td><td>"שלום עולם" — ההודעה הראשונה של מתכנתים.</td></tr>
+        </tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer>
+      <p><b>כל הכבוד שהגעת עד לכאן! 🎉</b> עכשיו אתה יודע להדליק אורות, להשמיע צלילים, לקרוא חיישנים ולהזיז מנועים. זו רק ההתחלה — העולם של הממציאים פתוח לפניך.</p>
+      <p style="margin-top:14px">מדריך זה נכתב בעברית במיוחד בשבילך. הקוד והמעגלים מבוססים על ערכת <b>Freenove Starter Kit</b> וזמינים תחת רישיון <span class="en">Creative Commons BY-SA 3.0</span>. את התמונות והמדריך המקורי (באנגלית) תמצא בקבצים של הערכה. <span class="en">Arduino</span> הוא סימן מסחרי של Arduino S.r.l.</p>
+    </footer>
+
+  </div><!-- /wrap -->
+
+  <!-- ===================== FLOATING TOOLS ===================== -->
+  <div class="fab-dock" id="fabDock">
+    <button class="fab" type="button" data-tool="resistor" aria-label="מזהה נגדים לפי צבעים">
+      <span class="emoji" aria-hidden="true">🎨</span><span class="cap">נגדים</span>
+    </button>
+    <button class="fab" type="button" data-tool="pinout" aria-label="מפת הרגליים של הלוח">
+      <span class="emoji" aria-hidden="true">📌</span><span class="cap">רגליים</span>
+    </button>
+    <button class="fab" type="button" data-tool="notes" aria-label="טבלת צלילים לזמזם">
+      <span class="emoji" aria-hidden="true">🎵</span><span class="cap">צלילים</span>
+    </button>
+    <button class="fab" type="button" data-tool="words" aria-label="מקרא מילות קוד">
+      <span class="emoji" aria-hidden="true">🔤</span><span class="cap">מילים</span>
+    </button>
+    <button class="fab" type="button" data-tool="ohm" aria-label="מחשבון חוק אוהם">
+      <span class="emoji" aria-hidden="true">⚡</span><span class="cap">אוהם</span>
+    </button>
+    <!-- כלים צפים: כל כלי = כפתור עם data-tool="X" + פאנל עם id="tool-X" -->
+  </div>
+
+  <div class="tool-panel" id="tool-resistor" role="dialog" aria-label="מזהה נגדים" hidden>
+    <button class="tool-close" type="button" aria-label="סגור">×</button>
+    <h3 class="tool-title">🎨 מזהה נגדים</h3>
+    <p class="tool-hint">לנגד יש פסים צבעוניים. בחרו את הצבעים שאתם רואים — ותגלו כמה "אוֹם" (Ω) הנגד.</p>
+    <div class="mode-toggle" role="group" aria-label="מספר הפסים על הנגד">
+      <button class="mode-btn active" type="button" data-mode="4">4 פסים</button>
+      <button class="mode-btn" type="button" data-mode="5">5 פסים</button>
+    </div>
+    <div class="res" id="resPreview" aria-hidden="true"></div>
+    <div class="res-val" id="resValue">—</div>
+    <div id="bandGroups">
+      <div class="band-group"><span class="band-label" id="lblD1">פס 1 (ספרה)</span><div class="sw-row" id="rowD1"></div></div>
+      <div class="band-group"><span class="band-label" id="lblD2">פס 2 (ספרה)</span><div class="sw-row" id="rowD2"></div></div>
+      <div class="band-group" id="grpD3" hidden><span class="band-label" id="lblD3">פס 3 (ספרה)</span><div class="sw-row" id="rowD3"></div></div>
+      <div class="band-group"><span class="band-label" id="lblMul">פס 3 (מכפיל)</span><div class="sw-row" id="rowMul"></div></div>
+      <div class="band-group"><span class="band-label" id="lblTol">פס 4 (דיוק)</span><div class="sw-row" id="rowTol"></div></div>
+    </div>
+    <div class="presets">
+      <span class="band-label">הנגדים שיש בערכה — לחצו כדי לראות:</span>
+      <div class="preset-row" id="presetRow"></div>
+    </div>
+  </div>
+
+  <!-- tool: pinout -->
+  <div class="tool-panel" id="tool-pinout" role="dialog" aria-label="מפת רגליים" hidden>
+    <button class="tool-close" type="button" aria-label="סגור">×</button>
+    <h3 class="tool-title">📌 מפת הרגליים</h3>
+    <p class="tool-hint">איזו רגל עושה מה בלוח (Arduino UNO).</p>
+    <div class="pin-sec">
+      <span class="band-label">✨ רגליים עם בהירות וצליל (PWM · הסימן ~)</span>
+      <div class="pin-row"><span class="pin pwm">3</span><span class="pin pwm">5</span><span class="pin pwm">6</span><span class="pin pwm">9</span><span class="pin pwm">10</span><span class="pin pwm">11</span></div>
+      <p class="pin-note">רק אלה עובדות עם <span class="en">analogWrite</span> (בהירות) ועם <span class="en">tone</span> חלק.</p>
+    </div>
+    <div class="pin-sec">
+      <span class="band-label">🔘 רגליים דיגיטליות רגילות (דלוק/כבוי)</span>
+      <div class="pin-row"><span class="pin">0</span><span class="pin">1</span><span class="pin">2</span><span class="pin">4</span><span class="pin">7</span><span class="pin">8</span><span class="pin">12</span><span class="pin">13</span></div>
+    </div>
+    <div class="pin-sec">
+      <span class="band-label">🎚️ רגליים אנלוגיות (קוראות חיישנים · 0 עד 1023)</span>
+      <div class="pin-row"><span class="pin ana">A0</span><span class="pin ana">A1</span><span class="pin ana">A2</span><span class="pin ana">A3</span><span class="pin ana">A4</span><span class="pin ana">A5</span></div>
+    </div>
+    <div class="pin-sec">
+      <span class="band-label">⚡ חשמל</span>
+      <div class="pin-row"><span class="pin pow">5V</span><span class="pin pow">3.3V</span><span class="pin gnd">GND</span><span class="pin gnd">GND</span><span class="pin pow">VIN</span></div>
+    </div>
+    <ul class="tool-tips">
+      <li>ברגל <b>13</b> יש נורה קטנה מובנית על הלוח עצמו.</li>
+      <li>רגליים <b>0</b> ו-<b>1</b> בשימוש בזמן דיבור עם המחשב (Serial) — עדיף לא לחבר אליהן נורות.</li>
+      <li>הרגליים <b>A0–A5</b> יכולות לשמש גם כרגליים דיגיטליות רגילות.</li>
+    </ul>
+  </div>
+
+  <!-- tool: notes -->
+  <div class="tool-panel" id="tool-notes" role="dialog" aria-label="טבלת צלילים" hidden>
+    <button class="tool-close" type="button" aria-label="סגור">×</button>
+    <h3 class="tool-title">🎵 טבלת צלילים</h3>
+    <p class="tool-hint">לחצו על צליל כדי לשמוע אותו! המספר הוא ה"תדר" — בקוד כותבים למשל <span class="en">tone(9, 440);</span></p>
+    <div class="note-row">
+      <button class="note-btn" type="button" data-freq="262">דו<small>262</small></button>
+      <button class="note-btn" type="button" data-freq="294">רה<small>294</small></button>
+      <button class="note-btn" type="button" data-freq="330">מי<small>330</small></button>
+      <button class="note-btn" type="button" data-freq="349">פה<small>349</small></button>
+      <button class="note-btn" type="button" data-freq="392">סול<small>392</small></button>
+      <button class="note-btn" type="button" data-freq="440">לה<small>440</small></button>
+      <button class="note-btn" type="button" data-freq="494">סי<small>494</small></button>
+      <button class="note-btn" type="button" data-freq="523">דו↑<small>523</small></button>
+    </div>
+    <ul class="tool-tips">
+      <li>מספר גדול = צליל <b>גבוה</b> (חד). מספר קטן = צליל <b>נמוך</b> (עבה).</li>
+      <li>לנגן שיר = לנגן כמה צלילים בזה אחר זה, עם <span class="en">delay</span> ביניהם.</li>
+    </ul>
+  </div>
+
+  <!-- tool: code words -->
+  <div class="tool-panel" id="tool-words" role="dialog" aria-label="מקרא מילות קוד" hidden>
+    <button class="tool-close" type="button" aria-label="סגור">×</button>
+    <h3 class="tool-title">🔤 מילות קוד — מקרא מהיר</h3>
+    <p class="tool-hint">המילים שחוזרות הכי הרבה, בשורה אחת כל אחת.</p>
+    <div class="kv">
+      <div class="kv-row"><code>setup()</code><span>רץ פעם אחת בהתחלה — כאן מכינים הכול.</span></div>
+      <div class="kv-row"><code>loop()</code><span>רץ שוב ושוב בלי סוף — כאן כל האקשן.</span></div>
+      <div class="kv-row"><code>pinMode</code><span>קובע אם רגל היא יציאה או כניסה.</span></div>
+      <div class="kv-row"><code>digitalWrite</code><span>מדליק (HIGH) או מכבה (LOW) רגל.</span></div>
+      <div class="kv-row"><code>digitalRead</code><span>בודק אם ברגל יש חשמל או לא (כפתור).</span></div>
+      <div class="kv-row"><code>analogWrite</code><span>קובע בהירות/עוצמה 0–255.</span></div>
+      <div class="kv-row"><code>analogRead</code><span>קורא חיישן, מספר 0–1023.</span></div>
+      <div class="kv-row"><code>delay</code><span>חכה. המספר באלפיות שנייה (1000=שנייה).</span></div>
+      <div class="kv-row"><code>if / else</code><span>אם ... אחרת ... — קבלת החלטה.</span></div>
+      <div class="kv-row"><code>for</code><span>לולאה שחוזרת מספר קבוע של פעמים.</span></div>
+      <div class="kv-row"><code>tone</code><span>מנגן צליל בזמזם.</span></div>
+      <div class="kv-row"><code>map</code><span>מתרגם מספר מטווח אחד לטווח אחר.</span></div>
+      <div class="kv-row"><code>random</code><span>בוחר מספר אקראי (מפתיע).</span></div>
+      <div class="kv-row"><code>Serial.print</code><span>שולח טקסט/מספר למסך המחשב.</span></div>
+    </div>
+    <p class="pin-note">רוצים עוד? יש מילון גדול ומלא בתחתית המדריך.</p>
+  </div>
+
+  <!-- tool: ohm calculator -->
+  <div class="tool-panel" id="tool-ohm" role="dialog" aria-label="מחשבון חוק אוהם" hidden>
+    <button class="tool-close" type="button" aria-label="סגור">×</button>
+    <h3 class="tool-title">⚡ מחשבון חוק אוהם</h3>
+    <p class="tool-hint">מלאו <b>שני</b> שדות, לחצו "חשב", ואמצא את השלישי.<br>הכלל: מתח = זרם × התנגדות &nbsp;(<span class="en">V = I × R</span>).</p>
+    <div class="ohm-field"><label>מתח (V · וולט)</label><input id="ohmV" type="text" inputmode="decimal" placeholder="למשל 5"></div>
+    <div class="ohm-field"><label>זרם (A · אמפר)</label><input id="ohmI" type="text" inputmode="decimal" placeholder="?"></div>
+    <div class="ohm-field"><label>התנגדות (Ω · אוהם)</label><input id="ohmR" type="text" inputmode="decimal" placeholder="למשל 220"></div>
+    <div class="ohm-btns">
+      <button class="preset" id="ohmCalc" type="button">חשב</button>
+      <button class="tool-close" id="ohmClear" type="button" style="position:static;width:auto;padding:5px 14px;border-radius:999px;font-size:.85rem">נקה</button>
+    </div>
+    <div class="ohm-out" id="ohmOut"></div>
+    <p class="pin-note">טיפ: זרם קטן נמדד לרוב באלפיות אמפר. 0.02 אמפר = 20 מיליאמפר — עוצמה טיפוסית לנורה.</p>
+  </div>
+
+  <button id="top" type="button" aria-label="חזרה למעלה">↑</button>
+</div><!-- /page -->
+
+<script>
+  (function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('themeBtn');
+    var ico = document.getElementById('themeIco');
+    var txt = document.getElementById('themeTxt');
+    function current(){
+      var set = root.getAttribute('data-theme');
+      if(set) return set;
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function apply(mode){
+      root.setAttribute('data-theme', mode);
+      var dark = mode === 'dark';
+      ico.textContent = dark ? '☀️' : '🌙';
+      txt.textContent = dark ? 'מצב בהיר' : 'מצב כהה';
+    }
+    apply(current());
+    btn.addEventListener('click', function(){
+      apply(current() === 'dark' ? 'light' : 'dark');
+    });
+
+    // copy buttons
+    document.querySelectorAll('.copy').forEach(function(b){
+      b.addEventListener('click', function(){
+        var pre = b.closest('.code').querySelector('pre');
+        var text = pre.innerText;
+        navigator.clipboard && navigator.clipboard.writeText(text).then(function(){
+          var old = b.textContent; b.textContent = 'הועתק! ✓';
+          setTimeout(function(){ b.textContent = old; }, 1400);
+        }).catch(function(){ b.textContent='העתק ידנית'; });
+      });
+    });
+
+    // smooth scroll for TOC
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href');
+        var el = document.querySelector(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'});
+          history.replaceState(null,'',id); }
+      });
+    });
+
+    // print button
+    var printBtn = document.getElementById('printBtn');
+    if(printBtn){ printBtn.addEventListener('click', function(){ window.print(); }); }
+
+    // ===== floating tools dock (reusable: one <button data-tool="X"> + one #tool-X panel per tool) =====
+    var dock = document.getElementById('fabDock');
+    if(dock){
+      var fabs = dock.querySelectorAll('.fab');
+      function closeTools(){
+        document.querySelectorAll('.tool-panel').forEach(function(p){ p.hidden = true; });
+        fabs.forEach(function(f){ f.classList.remove('active'); });
+      }
+      fabs.forEach(function(fab){
+        fab.addEventListener('click', function(){
+          var panel = document.getElementById('tool-' + fab.getAttribute('data-tool'));
+          if(!panel) return;
+          var wasOpen = !panel.hidden;
+          closeTools();
+          if(!wasOpen){ panel.hidden = false; fab.classList.add('active'); }
+        });
+      });
+      document.querySelectorAll('.tool-close').forEach(function(c){
+        c.addEventListener('click', closeTools);
+      });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeTools(); });
+    }
+
+    // ===== tool: resistor color-code identifier =====
+    (function(){
+      var panel = document.getElementById('tool-resistor');
+      if(!panel) return;
+      // color tables (name in Hebrew, digit value, multiplier factor, hex, whether text should be dark)
+      var DIG = [
+        {n:'שחור', v:0, c:'#1b1b1b'}, {n:'חום', v:1, c:'#8a5a2b'}, {n:'אדום', v:2, c:'#d13b30'},
+        {n:'כתום', v:3, c:'#e8801e'}, {n:'צהוב', v:4, c:'#f4c430'}, {n:'ירוק', v:5, c:'#3aa655'},
+        {n:'כחול', v:6, c:'#2f6fdb'}, {n:'סגול', v:7, c:'#7d4fc0'}, {n:'אפור', v:8, c:'#9aa0a6'},
+        {n:'לבן', v:9, c:'#f4f4f4'}
+      ];
+      var MUL = [
+        {n:'שחור', m:1, c:'#1b1b1b'}, {n:'חום', m:10, c:'#8a5a2b'}, {n:'אדום', m:100, c:'#d13b30'},
+        {n:'כתום', m:1000, c:'#e8801e'}, {n:'צהוב', m:10000, c:'#f4c430'}, {n:'ירוק', m:100000, c:'#3aa655'},
+        {n:'כחול', m:1000000, c:'#2f6fdb'}, {n:'זהב', m:0.1, c:'#c9a227'}, {n:'כסף', m:0.01, c:'#c2cad0'}
+      ];
+      var TOL = [
+        {n:'חום', t:'±1%', c:'#8a5a2b'}, {n:'אדום', t:'±2%', c:'#d13b30'},
+        {n:'זהב', t:'±5%', c:'#c9a227'}, {n:'כסף', t:'±10%', c:'#c2cad0'}
+      ];
+      // state: indexes into the tables. Default = 4-band red-red-brown = 220Ω, gold tolerance.
+      var st = { mode:4, d1:2, d2:2, d3:0, mul:1, tol:2 };
+
+      var rowD1=document.getElementById('rowD1'), rowD2=document.getElementById('rowD2'),
+          rowD3=document.getElementById('rowD3'), rowMul=document.getElementById('rowMul'),
+          rowTol=document.getElementById('rowTol'), grpD3=document.getElementById('grpD3');
+
+      function buildRow(row, list, key){
+        row.innerHTML = '';
+        list.forEach(function(item, i){
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'sw' + (st[key]===i ? ' sel' : '');
+          b.style.background = item.c;
+          b.title = item.n;
+          b.setAttribute('aria-label', item.n);
+          b.addEventListener('click', function(){ st[key] = i; render(); });
+          row.appendChild(b);
+        });
+      }
+
+      function fmt(v){
+        var out, unit;
+        if(v >= 1000000){ out = v/1000000; unit = ' MΩ'; }
+        else if(v >= 1000){ out = v/1000; unit = ' kΩ'; }
+        else { out = v; unit = ' Ω'; }
+        out = Math.round(out * 100) / 100;      // trim float noise
+        return String(out) + unit;
+      }
+
+      function render(){
+        var five = (st.mode === 5);
+        grpD3.hidden = !five;
+        buildRow(rowD1, DIG, 'd1'); buildRow(rowD2, DIG, 'd2');
+        if(five) buildRow(rowD3, DIG, 'd3');
+        buildRow(rowMul, MUL, 'mul'); buildRow(rowTol, TOL, 'tol');
+        // labels show the chosen color name; band numbers shift when there's a 3rd digit
+        document.getElementById('lblD1').textContent = 'פס 1 (ספרה): ' + DIG[st.d1].n;
+        document.getElementById('lblD2').textContent = 'פס 2 (ספרה): ' + DIG[st.d2].n;
+        document.getElementById('lblD3').textContent = 'פס 3 (ספרה): ' + DIG[st.d3].n;
+        document.getElementById('lblMul').textContent = 'פס ' + (five ? '4' : '3') + ' (מכפיל): ' + MUL[st.mul].n;
+        document.getElementById('lblTol').textContent = 'פס ' + (five ? '5' : '4') + ' (דיוק): ' + TOL[st.tol].n + ' ' + TOL[st.tol].t;
+        // value
+        var digits = five
+          ? (DIG[st.d1].v * 100 + DIG[st.d2].v * 10 + DIG[st.d3].v)
+          : (DIG[st.d1].v * 10 + DIG[st.d2].v);
+        var value = digits * MUL[st.mul].m;
+        document.getElementById('resValue').textContent = fmt(value) + '  (' + TOL[st.tol].t + ')';
+        // preview resistor: digit bands + multiplier, then a gap, then tolerance
+        var bands =
+          '<span class="band" style="background:'+DIG[st.d1].c+'"></span>' +
+          '<span class="band" style="background:'+DIG[st.d2].c+'"></span>' +
+          (five ? '<span class="band" style="background:'+DIG[st.d3].c+'"></span>' : '') +
+          '<span class="band" style="background:'+MUL[st.mul].c+'"></span>' +
+          '<span class="band spacer"></span>' +
+          '<span class="band" style="background:'+TOL[st.tol].c+'"></span>';
+        document.getElementById('resPreview').innerHTML =
+          '<span class="lead"></span><span class="body">' + bands + '</span><span class="lead"></span>';
+      }
+
+      // 4/5 band toggle
+      panel.querySelectorAll('.mode-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          st.mode = parseInt(btn.getAttribute('data-mode'), 10);
+          panel.querySelectorAll('.mode-btn').forEach(function(b){ b.classList.toggle('active', b === btn); });
+          render();
+        });
+      });
+
+      // presets (the resistors that ship with the kit)
+      var PRESETS = [
+        {label:'220Ω',  mode:4, d1:2, d2:2, d3:0, mul:1, tol:2},   // אדום אדום חום
+        {label:'330Ω',  mode:4, d1:3, d2:3, d3:0, mul:1, tol:2},   // כתום כתום חום
+        {label:'1kΩ',   mode:4, d1:1, d2:0, d3:0, mul:2, tol:2},   // חום שחור אדום
+        {label:'10kΩ',  mode:4, d1:1, d2:0, d3:0, mul:3, tol:2},   // חום שחור כתום
+        {label:'4.7kΩ (5 פסים)', mode:5, d1:4, d2:7, d3:0, mul:1, tol:2}  // צהוב סגול שחור חום
+      ];
+      var prow = document.getElementById('presetRow');
+      PRESETS.forEach(function(p){
+        var b = document.createElement('button');
+        b.type='button'; b.className='preset'; b.textContent = p.label;
+        b.addEventListener('click', function(){
+          st.mode=p.mode; st.d1=p.d1; st.d2=p.d2; st.d3=p.d3; st.mul=p.mul; st.tol=p.tol;
+          panel.querySelectorAll('.mode-btn').forEach(function(mb){ mb.classList.toggle('active', parseInt(mb.getAttribute('data-mode'),10) === p.mode); });
+          render();
+        });
+        prow.appendChild(b);
+      });
+
+      render();
+    })();
+
+    // ===== tool: notes -> play frequency with Web Audio =====
+    function playTone(freq){
+      try{
+        var Ctx = window.AudioContext || window.webkitAudioContext;
+        if(!Ctx) return;
+        var ctx = playTone._ctx || (playTone._ctx = new Ctx());
+        if(ctx.state === 'suspended') ctx.resume();
+        var osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.type = 'square'; osc.frequency.value = freq;
+        gain.gain.value = 0.11;
+        osc.connect(gain); gain.connect(ctx.destination);
+        var t = ctx.currentTime;
+        osc.start(t);
+        gain.gain.setTargetAtTime(0, t + 0.28, 0.05);
+        osc.stop(t + 0.45);
+      }catch(e){}
+    }
+    document.querySelectorAll('.note-btn').forEach(function(b){
+      b.addEventListener('click', function(){ playTone(parseFloat(b.getAttribute('data-freq'))); });
+    });
+
+    // ===== tool: Ohm's law calculator =====
+    (function(){
+      var v=document.getElementById('ohmV'), i=document.getElementById('ohmI'), r=document.getElementById('ohmR'),
+          out=document.getElementById('ohmOut');
+      if(!v) return;
+      function round(x){ return Math.round(x * 10000) / 10000; }
+      function num(el){ var s = el.value.trim(); if(s === '') return null; var n = parseFloat(s); return isNaN(n) ? NaN : n; }
+      function calc(){
+        var V=num(v), I=num(i), R=num(r);
+        if([V,I,R].some(function(x){ return typeof x === 'number' && isNaN(x); })){ out.textContent = 'נא להקליד מספרים בלבד.'; return; }
+        var filled = [V,I,R].filter(function(x){ return x !== null; }).length;
+        if(filled !== 2){ out.textContent = 'מלאו בדיוק שני שדות, ואחשב את השלישי.'; return; }
+        if(V === null){ out.textContent = 'מתח = ' + round(I * R) + ' וולט'; v.value = round(I * R); }
+        else if(I === null){ if(R === 0){ out.textContent = 'אי אפשר לחלק ב-0.'; return; } out.textContent = 'זרם = ' + round(V / R) + ' אמפר'; i.value = round(V / R); }
+        else { if(I === 0){ out.textContent = 'אי אפשר לחלק ב-0.'; return; } out.textContent = 'התנגדות = ' + round(V / I) + ' אוהם'; r.value = round(V / I); }
+      }
+      document.getElementById('ohmCalc').addEventListener('click', calc);
+      document.getElementById('ohmClear').addEventListener('click', function(){ v.value=''; i.value=''; r.value=''; out.textContent=''; });
+    })();
+
+    // back to top
+    var top = document.getElementById('top');
+    top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+    window.addEventListener('scroll', function(){
+      if(window.scrollY > 600) top.classList.add('show'); else top.classList.remove('show');
+    });
+  })();
+</script>

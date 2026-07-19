@@ -1,0 +1,340 @@
+<title>מבוא לתכנות — לפני שמתחילים לבנות</title>
+<style>
+  :root{
+    --bg:#f4f8f9; --bg-2:#e9f1f3; --surface:#ffffff; --surface-2:#f1f7f8;
+    --ink:#16272e; --ink-soft:#485c64; --ink-faint:#7c8f96; --border:#d8e4e7;
+    --accent:#0e9aa7; --accent-strong:#0b7f8a; --accent-soft:#d5eef0;
+    --amber:#e0900a; --amber-soft:#fbeccd;
+    --spark:#ef5b4f; --spark-soft:#ffe0dc;
+    --grape:#6d4fc7; --grape-soft:#e8e2fb;
+    --code-bg:#0f1e26; --code-ink:#dcecef; --code-key:#f6b93b; --code-com:#5f8592; --code-num:#ff9d8a;
+    --shadow:0 1px 2px rgba(16,40,48,.06),0 8px 24px rgba(16,40,48,.07);
+    --shadow-lg:0 12px 40px rgba(16,40,48,.14);
+    --radius:16px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0c151a; --bg-2:#091015; --surface:#14222a; --surface-2:#182b34;
+      --ink:#e9f1f3; --ink-soft:#aabdc4; --ink-faint:#6f838b; --border:#23383f;
+      --accent:#2fc0cf; --accent-strong:#5bd6e1; --accent-soft:#0f3138;
+      --amber:#ffb43d; --amber-soft:#3a2c12; --spark:#ff8074; --spark-soft:#3a1f1c;
+      --grape:#a98cf0; --grape-soft:#241a3d; --code-bg:#081116; --code-ink:#dcecef;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.35);
+      --shadow-lg:0 16px 46px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f8f9; --bg-2:#e9f1f3; --surface:#ffffff; --surface-2:#f1f7f8;
+    --ink:#16272e; --ink-soft:#485c64; --ink-faint:#7c8f96; --border:#d8e4e7;
+    --accent:#0e9aa7; --accent-strong:#0b7f8a; --accent-soft:#d5eef0;
+    --amber:#e0900a; --amber-soft:#fbeccd; --spark:#ef5b4f; --spark-soft:#ffe0dc;
+    --grape:#6d4fc7; --grape-soft:#e8e2fb; --code-bg:#0f1e26;
+    --shadow:0 1px 2px rgba(16,40,48,.06),0 8px 24px rgba(16,40,48,.07); --shadow-lg:0 12px 40px rgba(16,40,48,.14);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c151a; --bg-2:#091015; --surface:#14222a; --surface-2:#182b34;
+    --ink:#e9f1f3; --ink-soft:#aabdc4; --ink-faint:#6f838b; --border:#23383f;
+    --accent:#2fc0cf; --accent-strong:#5bd6e1; --accent-soft:#0f3138;
+    --amber:#ffb43d; --amber-soft:#3a2c12; --spark:#ff8074; --spark-soft:#3a1f1c;
+    --grape:#a98cf0; --grape-soft:#241a3d; --code-bg:#081116;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.35); --shadow-lg:0 16px 46px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box}
+  body{margin:0}
+  .page{
+    direction:rtl; text-align:right;
+    font-family:"Segoe UI","Arial Hebrew","Noto Sans Hebrew",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:radial-gradient(circle at 12% -5%, var(--grape-soft), transparent 42%),radial-gradient(circle at 88% 0%, var(--accent-soft), transparent 40%),var(--bg);
+    color:var(--ink); line-height:1.7; min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:0 20px}
+
+  .topbar{position:sticky; top:0; z-index:40; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 20px;
+    background:color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid var(--border)}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+  .brand .dot{width:14px;height:14px;border-radius:50%;background:var(--grape);box-shadow:0 0 0 0 var(--grape);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--grape) 70%,transparent)}70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  .topbar .right{display:flex; gap:8px; align-items:center}
+  .theme-btn,.back-link{display:inline-flex; align-items:center; gap:7px; cursor:pointer; border:1px solid var(--border); background:var(--surface); color:var(--ink);
+    border-radius:999px; padding:7px 14px; font-size:14px; font-weight:700; font-family:inherit; text-decoration:none}
+  .theme-btn:hover,.back-link:hover{border-color:var(--accent)}
+  .back-link{background:var(--accent-soft); color:var(--accent-strong); border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+  .theme-btn:focus-visible,.back-link:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  .hero{padding:52px 0 26px}
+  .hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--grape);background:var(--grape-soft);
+    border:1px solid color-mix(in srgb,var(--grape) 30%,transparent);padding:6px 14px;border-radius:999px}
+  .hero h1{font-size:clamp(2rem,5.5vw,3.1rem); line-height:1.14; margin:.5em 0 .2em; text-wrap:balance; letter-spacing:-.5px}
+  .hero h1 .glow{color:var(--grape)}
+  .hero p.lead{font-size:clamp(1.05rem,2.4vw,1.22rem); color:var(--ink-soft); max-width:60ch; margin:.2em 0 0}
+
+  section{padding:20px 0; scroll-margin-top:70px}
+  h2.sec{font-size:clamp(1.4rem,4vw,1.9rem); margin:.2em 0 .1em; letter-spacing:-.3px; display:flex; align-items:center; gap:11px}
+  h2.sec .n{flex:none; width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:1.15rem;font-weight:800;color:#fff;
+    background:linear-gradient(140deg,var(--grape),#4e34a6); font-variant-numeric:tabular-nums}
+  .sec-body{margin-top:8px}
+  .sec-body p{margin:.4em 0; color:var(--ink-soft)}
+  .sec-body p b{color:var(--ink)}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px}
+  .analogy{display:flex; gap:13px; align-items:flex-start; background:var(--amber-soft); border:1px solid color-mix(in srgb,var(--amber) 34%,transparent);
+    border-radius:14px; padding:14px 16px; margin:12px 0}
+  .analogy .ico{font-size:24px; line-height:1.1}
+  .analogy p{margin:0; color:var(--ink); font-size:.96rem}
+  .analogy b{color:var(--ink)}
+
+  .grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:12px}
+  .mini{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:15px; box-shadow:var(--shadow)}
+  .mini h3{margin:.1em 0 .3em; font-size:1.02rem; display:flex; gap:8px; align-items:center}
+  .mini p{margin:0; color:var(--ink-soft); font-size:.93rem}
+
+  .code{background:var(--code-bg); border-radius:12px; margin:.6em 0; box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .code .bar{display:flex; align-items:center; gap:8px; padding:7px 12px; border-bottom:1px solid rgba(255,255,255,.07)}
+  .code .bar i{width:11px;height:11px;border-radius:50%;display:block}
+  .code .bar i:nth-child(1){background:#ff5f56}.code .bar i:nth-child(2){background:#ffbd2e}.code .bar i:nth-child(3){background:#27c93f}
+  .code .bar .fn{margin-inline-start:auto; color:var(--code-com); font-size:.78rem; font-family:"Cascadia Code","Consolas",monospace}
+  .code pre{direction:ltr; text-align:left; margin:0; padding:14px 16px; overflow-x:auto; color:var(--code-ink);
+    font-family:"Cascadia Code","Consolas","SF Mono",ui-monospace,monospace; font-size:.86rem; line-height:1.65; tab-size:2}
+  .code .k{color:var(--code-key)} .code .c{color:var(--code-com); font-style:italic} .code .n{color:var(--code-num)}
+
+  .dict{margin-top:16px; background:var(--grape-soft); border:1px solid color-mix(in srgb,var(--grape) 32%,transparent); border-radius:14px; overflow:hidden}
+  .dict h4{margin:0; padding:12px 16px; font-size:1rem; display:flex; align-items:center; gap:9px; color:var(--ink);
+    background:color-mix(in srgb,var(--grape) 16%,transparent); border-bottom:1px solid color-mix(in srgb,var(--grape) 24%,transparent)}
+  .dict-scroll{overflow-x:auto}
+  table.voc{width:100%; border-collapse:collapse; font-size:.95rem; min-width:440px}
+  table.voc th,table.voc td{padding:9px 14px; text-align:right; border-bottom:1px solid color-mix(in srgb,var(--grape) 18%,transparent); vertical-align:top; color:var(--ink)}
+  table.voc th{font-size:.8rem; letter-spacing:.4px; color:var(--ink-soft); font-weight:700; background:color-mix(in srgb,var(--grape) 8%,transparent)}
+  table.voc tr:last-child td{border-bottom:none}
+  .en{direction:ltr; unicode-bidi:isolate; display:inline-block; font-family:"Cascadia Code","Consolas",ui-monospace,monospace; font-weight:600; color:var(--grape);
+    background:color-mix(in srgb,var(--grape) 12%,transparent); padding:1px 7px; border-radius:6px; font-size:.9em}
+  .say{font-weight:700; color:var(--ink); white-space:nowrap}
+
+  .cta-box{margin:30px 0 10px; text-align:center; background:linear-gradient(140deg,var(--accent-soft),var(--surface)); border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+    border-radius:20px; padding:28px 22px; box-shadow:var(--shadow)}
+  .cta-box h2{margin:.1em 0 .3em; font-size:1.5rem}
+  .cta-box p{margin:0 auto 16px; color:var(--ink-soft); max-width:52ch}
+  .cta{display:inline-flex; align-items:center; gap:10px; text-decoration:none; background:var(--accent); color:#fff; font-weight:800; font-size:1.08rem;
+    padding:14px 26px; border-radius:999px; box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 40%,transparent)}
+  .cta:hover{background:var(--accent-strong)}
+  .cta:focus-visible{outline:3px solid var(--accent); outline-offset:3px}
+
+  footer{margin-top:36px; padding:26px 0 60px; border-top:1px solid var(--border); color:var(--ink-faint); font-size:.9rem}
+  footer a{color:var(--accent-strong)}
+
+  #top{position:fixed; inset-inline-end:18px; bottom:18px; z-index:50; width:46px;height:46px;border-radius:50%; border:1px solid var(--border);
+    background:var(--surface); color:var(--ink); box-shadow:var(--shadow-lg); cursor:pointer; font-size:20px; display:none; place-items:center}
+  #top.show{display:grid}
+  #top:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="page" lang="he">
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span><span>מבוא לתכנות</span></div>
+    <div class="right">
+      <a class="back-link" href="Madrich_Arduino_Ivrit.html">→ חזרה למדריך</a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="החלף מצב תצוגה"><span id="themeIco">🌙</span><span id="themeTxt">מצב כהה</span></button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <header class="hero">
+      <span class="kicker">🧠 לפני שמתחילים לבנות</span>
+      <h1>איך בכלל <span class="glow">מדברים</span> עם מחשב?</h1>
+      <p class="lead">לפני שנדליק נורות ונזיז מנועים, כדאי להבין דבר אחד קטן: איך המחשב "חושב", ואיך אנחנו נותנים לו הוראות. אל דאגה — זה ממש לא מסובך, ואחרי המבוא הקצר הזה כל הקוד במדריך ייראה לך הגיוני. קדימה! 🚀</p>
+    </header>
+
+    <!-- 1 -->
+    <section id="s1">
+      <h2 class="sec"><span class="n">1</span> מה זה בעצם מחשב?</h2>
+      <div class="sec-body">
+        <p>הרבה חושבים שמחשב הוא חכם. האמת מפתיעה: המחשב הוא דווקא <b>די "טיפש"</b> — הוא יודע לעשות רק פעולות פשוטות מאוד (לחבר מספרים, להשוות, לזכור). אבל יש לו שתי מעלות ענק: הוא עושה את זה <b>מהר בטירוף</b> (מיליוני פעולות בשנייה), ו<b>אף פעם לא מתעייף, לא משתעמם ולא טועה</b>.</p>
+        <div class="analogy"><span class="ico">🤖</span><p><b>דמיין רובוט ממושמע להפליא:</b> הוא יעשה <b>בדיוק</b> מה שתגיד לו — לא מה שהתכוונת, אלא מה שאמרת. אם תשכח לומר לו משהו, הוא פשוט לא יעשה אותו. התפקיד שלנו כמתכנתים הוא לתת לו הוראות ברורות וּמדויקות.</p></div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="s2">
+      <h2 class="sec"><span class="n">2</span> אפס ואחד — השפה של המחשב</h2>
+      <div class="sec-body">
+        <p>בפנים, המחשב עשוי ממיליוני "מתגים" זעירים. כל מתג יכול להיות במצב אחד מ־שניים: <b>דלוק</b> או <b>כבוי</b> — ובשפת המחשב: <b>1</b> או <b>0</b>. זהו! מכל הצירופים של אפסים ואחדים המחשב מרכיב הכול: מספרים, אותיות, צבעים, מוזיקה ותמונות.</p>
+        <div class="grid2">
+          <div class="mini"><h3>🔘 ביט (bit)</h3><p>מתג אחד — 0 או 1. חתיכת המידע הכי קטנה שיש.</p></div>
+          <div class="mini"><h3>📦 בית (byte)</h3><p>8 ביטים יחד. מספיק כדי לשמור אות אחת, למשל האות "A".</p></div>
+        </div>
+        <div class="analogy"><span class="ico">💡</span><p>כמו <b>נורה</b> במדריך: או שהיא דלוקה או כבויה. בקוד קראנו לזה <span class="en">HIGH</span> ו־<span class="en">LOW</span> — זה בדיוק ה־1 וה־0 של המחשב!</p></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="s3">
+      <h2 class="sec"><span class="n">3</span> מה זו שפת תכנות?</h2>
+      <div class="sec-body">
+        <p>אנחנו מדברים עברית. המחשב "מדבר" רק אפסים ואחדים. אז איך מסתדרים? משתמשים ב<b>שפת תכנות</b> — שפת ביניים שנמצאת באמצע: אנחנו כותבים בה מילים שקל לנו לזכור (כמו <span class="en">delay</span> או <span class="en">if</span>), ותוכנה מיוחדת <b>מתרגמת</b> אותן לאפסים ואחדים שהמחשב מבין.</p>
+        <p>ה<b>קוד</b> הוא פשוט רשימת ההוראות שכתבנו. יש הרבה שפות תכנות — במדריך הזה אנחנו משתמשים בשפה של ארדואינו (מבוססת על שפה בשם <span class="en">C++</span>). שפות אחרות מפורסמות: <span class="en">Python</span>, <span class="en">Scratch</span>, <span class="en">JavaScript</span>.</p>
+        <div class="analogy"><span class="ico">🍰</span><p><b>תכנית = מתכון עוגה.</b> מתכון הוא רשימת הוראות ברורה, לפי סדר: "שבור ביצה, הוסף סוכר, ערבב, אפה 30 דקות". קוד זה בדיוק אותו דבר — הוראות מסודרות שהמחשב מבצע צעד אחרי צעד.</p></div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="s4">
+      <h2 class="sec"><span class="n">4</span> זיכרון — איפה המחשב "זוכר"?</h2>
+      <div class="sec-body">
+        <p>כדי לעבוד, המחשב צריך <b>לזכור</b> דברים: מספרים, מצבים, תוצאות. את זה הוא עושה ב<b>זיכרון</b>.</p>
+        <div class="analogy"><span class="ico">🗄️</span><p>דמיין <b>ארון עם המון מגירות ממוספרות</b>. בכל מגירה אפשר לשים ערך אחד. כשאנחנו רוצים לזכור משהו, אנחנו לוקחים מגירה, נותנים לה <b>שם</b>, ושמים בה את הערך. אחר כך אפשר לפתוח את המגירה לפי השם ולראות מה יש בפנים.</p></div>
+        <div class="grid2">
+          <div class="mini"><h3>⚡ זיכרון עבודה (RAM)</h3><p>מהיר, אבל <b>נמחק</b> כשמכבים את החשמל. כאן קורים החישובים תוך כדי ריצה.</p></div>
+          <div class="mini"><h3>💾 זיכרון קבוע</h3><p><b>נשמר</b> גם אחרי כיבוי. בארדואינו, הקוד שלך נשמר כאן — לכן הלוח זוכר אותו גם אחרי ניתוק.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="s5">
+      <h2 class="sec"><span class="n">5</span> משתנים — המגירות עם השם</h2>
+      <div class="sec-body">
+        <p>המגירה מהדוגמה הקודמת נקראת בתכנות <b>משתנה</b> (<span class="en">variable</span>). זו קופסה עם שם, שמחזיקה ערך שאפשר לשנות. במדריך כבר ראית משתנים, למשל <span class="en">int ledPin = 9;</span> — יצרנו מגירה בשם <span class="en">ledPin</span> ושמנו בה את המספר 9.</p>
+        <p>יש כמה <b>סוגים</b> של מגירות, לפי מה ששמים בפנים:</p>
+        <div class="grid2">
+          <div class="mini"><h3>🔢 <span class="en">int</span></h3><p>מספר שלם: 9, 42, 1023.</p></div>
+          <div class="mini"><h3>🌡️ <span class="en">float</span></h3><p>מספר עם נקודה עשרונית: 24.5.</p></div>
+          <div class="mini"><h3>✅ <span class="en">bool</span></h3><p>כן/לא בלבד: <span class="en">true</span> או <span class="en">false</span>.</p></div>
+          <div class="mini"><h3>🔤 טקסט</h3><p>אותיות ומילים, למשל <span class="en">"hello"</span>.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="s6">
+      <h2 class="sec"><span class="n">6</span> פקודות — שורה אחרי שורה</h2>
+      <div class="sec-body">
+        <p>תכנית בנויה מ<b>פקודות</b> (הוראות). כלל הזהב: המחשב מבצע אותן <b>מלמעלה למטה, שורה אחרי שורה, לפי הסדר</b> — בדיוק כמו שקוראים מתכון מלמעלה. אם תחליף את סדר השורות, יקרה משהו אחר!</p>
+        <div class="code"><div class="bar"><i></i><i></i><i></i><span class="fn">רעיון</span></div><pre>הדלק נורה;      <span class="c">// שורה 1</span>
+חכה שנייה;      <span class="c">// שורה 2</span>
+כבה נורה;       <span class="c">// שורה 3</span></pre></div>
+        <p>כל פקודה בשפת ארדואינו מסתיימת ב־<b>נקודה־פסיק</b> <span class="en">;</span> — זה כמו נקודה בסוף משפט, שאומרת למחשב "סיימתי את ההוראה הזאת".</p>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="s7">
+      <h2 class="sec"><span class="n">7</span> תנאים — המחשב מקבל החלטות</h2>
+      <div class="sec-body">
+        <p>לפעמים רוצים שהמחשב יעשה משהו <b>רק אם</b> קורה תנאי מסוים. לזה משמש <span class="en">if</span> (אם) ו־<span class="en">else</span> (אחרת).</p>
+        <div class="analogy"><span class="ico">☔</span><p><b>מהחיים:</b> "אם יורד גשם — קח מטרייה. אחרת — קח משקפי שמש." המחשב עושה בדיוק את זה, רק עם מספרים וחיישנים.</p></div>
+        <div class="code"><div class="bar"><i></i><i></i><i></i><span class="fn">if / else</span></div><pre><span class="k">if</span> (temperature &gt; <span class="n">30</span>)   <span class="c">// אם חם מ-30 מעלות</span>
+  turnOnFan();          <span class="c">// הדלק מאוורר</span>
+<span class="k">else</span>                    <span class="c">// אחרת</span>
+  doNothing();          <span class="c">// אל תעשה כלום</span></pre></div>
+        <p>את זה כבר ראית במדריך — בפרויקט הכפתור! "אם לוחצים — הדלק, אחרת — כבה".</p>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section id="s8">
+      <h2 class="sec"><span class="n">8</span> לולאות — לחזור בלי לשכפל</h2>
+      <div class="sec-body">
+        <p>מה עושים כשצריך לחזור על משהו 100 פעם? <b>לא</b> כותבים 100 שורות! משתמשים ב<b>לולאה</b> (<span class="en">loop</span>): אומרים למחשב "חזור על זה כך וכך פעמים", והוא עושה את זה בשבילנו.</p>
+        <div class="code"><div class="bar"><i></i><i></i><i></i><span class="fn">for</span></div><pre><span class="k">for</span> (<span class="k">int</span> i = <span class="n">1</span>; i &lt;= <span class="n">10</span>; i++)  <span class="c">// חזור 10 פעמים</span>
+  blinkLED();                    <span class="c">// הבהב נורה</span></pre></div>
+        <div class="analogy"><span class="ico">🔁</span><p>הפונקציה <span class="en">loop()</span> בכל קוד ארדואינו היא <b>לולאה ענקית</b> שרצה שוב ושוב בלי סוף — לכן הנורות ממשיכות להבהב כל הזמן.</p></div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section id="s9">
+      <h2 class="sec"><span class="n">9</span> פונקציות — קטע קוד עם שם</h2>
+      <div class="sec-body">
+        <p><b>פונקציה</b> (<span class="en">function</span>) היא קבוצת פקודות שנתנו לה שם, ואפשר "להפעיל" אותה מתי שרוצים — במקום לכתוב הכול שוב. זה חוסך עבודה ומסדר את הקוד.</p>
+        <div class="analogy"><span class="ico">🎛️</span><p>כמו <b>כפתור</b> במיקרוגל: כתוב עליו "פופקורן", ובלחיצה אחת קורית סדרה שלמה של פעולות. פונקציה זה בדיוק זה — שם אחד שמפעיל הרבה הוראות.</p></div>
+        <p>במדריך פגשת שתי פונקציות מיוחדות: <span class="en">setup()</span> (רצה פעם אחת בהתחלה) ו־<span class="en">loop()</span> (רצה שוב ושוב). גם <span class="en">delay()</span> ו־<span class="en">digitalWrite()</span> הן פונקציות שכבר מוכנות בשבילנו.</p>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section id="s10">
+      <h2 class="sec"><span class="n">10</span> באגים — טעויות זה חלק מהמשחק</h2>
+      <div class="sec-body">
+        <p>כשמשהו בקוד לא עובד כמו שרצינו, קוראים לזה <b>באג</b> (<span class="en">bug</span> — "חרק"). וזה קורה <b>לכולם</b>, גם למתכנתים הכי מנוסים בעולם — כל יום! זה לא סימן שאתה גרוע, זה חלק רגיל מהתהליך.</p>
+        <p>לתקן באג נקרא <b>דיבּוּג</b> (<span class="en">debug</span>). איך? קוראים את הקוד לאט, שורה-שורה, ושואלים "מה בדיוק אמרתי למחשב לעשות כאן?". טריק מנצח: להשתמש ב־<span class="en">Serial Monitor</span> כדי לראות מה הלוח "חושב".</p>
+        <div class="analogy"><span class="ico">🐛</span><p><b>סוד קטן:</b> המילה "באג" נולדה כשמתכנתת מזמן מצאה עש אמיתי תקוע בתוך מחשב ענק, שגרם לתקלה. מאז כל תקלה בתוכנה נקראת "חרק".</p></div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section id="s11">
+      <h2 class="sec"><span class="n">11</span> איך הכול מתחבר בארדואינו</h2>
+      <div class="sec-body">
+        <p>עכשיו יש לך את כל התמונה! זה מה שקורה בכל פרויקט במדריך:</p>
+        <div class="grid2">
+          <div class="mini"><h3>✍️ 1. כותבים</h3><p>כותבים קוד במחשב, בשפת ארדואינו, בתוכנת ה־IDE.</p></div>
+          <div class="mini"><h3>🔄 2. מתרגמים</h3><p>המחשב מתרגם את הקוד לאפסים ואחדים (זה ה־<span class="en">Verify</span>).</p></div>
+          <div class="mini"><h3>📤 3. שולחים</h3><p>שולחים את זה ללוח דרך חוט USB (זה ה־<span class="en">Upload</span>).</p></div>
+          <div class="mini"><h3>⚡ 4. רץ!</h3><p>הלוח מריץ את הקוד שוב ושוב, וזוכר אותו בזיכרון הקבוע.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- glossary -->
+    <section id="dict">
+      <div class="dict">
+        <h4>📖 מילון מושגי היסוד בתכנות</h4>
+        <div class="dict-scroll"><table class="voc"><thead><tr><th>מושג</th><th>איך אומרים</th><th>מה זה</th></tr></thead><tbody>
+          <tr><td>מחשב · <span class="en">computer</span></td><td class="say">קוֹמְפְּיוּטֶר</td><td>מכונה שמבצעת הוראות מהר ובדיוק.</td></tr>
+          <tr><td>בינארי · <span class="en">binary</span></td><td class="say">בַּייְנֶרִי</td><td>שפת האפסים והאחדים של המחשב.</td></tr>
+          <tr><td><span class="en">bit</span></td><td class="say">בִּיט</td><td>מתג יחיד — 0 או 1. פיסת המידע הקטנה ביותר.</td></tr>
+          <tr><td><span class="en">byte</span></td><td class="say">בַּייְט</td><td>8 ביטים יחד.</td></tr>
+          <tr><td>זיכרון · <span class="en">memory</span></td><td class="say">מֶמוֹרִי</td><td>המקום שבו המחשב שומר ערכים.</td></tr>
+          <tr><td><span class="en">RAM</span></td><td class="say">ראם</td><td>זיכרון עבודה מהיר שנמחק בכיבוי.</td></tr>
+          <tr><td>קוד · <span class="en">code</span></td><td class="say">קוֹוד</td><td>רשימת ההוראות שכתבנו למחשב.</td></tr>
+          <tr><td>שפת תכנות · <span class="en">programming language</span></td><td class="say">פְּרוֹגְרַמִינְג לַאנְגְוֵוג'</td><td>שפת הביניים שבה כותבים קוד.</td></tr>
+          <tr><td>משתנה · <span class="en">variable</span></td><td class="say">וֵורִיאֶבְּל</td><td>קופסה עם שם ששומרת ערך.</td></tr>
+          <tr><td>פקודה · <span class="en">command</span></td><td class="say">קוֹמַנְד</td><td>הוראה אחת בקוד.</td></tr>
+          <tr><td>תנאי · <span class="en">condition</span></td><td class="say">קוֹנְדִישֶׁן</td><td>בדיקה שמחליטה מה יקרה (if/else).</td></tr>
+          <tr><td>לולאה · <span class="en">loop</span></td><td class="say">לוּפּ</td><td>חזרה על פקודות שוב ושוב.</td></tr>
+          <tr><td>פונקציה · <span class="en">function</span></td><td class="say">פַאנְקְשֶׁן</td><td>קטע קוד עם שם שאפשר להפעיל.</td></tr>
+          <tr><td>אלגוריתם · <span class="en">algorithm</span></td><td class="say">אַלְגוֹרִיתְם</td><td>סדר הצעדים לפתרון בעיה (ה"מתכון").</td></tr>
+          <tr><td>באג · <span class="en">bug</span></td><td class="say">בַּאג</td><td>טעות בקוד.</td></tr>
+          <tr><td>דיבוג · <span class="en">debug</span></td><td class="say">דִּיבַּאג</td><td>למצוא ולתקן טעויות.</td></tr>
+          <tr><td>מתרגם · <span class="en">compiler</span></td><td class="say">קוֹמְפַּיילֶר</td><td>הופך את הקוד שלנו לשפת המחשב.</td></tr>
+        </tbody></table></div>
+      </div>
+    </section>
+
+    <!-- CTA back to guide -->
+    <div class="cta-box">
+      <h2>מוכן? עכשיו הכול יתחבר! 🎉</h2>
+      <p>אחרי שהבנת איך המחשב חושב, כל שורת קוד במדריך תיראה לך הגיונית. קדימה — בוא נתחיל להדליק נורות ולבנות דברים אמיתיים.</p>
+      <a class="cta" href="Madrich_Arduino_Ivrit.html">🔌 קדימה, למדריך והפרויקטים ←</a>
+    </div>
+
+    <footer>
+      <p>דף מבוא זה נכתב בעברית במיוחד בשבילך, כחלק ממדריך ארדואינו לילדים. המושגים כאן מתאימים לכל שפת תכנות בעולם — לא רק לארדואינו.</p>
+    </footer>
+  </div>
+
+  <button id="top" type="button" aria-label="חזרה למעלה">↑</button>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('themeBtn'),
+        ico=document.getElementById('themeIco'), txt=document.getElementById('themeTxt');
+    function current(){ var s=root.getAttribute('data-theme'); if(s) return s;
+      return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; }
+    function apply(m){ root.setAttribute('data-theme', m); var d=m==='dark';
+      ico.textContent=d?'☀️':'🌙'; txt.textContent=d?'מצב בהיר':'מצב כהה'; }
+    apply(current());
+    btn.addEventListener('click', function(){ apply(current()==='dark'?'light':'dark'); });
+
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){ var el=document.querySelector(a.getAttribute('href'));
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); } });
+    });
+
+    var top=document.getElementById('top');
+    top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+    window.addEventListener('scroll', function(){ if(window.scrollY>600) top.classList.add('show'); else top.classList.remove('show'); });
+  })();
+</script>
