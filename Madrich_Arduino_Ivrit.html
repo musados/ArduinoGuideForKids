@@ -116,6 +116,33 @@
   .mavo-btn:focus-visible{outline:3px solid var(--grape); outline-offset:3px}
   @media (max-width:560px){ .mavo-card{flex-direction:column; text-align:center} .mavo-btn{width:100%; justify-content:center} }
 
+  /* connection diagrams (accordion) */
+  details.diagram{margin-top:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:14px; overflow:hidden}
+  details.diagram > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px; padding:11px 15px; font-weight:800; font-size:.95rem; color:var(--accent-strong)}
+  details.diagram > summary::-webkit-details-marker{display:none}
+  details.diagram > summary::after{content:"▾"; margin-inline-start:auto; transition:transform .15s ease; color:var(--ink-faint)}
+  details.diagram[open] > summary::after{transform:rotate(180deg)}
+  details.diagram > summary:hover{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+  details.diagram > summary:focus-visible{outline:3px solid var(--accent); outline-offset:-3px}
+  .diagram .dg-hint{font-weight:600; font-size:.82rem; color:var(--ink-faint)}
+  .diagram-body{padding:6px 12px 14px; border-top:1px solid var(--border)}
+  .wiring-svg{width:100%; height:auto; display:block; max-width:540px; margin:4px auto 0}
+  .wiring-svg text{font-family:"Segoe UI","Arial Hebrew",sans-serif}
+  .d-board{fill:var(--accent-soft); stroke:var(--accent); stroke-width:1.5}
+  .d-board-t{fill:var(--accent-strong); font-weight:800; font-size:11px}
+  .d-pad{fill:var(--surface); stroke:var(--border); stroke-width:1}
+  .d-pad.d-pwm{fill:var(--accent-soft); stroke:var(--accent)}
+  .d-pad.d-ana{fill:var(--grape-soft); stroke:var(--grape)}
+  .d-pad.d-pow{fill:var(--spark-soft); stroke:var(--spark)}
+  .d-pad.d-gnd{fill:color-mix(in srgb,var(--ink) 16%,var(--surface)); stroke:var(--ink-faint)}
+  .d-pad-t{fill:var(--ink); font-weight:700; font-size:10px}
+  .d-chip{fill:var(--surface); stroke:var(--border); stroke-width:1.5}
+  .d-chip-t{fill:var(--ink); font-weight:700; font-size:11px}
+  .d-emoji{font-size:15px}
+  .d-wire-l{fill:var(--ink); font-weight:800; font-size:9px}
+  .d-wire-lb{fill:var(--surface); stroke:var(--border); stroke-width:.5}
+  .d-note{fill:var(--ink-soft); font-size:10px; font-style:italic}
+
   /* ---- generic section ---- */
   section{padding:22px 0}
   h2.sec{font-size:clamp(1.5rem,4vw,2rem); margin:.2em 0 .1em; letter-spacing:-.3px}
@@ -1726,6 +1753,117 @@ LiquidCrystal lcd(<span class="n">12</span>,<span class="n">11</span>,<span clas
       }
       document.getElementById('ohmCalc').addEventListener('click', calc);
       document.getElementById('ohmClear').addEventListener('click', function(){ v.value=''; i.value=''; r.value=''; out.textContent=''; });
+    })();
+
+    // ===== connection diagrams (data-driven SVG, injected as an accordion per project) =====
+    (function(){
+      var CA = 158, CB = 292, CW = 112, CH = 32, VW = 420;
+      var W = { amber:'#e0900a', grey:'#9aa4ab', gnd:'#54646c', pow:'#e0524a',
+                sig:'#0e9aa7', grape:'#6d4fc7', green:'#3aa655', blue:'#2f6fdb',
+                red:'#e0524a', yellow:'#d9a300' };
+      function kindClass(k){ return k==='pwm'?'d-pwm':k==='ana'?'d-ana':k==='pow'?'d-pow':k==='gnd'?'d-gnd':'d-d'; }
+      function ptOf(anchors, ref){
+        if(ref && typeof ref === 'object') return ref;
+        if(anchors[ref]) return anchors[ref];
+        var parts = String(ref).split('.');
+        var c = anchors[parts[0]];
+        if(!c) return {x:0,y:0};
+        if(parts[1] && c[parts[1]]) return c[parts[1]];
+        return c.l || c;
+      }
+      function wirePath(a, b, color, label){
+        var dx = b.x - a.x, c1x = a.x + dx * 0.45, c2x = b.x - dx * 0.45;
+        var d = 'M' + a.x + ' ' + a.y + ' C' + c1x + ' ' + a.y + ' ' + c2x + ' ' + b.y + ' ' + b.x + ' ' + b.y;
+        var s = '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="3" stroke-linecap="round"/>';
+        s += '<circle cx="' + a.x + '" cy="' + a.y + '" r="3" fill="' + color + '"/>';
+        s += '<circle cx="' + b.x + '" cy="' + b.y + '" r="3" fill="' + color + '"/>';
+        if(label){
+          var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, wLbl = Math.max(14, label.length * 6 + 6);
+          s += '<rect x="' + (mx - wLbl/2) + '" y="' + (my - 8) + '" width="' + wLbl + '" height="15" rx="4" class="d-wire-lb"/>';
+          s += '<text x="' + mx + '" y="' + (my + 3) + '" text-anchor="middle" class="d-wire-l">' + label + '</text>';
+        }
+        return s;
+      }
+      function render(spec){
+        var pins = spec.pins || [], padH = 22, gap = 7, top = 42, bx = 12, bw = 76;
+        var boardH = top + pins.length * (padH + gap) + 6, anchors = {}, maxY = boardH + 18, svg = '';
+        svg += '<rect x="' + bx + '" y="16" width="' + bw + '" height="' + boardH + '" rx="10" class="d-board"/>';
+        svg += '<text x="' + (bx + bw/2) + '" y="33" text-anchor="middle" class="d-board-t">Arduino</text>';
+        pins.forEach(function(p, i){
+          var py = top + i * (padH + gap), cy = py + padH/2;
+          svg += '<rect x="' + (bx + 7) + '" y="' + py + '" width="' + (bw - 13) + '" height="' + padH + '" rx="6" class="d-pad ' + kindClass(p[1]) + '"/>';
+          svg += '<text x="' + (bx + bw/2) + '" y="' + (cy + 4) + '" text-anchor="middle" class="d-pad-t">' + p[0] + '</text>';
+          anchors['p' + p[0]] = { x: bx + bw, y: cy };
+        });
+        (spec.comps || []).forEach(function(c){
+          var w = c.w || CW, h = c.h || CH, x = c.x, y = c.y;
+          svg += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="9" class="d-chip"' + (c.c ? ' style="stroke:' + c.c + ';stroke-width:2"' : '') + '/>';
+          svg += '<text x="' + (x + 11) + '" y="' + (y + h/2 + 5) + '" class="d-emoji">' + (c.e || '') + '</text>';
+          svg += '<text x="' + (x + 30) + '" y="' + (y + h/2 + 4) + '" class="d-chip-t">' + c.t + '</text>';
+          anchors[c.id] = { l:{x:x, y:y+h/2}, r:{x:x+w, y:y+h/2}, t:{x:x+w/2, y:y}, b:{x:x+w/2, y:y+h} };
+          if(y + h + 14 > maxY) maxY = y + h + 14;
+        });
+        (spec.wires || []).forEach(function(q){ svg += wirePath(ptOf(anchors, q.a), ptOf(anchors, q.b), q.c || W.grey, q.l); });
+        if(spec.note){ svg += '<text x="' + (VW/2) + '" y="' + (maxY - 2) + '" text-anchor="middle" class="d-note">' + spec.note + '</text>'; maxY += 6; }
+        return '<svg viewBox="0 0 ' + VW + ' ' + maxY + '" class="wiring-svg" role="img" aria-label="תרשים חיבורים">' + svg + '</svg>';
+      }
+      function ledLine(spec, pin, y, color, label){
+        var id = pin.replace(/[^0-9A-Za-z]/g, '') || ('x' + y);
+        spec.comps.push({ id:'r_'+id, e:'▬', t:'נגד', x:CA, y:y });
+        spec.comps.push({ id:'l_'+id, e:'💡', t:label || 'נורה', c:color, x:CB, y:y });
+        spec.wires.push({ a:'p'+pin, b:'r_'+id+'.l', c:W.amber });
+        spec.wires.push({ a:'r_'+id+'.r', b:'l_'+id+'.l', c:W.grey });
+        spec.wires.push({ a:'l_'+id+'.r', b:'pGND', c:W.gnd, l:'−' });
+      }
+      function chip(spec, id, e, t, x, y, w, color){ spec.comps.push({ id:id, e:e, t:t, x:x, y:y, w:w||CW, c:color }); }
+      function modWires(spec, id, conns){
+        var c = spec.comps.filter(function(o){ return o.id === id; })[0], n = conns.length, h = c.h || CH;
+        conns.forEach(function(cn, i){ spec.wires.push({ a: cn.pin, b:{x:c.x, y:c.y + (i+1)*h/(n+1)}, c: cn.c, l: cn.l }); });
+      }
+      function S(pins){ return { pins:pins, comps:[], wires:[] }; }
+      var D = {};
+      (function(){ var s = S([['13','d'],['GND','g']]); ledLine(s,'13',48,W.red,'נורה'); D.p1 = s; })();
+      (function(){ var s = S([['12','d'],['13','d'],['GND','g']]); ledLine(s,'12',44,W.red,'נורה 1'); ledLine(s,'13',96,W.blue,'נורה 2'); D.p2 = s; })();
+      (function(){ var s = S([['3–12','d'],['GND','g']]); chip(s,'bar','💡','שורת 10 נורות',CA,50,168); s.wires.push({a:'p3–12',b:'bar.l',c:W.amber}); s.wires.push({a:'bar.r',b:'pGND',c:W.gnd,l:'−'}); s.note='כל אחת מ-10 הנורות דרך נגד 220Ω משלה'; D.p3 = s; })();
+      (function(){ var s = S([['~5','pwm'],['GND','g']]); ledLine(s,'~5',48,W.red,'נורה'); s.note='רגל ~ נדרשת לבהירות (PWM)'; D.p4 = s; })();
+      (function(){ var s = S([['12','d'],['9','pwm'],['GND','g']]); chip(s,'btn','🔘','כפתור',CA,44,120); ledLine(s,'9',100,W.red,'נורה'); s.wires.push({a:'p12',b:'btn.l',c:W.sig}); s.wires.push({a:'btn.r',b:'pGND',c:W.gnd,l:'−'}); s.note='לכפתור מוסיפים גם נגד 10kΩ'; D.p5 = s; })();
+      (function(){ var s = S([['USB','pow']]); chip(s,'pc','💻','מחשב (כבל USB)',CA,50,170); s.wires.push({a:'pUSB',b:'pc.l',c:W.sig,l:'USB'}); s.note='אין חיבורים על הלוח — רק כבל USB'; D.p6 = s; })();
+      (function(){ var s = S([['A0','ana'],['5V','pow'],['GND','g'],['9','pwm']]); chip(s,'pot','🎚️','פוטנציומטר',CA,44,130); ledLine(s,'9',110,W.red,'נורה'); modWires(s,'pot',[{pin:'pA0',c:W.sig,l:'אות'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); s.note='אפשר להחליף בפוטורזיסטור + נגד 10kΩ'; D.p7 = s; })();
+      (function(){ var s = S([['11','pwm'],['10','pwm'],['9','pwm'],['GND','g']]); chip(s,'rgb','🌈','נורת RGB',CB-34,66,130,W.grape); modWires(s,'rgb',[{pin:'p11',c:W.red,l:'R'},{pin:'p10',c:W.green,l:'G'},{pin:'p9',c:W.blue,l:'B'}]); s.wires.push({a:'rgb.b',b:'pGND',c:W.gnd,l:'−'}); s.note='כל צבע דרך נגד משלו'; D.p8 = s; })();
+      (function(){ var s = S([['9','pwm'],['GND','g']]); chip(s,'bz','🔊','זמזם',CA,48,120); s.wires.push({a:'p9',b:'bz.l',c:W.sig,l:'+'}); s.wires.push({a:'bz.r',b:'pGND',c:W.gnd,l:'−'}); D.p9 = s; })();
+      (function(){ var s = S([['9','d'],['5V','pow'],['GND','g']]); chip(s,'rel','🔀','ממסר',CA,50,110); chip(s,'mot','⚙️','מנוע',CB+2,50,96); modWires(s,'rel',[{pin:'p9',c:W.sig,l:'IN'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); s.wires.push({a:'rel.r',b:'mot.l',c:W.red}); s.note='חיבור המנוע — עם עזרה של מבוגר'; D.p10 = s; })();
+      (function(){ var s = S([['~3','pwm'],['5V','pow'],['GND','g']]); chip(s,'sv','🤖','מנוע סרוו',CA,50,140); modWires(s,'sv',[{pin:'p~3',c:W.yellow,l:'אות'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); D.p11 = s; })();
+      (function(){ var s = S([['5V','pow'],['A0','ana'],['GND','g']]); chip(s,'lm','🌡️','חיישן LM35',CA,50,140); modWires(s,'lm',[{pin:'p5V',c:W.pow,l:'5V'},{pin:'pA0',c:W.sig,l:'אות'},{pin:'pGND',c:W.gnd,l:'GND'}]); D.p12 = s; })();
+      (function(){ var s = S([['A0','ana'],['A1','ana'],['8','d'],['5V','pow'],['GND','g']]); chip(s,'js','🕹️','ג׳ויסטיק',CA,54,140); modWires(s,'js',[{pin:'pA0',c:W.sig,l:'X'},{pin:'pA1',c:W.sig,l:'Y'},{pin:'p8',c:W.grape,l:'לחיצה'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); D.p13 = s; })();
+      (function(){ var s = S([['5V','pow'],['GND','g'],['A4','ana'],['A5','ana']]); chip(s,'mpu','📐','חיישן MPU-6050',CA,52,150); modWires(s,'mpu',[{pin:'p5V',c:W.pow,l:'VCC'},{pin:'pGND',c:W.gnd,l:'GND'},{pin:'pA4',c:W.sig,l:'SDA'},{pin:'pA5',c:W.sig,l:'SCL'}]); s.note='מתקדם — עובד בשיטת I2C עם ספריות'; D.p14 = s; })();
+      (function(){ var s = S([['11','d'],['12','d'],['13','d'],['5V','pow'],['GND','g']]); chip(s,'ic','🔲','שבב 74HC595',CA,52,124); chip(s,'leds','💡','8 נורות',CB+6,58,92); modWires(s,'ic',[{pin:'p11',c:W.sig,l:'Data'},{pin:'p12',c:W.sig,l:'Latch'},{pin:'p13',c:W.sig,l:'Clock'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); s.wires.push({a:'ic.r',b:'leds.l',c:W.amber,l:'×8'}); D.p15 = s; })();
+      (function(){ var s = S([['12,11,5,4,3,2','d'],['5V','pow'],['GND','g']]); chip(s,'lcd','🔡','מסך LCD1602',CA,48,150); chip(s,'pt','🎚️','פוט לניגודיות',CA,104,150); modWires(s,'lcd',[{pin:'p12,11,5,4,3,2',c:W.sig,l:'6 חוטים'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); D.p16 = s; })();
+      (function(){ var s = S([['13','d'],['12','d'],['11','d'],['GND','g']]); ledLine(s,'13',44,W.red,'אדום'); ledLine(s,'12',92,W.yellow,'צהוב'); ledLine(s,'11',140,W.green,'ירוק'); D.b1 = s; })();
+      (function(){ var s = S([['A0','ana'],['5V','pow'],['GND','g'],['9','pwm']]); chip(s,'ph','🔆','פוטורזיסטור',CA,44,140); ledLine(s,'9',110,W.red,'נורה'); modWires(s,'ph',[{pin:'pA0',c:W.sig,l:'אות'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); s.note='הפוטורזיסטור עם נגד 10kΩ'; D.b2 = s; })();
+      (function(){ var s = S([['A0','ana'],['9','pwm'],['8','d'],['5V','pow'],['GND','g']]); chip(s,'ph','🔆','פוטורזיסטור',CA,44,130); chip(s,'bz','🔊','זמזם',CA,96,110); ledLine(s,'8',148,W.red,'נורה'); modWires(s,'ph',[{pin:'pA0',c:W.sig,l:'אות'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); s.wires.push({a:'p9',b:'bz.l',c:W.sig,l:'+'}); s.wires.push({a:'bz.r',b:'pGND',c:W.gnd,l:'−'}); D.b3 = s; })();
+      (function(){ var s = S([['A0','ana'],['9','pwm'],['5V','pow'],['GND','g']]); chip(s,'ph','🔆','פוטורזיסטור',CA,46,130); chip(s,'bz','🔊','זמזם',CA,104,110); modWires(s,'ph',[{pin:'pA0',c:W.sig,l:'אות'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); s.wires.push({a:'p9',b:'bz.l',c:W.sig,l:'+'}); s.wires.push({a:'bz.r',b:'pGND',c:W.gnd,l:'−'}); D.b4 = s; })();
+      (function(){ var s = S([['9','pwm'],['12','d'],['GND','g']]); ledLine(s,'9',44,W.red,'נורה'); chip(s,'btn','🔘','כפתור',CA,100,120); s.wires.push({a:'p12',b:'btn.l',c:W.sig}); s.wires.push({a:'btn.r',b:'pGND',c:W.gnd,l:'−'}); s.note='כפתור במצב INPUT_PULLUP — בלי נגד'; D.b5 = s; })();
+      (function(){ var s = S([['5V','pow'],['A0','ana'],['GND','g'],['11','pwm'],['10','pwm'],['9','pwm']]); chip(s,'lm','🌡️','חיישן LM35',CA,44,130); chip(s,'rgb','🌈','נורת RGB',CB-34,120,130,W.grape); modWires(s,'lm',[{pin:'p5V',c:W.pow,l:'5V'},{pin:'pA0',c:W.sig,l:'אות'},{pin:'pGND',c:W.gnd,l:'GND'}]); modWires(s,'rgb',[{pin:'p11',c:W.red,l:'R'},{pin:'p10',c:W.green,l:'G'},{pin:'p9',c:W.blue,l:'B'}]); D.b6 = s; })();
+      (function(){ var s = S([['12,11,5,4,3,2','d'],['8','d'],['5V','pow'],['GND','g']]); chip(s,'lcd','🔡','מסך LCD1602',CA,48,150); chip(s,'btn','🔘','כפתור איפוס',CA,106,150); modWires(s,'lcd',[{pin:'p12,11,5,4,3,2',c:W.sig,l:'6 חוטים'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); s.wires.push({a:'p8',b:'btn.l',c:W.grape}); D.b7 = s; })();
+      (function(){ var s = S([['9','pwm'],['12','d'],['GND','g']]); ledLine(s,'9',44,W.red,'נורה'); chip(s,'btn','🔘','כפתור',CA,100,120); s.wires.push({a:'p12',b:'btn.l',c:W.sig}); s.wires.push({a:'btn.r',b:'pGND',c:W.gnd,l:'−'}); D.b8 = s; })();
+      (function(){ var s = S([['A0','ana'],['9','pwm'],['5V','pow'],['GND','g']]); chip(s,'ph','🔆','פוטורזיסטור',CA,46,130); chip(s,'bz','🔊','זמזם',CA,104,110); modWires(s,'ph',[{pin:'pA0',c:W.sig,l:'אות'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); s.wires.push({a:'p9',b:'bz.l',c:W.sig,l:'+'}); s.wires.push({a:'bz.r',b:'pGND',c:W.gnd,l:'−'}); D.b9 = s; })();
+      (function(){ var s = S([['A0','ana'],['5V','pow'],['GND','g'],['11','pwm'],['10','pwm'],['9','pwm']]); chip(s,'pot','🎚️','פוטנציומטר',CA,44,130); chip(s,'rgb','🌈','נורת RGB',CB-34,120,130,W.grape); modWires(s,'pot',[{pin:'pA0',c:W.sig,l:'אות'},{pin:'p5V',c:W.pow,l:'5V'},{pin:'pGND',c:W.gnd,l:'GND'}]); modWires(s,'rgb',[{pin:'p11',c:W.red,l:'R'},{pin:'p10',c:W.green,l:'G'},{pin:'p9',c:W.blue,l:'B'}]); D.b10 = s; })();
+
+      document.querySelectorAll('.chapter[id]').forEach(function(ch){
+        var spec = D[ch.id];
+        if(!spec) return;
+        var target = null;
+        ch.querySelectorAll('.block').forEach(function(b){
+          var h = b.querySelector('h4');
+          if(h && h.textContent.indexOf('מחברים') >= 0) target = b;
+        });
+        if(!target || target.querySelector('.diagram')) return;
+        var det = document.createElement('details');
+        det.className = 'diagram';
+        det.innerHTML = '<summary class="diagram-cap"><span class="dg-ico">📐</span> תרשים חיבורים <span class="dg-hint">(לחצו להצגה)</span></summary>' +
+                        '<div class="diagram-body">' + render(spec) + '</div>';
+        target.appendChild(det);
+      });
     })();
 
     // back to top
