@@ -1,0 +1,278 @@
+<title>מדריך Processing — לצייר עם הקוד</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --bg-2:#eceef6; --surface:#ffffff; --surface-2:#f2f3f9;
+    --ink:#1a1c2b; --ink-soft:#4c5066; --ink-faint:#7c8098; --border:#dcdfeb;
+    --accent:#5b57d6; --accent-strong:#413cbf; --accent-soft:#e5e4fb;
+    --amber:#e0900a; --amber-soft:#fbeccd; --spark:#ef5b8f; --spark-soft:#ffe0ec;
+    --teal:#0e9aa7; --teal-soft:#d5eef0;
+    --code-bg:#151327; --code-ink:#e6e6f2; --code-key:#f6b93b; --code-com:#7d7a9a; --code-num:#ff9d8a; --code-str:#7ee0a6;
+    --shadow:0 1px 2px rgba(26,28,43,.06),0 8px 24px rgba(26,28,43,.08);
+    --shadow-lg:0 12px 40px rgba(26,28,43,.16); --radius:16px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --bg:#0e0d18; --bg-2:#0a0912; --surface:#181628; --surface-2:#1e1c33;
+      --ink:#ecebf6; --ink-soft:#b1aecb; --ink-faint:#726f90; --border:#2b2842;
+      --accent:#8b87f5; --accent-strong:#a29ef8; --accent-soft:#221f3d;
+      --amber:#ffb43d; --amber-soft:#3a2c12; --spark:#ff8bbb; --spark-soft:#3a1f2c;
+      --teal:#2fc0cf; --teal-soft:#0f3138; --code-bg:#0c0b16;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.4); --shadow-lg:0 16px 46px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="light"]{ --bg:#f6f7fb; --bg-2:#eceef6; --surface:#ffffff; --surface-2:#f2f3f9;
+    --ink:#1a1c2b; --ink-soft:#4c5066; --ink-faint:#7c8098; --border:#dcdfeb;
+    --accent:#5b57d6; --accent-strong:#413cbf; --accent-soft:#e5e4fb; --amber:#e0900a; --amber-soft:#fbeccd;
+    --spark:#ef5b8f; --spark-soft:#ffe0ec; --teal:#0e9aa7; --teal-soft:#d5eef0; --code-bg:#151327;
+    --shadow:0 1px 2px rgba(26,28,43,.06),0 8px 24px rgba(26,28,43,.08); --shadow-lg:0 12px 40px rgba(26,28,43,.16); }
+  :root[data-theme="dark"]{ --bg:#0e0d18; --bg-2:#0a0912; --surface:#181628; --surface-2:#1e1c33;
+    --ink:#ecebf6; --ink-soft:#b1aecb; --ink-faint:#726f90; --border:#2b2842;
+    --accent:#8b87f5; --accent-strong:#a29ef8; --accent-soft:#221f3d; --amber:#ffb43d; --amber-soft:#3a2c12;
+    --spark:#ff8bbb; --spark-soft:#3a1f2c; --teal:#2fc0cf; --teal-soft:#0f3138; --code-bg:#0c0b16;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.4); --shadow-lg:0 16px 46px rgba(0,0,0,.55); }
+
+  *{box-sizing:border-box} body{margin:0}
+  .page{ direction:rtl; text-align:right;
+    font-family:"Segoe UI","Arial Hebrew","Noto Sans Hebrew",system-ui,-apple-system,Arial,sans-serif;
+    background:radial-gradient(circle at 12% -5%, var(--accent-soft), transparent 42%),radial-gradient(circle at 88% 0%, var(--spark-soft), transparent 40%),var(--bg);
+    color:var(--ink); line-height:1.7; min-height:100vh; -webkit-font-smoothing:antialiased; }
+  .wrap{max-width:900px; margin:0 auto; padding:0 20px}
+
+  .topbar{position:sticky; top:0; z-index:40; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 20px;
+    background:color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid var(--border)}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+  .brand .dot{width:14px;height:14px;border-radius:4px;background:var(--accent);animation:spin 3s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .right{display:flex; gap:8px; align-items:center}
+  .theme-btn,.back-link{display:inline-flex; align-items:center; gap:7px; cursor:pointer; border:1px solid var(--border); background:var(--surface); color:var(--ink);
+    border-radius:999px; padding:7px 14px; font-size:14px; font-weight:700; font-family:inherit; text-decoration:none}
+  .theme-btn:hover,.back-link:hover{border-color:var(--accent)}
+  .back-link{background:var(--accent-soft); color:var(--accent-strong); border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+  .theme-btn:focus-visible,.back-link:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  .hero{padding:52px 0 26px}
+  .hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--accent);background:var(--accent-soft);
+    border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);padding:6px 14px;border-radius:999px}
+  .hero h1{font-size:clamp(2rem,5.5vw,3.1rem); line-height:1.14; margin:.5em 0 .2em; text-wrap:balance; letter-spacing:-.5px}
+  .hero h1 .glow{color:var(--accent)}
+  .hero p.lead{font-size:clamp(1.05rem,2.4vw,1.22rem); color:var(--ink-soft); max-width:60ch; margin:.2em 0 0}
+  .canvas-demo{margin:24px 0 2px; border-radius:14px; overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow); background:#0e0d18; display:block; max-width:420px}
+
+  section{padding:20px 0; scroll-margin-top:70px}
+  h2.sec{font-size:clamp(1.4rem,4vw,1.9rem); margin:.2em 0 .1em; letter-spacing:-.3px; display:flex; align-items:center; gap:11px}
+  h2.sec .n{flex:none; width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:1.15rem;font-weight:800;color:#fff;
+    background:linear-gradient(140deg,var(--accent),var(--accent-strong)); font-variant-numeric:tabular-nums}
+  .sec-body p{margin:.4em 0; color:var(--ink-soft)} .sec-body p b{color:var(--ink)}
+
+  .analogy{display:flex; gap:13px; align-items:flex-start; background:var(--amber-soft); border:1px solid color-mix(in srgb,var(--amber) 34%,transparent);
+    border-radius:14px; padding:14px 16px; margin:12px 0} .analogy .ico{font-size:24px} .analogy p{margin:0; color:var(--ink)}
+
+  .split{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px}
+  .split .card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:15px; box-shadow:var(--shadow)}
+  .split .card h3{margin:.1em 0 .4em; font-size:1.02rem; display:flex; gap:8px; align-items:center}
+  .split .card p{margin:0; color:var(--ink-soft); font-size:.93rem}
+  @media (max-width:600px){ .split{grid-template-columns:1fr} }
+
+  .code{background:var(--code-bg); border-radius:12px; margin:.6em 0; box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .code .bar{display:flex; align-items:center; gap:8px; padding:7px 12px; border-bottom:1px solid rgba(255,255,255,.07)}
+  .code .bar i{width:11px;height:11px;border-radius:50%;display:block}
+  .code .bar i:nth-child(1){background:#ff5f56}.code .bar i:nth-child(2){background:#ffbd2e}.code .bar i:nth-child(3){background:#27c93f}
+  .code .bar .fn{margin-inline-start:auto; color:var(--code-com); font-size:.78rem; font-family:"Cascadia Code","Consolas",monospace}
+  .code pre{direction:ltr; text-align:left; margin:0; padding:14px 16px; overflow-x:auto; color:var(--code-ink);
+    font-family:"Cascadia Code","Consolas","SF Mono",ui-monospace,monospace; font-size:.86rem; line-height:1.65; tab-size:2}
+  .code .k{color:var(--code-key)} .code .c{color:var(--code-com); font-style:italic} .code .n{color:var(--code-num)} .code .s{color:var(--code-str)}
+
+  ol.steps{margin:0; padding:0; list-style:none; counter-reset:s; display:grid; gap:12px}
+  ol.steps li{position:relative; padding:14px 58px 14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:12px; color:var(--ink-soft)}
+  ol.steps li b{color:var(--ink)}
+  ol.steps li::before{counter-increment:s; content:counter(s); position:absolute; inset-inline-start:14px; top:12px;
+    width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-weight:800;color:#fff;background:var(--accent)}
+
+  .dict{margin-top:16px; background:var(--accent-soft); border:1px solid color-mix(in srgb,var(--accent) 32%,transparent); border-radius:14px; overflow:hidden}
+  .dict h4{margin:0; padding:12px 16px; font-size:1rem; display:flex; align-items:center; gap:9px; color:var(--ink);
+    background:color-mix(in srgb,var(--accent) 16%,transparent); border-bottom:1px solid color-mix(in srgb,var(--accent) 24%,transparent)}
+  .dict-scroll{overflow-x:auto}
+  table.voc{width:100%; border-collapse:collapse; font-size:.95rem; min-width:440px}
+  table.voc th,table.voc td{padding:9px 14px; text-align:right; border-bottom:1px solid color-mix(in srgb,var(--accent) 18%,transparent); vertical-align:top; color:var(--ink)}
+  table.voc th{font-size:.8rem; color:var(--ink-soft); font-weight:700; background:color-mix(in srgb,var(--accent) 8%,transparent)}
+  table.voc tr:last-child td{border-bottom:none}
+  .en{direction:ltr; unicode-bidi:isolate; display:inline-block; font-family:"Cascadia Code","Consolas",ui-monospace,monospace; font-weight:600; color:var(--accent);
+    background:color-mix(in srgb,var(--accent) 12%,transparent); padding:1px 7px; border-radius:6px; font-size:.9em}
+  .say{font-weight:700; color:var(--ink); white-space:nowrap}
+
+  .gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:12px}
+  .g-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px; box-shadow:var(--shadow); text-align:center}
+  .g-card .emoji{font-size:1.8rem} .g-card h4{margin:.3em 0 .2em; font-size:.98rem} .g-card p{margin:0; color:var(--ink-soft); font-size:.85rem}
+
+  .cta-box{margin:30px 0 10px; text-align:center; background:linear-gradient(140deg,var(--teal-soft),var(--surface)); border:1px solid color-mix(in srgb,var(--teal) 30%,transparent);
+    border-radius:20px; padding:28px 22px; box-shadow:var(--shadow)}
+  .cta-box h2{margin:.1em 0 .3em; font-size:1.5rem} .cta-box p{margin:0 auto 16px; color:var(--ink-soft); max-width:52ch}
+  .cta{display:inline-flex; align-items:center; gap:10px; text-decoration:none; background:var(--teal); color:#fff; font-weight:800; font-size:1.08rem;
+    padding:14px 26px; border-radius:999px; box-shadow:0 8px 22px color-mix(in srgb,var(--teal) 40%,transparent)}
+  .cta:hover{background:color-mix(in srgb,var(--teal) 82%,#000)} .cta:focus-visible{outline:3px solid var(--teal); outline-offset:3px}
+
+  footer{margin-top:36px; padding:26px 0 60px; border-top:1px solid var(--border); color:var(--ink-faint); font-size:.9rem}
+  #top{position:fixed; inset-inline-end:18px; bottom:18px; z-index:50; width:46px;height:46px;border-radius:50%; border:1px solid var(--border);
+    background:var(--surface); color:var(--ink); box-shadow:var(--shadow-lg); cursor:pointer; font-size:20px; display:none; place-items:center}
+  #top.show{display:grid} #top:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="page" lang="he">
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span><span>מדריך Processing</span></div>
+    <div class="right">
+      <a class="back-link" href="Madrich_Arduino_Ivrit.html">→ חזרה למדריך הראשי</a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="החלף מצב תצוגה"><span id="themeIco">🌙</span><span id="themeTxt">מצב כהה</span></button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <header class="hero">
+      <span class="kicker">🎨 בונוס · לצייר ולשחק עם קוד</span>
+      <h1>מה זה <span class="glow">Processing</span>?</h1>
+      <p class="lead">עד עכשיו הארדואינו הדליק נורות והשמיע צלילים. עכשיו נלמד כלי אחר וקסום: <span class="en">Processing</span> — שפה שבה כותבים קוד ש<b>מצייר על מסך המחשב</b>. אפשר לצייר צורות, ליצור אנימציות, ואפילו לבנות משחקים — ולחבר הכול לחיישנים של הארדואינו! 🎮</p>
+      <canvas id="demo" class="canvas-demo" width="420" height="200" aria-label="הדגמה מצוירת"></canvas>
+    </header>
+
+    <section id="s1">
+      <h2 class="sec"><span class="n">1</span> קוד שמצייר במקום להדליק נורות</h2>
+      <div class="sec-body">
+        <p><span class="en">Processing</span> הוא כמו דף ציור שהמחשב מצייר עליו לפי ההוראות שלנו. במקום <span class="en">pinMode</span> ו־<span class="en">digitalWrite</span>, יש פקודות ציור: <span class="en">ellipse</span> (עיגול), <span class="en">rect</span> (מלבן), <span class="en">line</span> (קו), <span class="en">fill</span> (צבע).</p>
+        <div class="analogy"><span class="ico">🖍️</span><p><b>ההפתעה הנחמדה:</b> Processing דומה מאוד לארדואינו! גם כאן יש <span class="en">setup()</span> שרץ פעם אחת, ו־<span class="en">draw()</span> שרץ שוב ושוב (בדיוק כמו <span class="en">loop</span>). מי שלמד ארדואינו — כבר חצי יודע Processing.</p></div>
+      </div>
+    </section>
+
+    <section id="s2">
+      <h2 class="sec"><span class="n">2</span> הציור הראשון</h2>
+      <div class="sec-body">
+        <p>הנה תוכנית Processing שמציירת עיגול שרודף אחרי העכבר. נסו — זה ממש קצר:</p>
+        <div class="code"><div class="bar"><i></i><i></i><i></i><span class="fn">FirstSketch.pde</span></div><pre><span class="k">void</span> setup() {
+  size(<span class="n">400</span>, <span class="n">400</span>);   <span class="c">// גודל חלון הציור</span>
+}
+
+<span class="k">void</span> draw() {
+  background(<span class="n">20</span>);          <span class="c">// רקע כהה (נמחק כל פעם)</span>
+  fill(<span class="n">120</span>, <span class="n">100</span>, <span class="n">255</span>);  <span class="c">// צבע סגול (אדום,ירוק,כחול)</span>
+  ellipse(mouseX, mouseY, <span class="n">60</span>, <span class="n">60</span>);  <span class="c">// עיגול איפה שהעכבר</span>
+}</pre></div>
+        <div class="analogy"><span class="ico">🖱️</span><p><span class="en">mouseX</span> ו־<span class="en">mouseY</span> הם המקום של העכבר. כי <span class="en">draw()</span> רץ שוב ושוב, העיגול "רודף" אחרי העכבר בזמן אמת!</p></div>
+      </div>
+    </section>
+
+    <section id="s3">
+      <h2 class="sec"><span class="n">3</span> לחבר את Processing לארדואינו</h2>
+      <div class="sec-body">
+        <p>כאן מגיע הקסם האמיתי: הארדואינו <b>שולח</b> נתונים מחיישן (למשל פוטנציומטר) דרך ה־<span class="en">Serial</span>, ו־Processing <b>מקבל</b> אותם ומצייר לפיהם. ככה חיישן אמיתי שולט בציור על המסך!</p>
+        <div class="split">
+          <div class="card"><h3>📤 צד הארדואינו</h3><p>שולח מספר דרך <span class="en">Serial.println()</span> — בדיוק כמו שכבר עשינו בפרק "מדברים עם המחשב".</p></div>
+          <div class="card"><h3>📥 צד Processing</h3><p>פותח את אותה יציאה (<span class="en">Serial</span>), קורא את המספר, ומצייר לפיו — עמודה, קו, או תזוזה.</p></div>
+        </div>
+        <div class="analogy"><span class="ico">⚠️</span><p><b>חשוב:</b> רק תוכנית אחת יכולה להשתמש ביציאה בכל רגע. אם ה־<span class="en">Serial Monitor</span> של ארדואינו פתוח — סגרו אותו לפני שמריצים את Processing.</p></div>
+      </div>
+    </section>
+
+    <section id="s4">
+      <h2 class="sec"><span class="n">4</span> איך מתחילים — צעד אחר צעד</h2>
+      <div class="sec-body">
+        <ol class="steps">
+          <li><b>מורידים את Processing</b> בחינם מהאתר <span class="en">processing.org</span> ומתקינים (זו תוכנה נפרדת מהארדואינו).</li>
+          <li><b>מעלים לארדואינו</b> את קוד השליחה (למשל שליחת ערך פוטנציומטר ב־<span class="en">Serial</span>).</li>
+          <li><b>סוגרים את ה־Serial Monitor</b> של הארדואינו כדי לשחרר את היציאה.</li>
+          <li><b>פותחים ב-Processing</b> את דוגמת ה־<span class="en">.pde</span> מהערכה, ומעדכנים את שם היציאה (<span class="en">COM</span>) לזו של הלוח.</li>
+          <li><b>לוחצים Run (▶)</b> — וחלון הציור נפתח וזז לפי החיישן. וואו! 🎉</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="s5">
+      <h2 class="sec"><span class="n">5</span> דברים מגניבים שאפשר לבנות</h2>
+      <div class="sec-body">
+        <p>בערכה יש דוגמאות Processing מוכנות — פתחו, הריצו, ושנו! הנה הכי כיפיות:</p>
+        <div class="gallery">
+          <div class="g-card"><div class="emoji">📈</div><h4>מד-מתח</h4><p><span class="en">Voltmeter</span> — מחוג שזז לפי הפוטנציומטר.</p></div>
+          <div class="g-card"><div class="emoji">〰️</div><h4>אוסילוסקופ</h4><p><span class="en">Oscilloscope</span> — גרף חי של החיישן.</p></div>
+          <div class="g-card"><div class="emoji">🏓</div><h4>פּונג</h4><p><span class="en">Pong</span> — משחק שולטים בו עם החיישן!</p></div>
+          <div class="g-card"><div class="emoji">🐍</div><h4>סנייק</h4><p><span class="en">Snake</span> — הנחש הקלאסי.</p></div>
+          <div class="g-card"><div class="emoji">🎲</div><h4>קוביה תלת-ממד</h4><p><span class="en">Box 3D</span> — קוביה שמסתובבת.</p></div>
+          <div class="g-card"><div class="emoji">⭕</div><h4>עיגול</h4><p><span class="en">Ellipse</span> — הדוגמה הכי בסיסית להתחלה.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dict">
+      <div class="dict">
+        <h4>📖 מילון Processing</h4>
+        <div class="dict-scroll"><table class="voc"><thead><tr><th>מילה</th><th>איך אומרים</th><th>מה זה</th></tr></thead><tbody>
+          <tr><td><span class="en">Processing</span></td><td class="say">פְּרוֹסֶסִינְג</td><td>שפת תכנות לציור, אנימציה ומשחקים.</td></tr>
+          <tr><td><span class="en">sketch</span></td><td class="say">סְקֶץ'</td><td>קובץ הקוד (סיומת <span class="en">.pde</span>).</td></tr>
+          <tr><td><span class="en">setup()</span></td><td class="say">סֶטְ־אַפּ</td><td>רץ פעם אחת בהתחלה (כמו בארדואינו).</td></tr>
+          <tr><td><span class="en">draw()</span></td><td class="say">דְרוֹו</td><td>רץ שוב ושוב — כמו <span class="en">loop</span>. כאן מציירים.</td></tr>
+          <tr><td><span class="en">size()</span></td><td class="say">סַייז</td><td>קובע את גודל חלון הציור.</td></tr>
+          <tr><td><span class="en">background()</span></td><td class="say">בֶּקְגְרַאונְד</td><td>צובע את הרקע (מנקה את המסך).</td></tr>
+          <tr><td><span class="en">fill()</span></td><td class="say">פִיל</td><td>בוחר צבע מילוי לצורות (R,G,B).</td></tr>
+          <tr><td><span class="en">ellipse()</span></td><td class="say">אִילִיפְּס</td><td>מצייר עיגול/אליפסה.</td></tr>
+          <tr><td><span class="en">rect()</span></td><td class="say">רֶקְט</td><td>מצייר מלבן.</td></tr>
+          <tr><td><span class="en">line()</span></td><td class="say">לַיין</td><td>מצייר קו.</td></tr>
+          <tr><td><span class="en">mouseX / mouseY</span></td><td class="say">מַאוּס אֶקְס / וַואי</td><td>המיקום של העכבר על המסך.</td></tr>
+          <tr><td><span class="en">Serial</span></td><td class="say">סִירְיַאל</td><td>הקו שמקבל נתונים מהארדואינו.</td></tr>
+          <tr><td><span class="en">Run</span></td><td class="say">רַאן</td><td>"הרץ" — כפתור ה-▶ שמפעיל את הציור.</td></tr>
+        </tbody></table></div>
+      </div>
+    </section>
+
+    <div class="cta-box">
+      <h2>מוכן ליצור? 🎨</h2>
+      <p>Processing פותח דלת לעולם של אמנות דיגיטלית ומשחקים — והכול מתחבר לחיישנים שכבר הכרת. חזור למדריך הראשי כדי לבנות עוד, או הורד את Processing והתחל לצייר!</p>
+      <a class="cta" href="Madrich_Arduino_Ivrit.html">🔌 חזרה למדריך והפרויקטים ←</a>
+    </div>
+
+    <footer>
+      <p>דף זה נכתב בעברית במיוחד בשבילך. Processing הוא כלי חינמי וקוד-פתוח מ־<span class="en">processing.org</span>. דוגמאות ה־Processing נמצאות בתיקיית הערכה של Freenove.</p>
+    </footer>
+  </div>
+
+  <button id="top" type="button" aria-label="חזרה למעלה">↑</button>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('themeBtn'),
+        ico=document.getElementById('themeIco'), txt=document.getElementById('themeTxt');
+    function current(){ var s=root.getAttribute('data-theme'); if(s) return s;
+      return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark':'light'; }
+    function apply(m){ root.setAttribute('data-theme', m); var d=m==='dark';
+      ico.textContent=d?'☀️':'🌙'; txt.textContent=d?'מצב בהיר':'מצב כהה'; }
+    apply(current());
+    btn.addEventListener('click', function(){ apply(current()==='dark'?'light':'dark'); });
+
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){ var el=document.querySelector(a.getAttribute('href'));
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); } });
+    });
+
+    var top=document.getElementById('top');
+    top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+    window.addEventListener('scroll', function(){ if(window.scrollY>600) top.classList.add('show'); else top.classList.remove('show'); });
+
+    // tiny live "Processing-style" demo on the hero canvas
+    var cv=document.getElementById('demo'); if(cv && cv.getContext){
+      var ctx=cv.getContext('2d'), W=cv.width, H=cv.height, t=0, reduce=false;
+      try{ reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+      var mx=W/2, my=H/2;
+      cv.addEventListener('mousemove', function(e){ var r=cv.getBoundingClientRect(); mx=(e.clientX-r.left)*(W/r.width); my=(e.clientY-r.top)*(H/r.height); });
+      function frame(){
+        ctx.fillStyle='#0e0d18'; ctx.fillRect(0,0,W,H);
+        for(var i=0;i<6;i++){
+          var x = W/2 + Math.cos(t/40 + i)*(90+i*10);
+          var y = H/2 + Math.sin(t/33 + i*1.4)*(50+i*6);
+          var hue = (t*2 + i*40)%360;
+          ctx.fillStyle='hsla('+hue+',70%,60%,.85)';
+          ctx.beginPath(); ctx.arc(x,y,20+i*3,0,Math.PI*2); ctx.fill();
+        }
+        ctx.fillStyle='rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(mx,my,14,0,Math.PI*2); ctx.fill();
+        if(!reduce){ t++; requestAnimationFrame(frame); }
+      }
+      frame();
+    }
+  })();
+</script>
